@@ -207,6 +207,246 @@ h1 {
 .chart-container canvas {
   max-height: 300px;
 }
+.ferries-section {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin: 30px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.ferries-section > h2 {
+  color: #667eea;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8em;
+}
+
+.ferry-alert {
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  border-left: 6px solid;
+}
+
+.ferry-alert.alert-verde {
+  background: #51cf6615;
+  border-left-color: #51cf66;
+}
+
+.ferry-alert.alert-gialla {
+  background: #ffd43b15;
+  border-left-color: #ffd43b;
+}
+
+.ferry-alert.alert-arancione {
+  background: #ff922b15;
+  border-left-color: #ff922b;
+}
+
+.ferry-alert.alert-rossa {
+  background: #ff6b6b15;
+  border-left-color: #ff6b6b;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.alert-icon {
+  font-size: 2.5em;
+}
+
+.alert-header h3 {
+  font-size: 1.3em;
+  margin-bottom: 5px;
+}
+
+.alert-main {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #333;
+}
+
+.alert-details {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.alert-conditions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 15px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.alert-conditions span {
+  font-weight: 600;
+  color: #495057;
+}
+
+.affected-vessels {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vessel-status {
+  padding: 10px 15px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 8px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.route-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s;
+}
+
+.route-card:hover {
+  border-color: #667eea;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(102,126,234,0.2);
+}
+
+.route-card h4 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.route-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.company {
+  font-weight: 600;
+  color: #495057;
+}
+
+.type {
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+.hours {
+  margin: 15px 0;
+}
+
+.hours strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.hours-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hour {
+  display: inline-block;
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #495057;
+}
+
+.verify-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: background 0.3s;
+}
+
+.verify-link:hover {
+  background: #764ba2;
+}
+
+.ferry-footer {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.ferry-footer p {
+  color: #495057;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.company-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.company-links a {
+  padding: 8px 16px;
+  background: white;
+  color: #667eea;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #667eea;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s;
+}
+
+.company-links a:hover {
+  background: #667eea;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .routes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .alert-conditions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .company-links {
+    flex-direction: column;
+  }
+}
 
 footer {
   text-align: center;
@@ -230,7 +470,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 10/12/2025, 16:10:10</p>
+  <p class="update-time">Aggiornato: 10/12/2025, 16:16:25</p>
 </header>
 
 <div class="week-stats">
@@ -640,6 +880,112 @@ new Chart(document.getElementById('marineChart'), {
   <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
   <p>Pressione atmosferica: stabile</p>
 </footer>
+
+    
+<section class="ferries-section">
+  <h2>⛴️ Collegamenti Marittimi</h2>
+  
+  <div class="ferry-alert alert-verde">
+    <div class="alert-header">
+      <span class="alert-icon">🟢</span>
+      <div>
+        <h3>VERDE</h3>
+        <p class="alert-main">Collegamenti marittimi regolari</p>
+      </div>
+    </div>
+    <p class="alert-details">Condizioni meteo-marine favorevoli. Collegamenti operativi.</p>
+    <div class="alert-conditions">
+      <span>🌊 Onde: 0.3m</span>
+      <span>💨 Vento: 7.5 km/h</span>
+      <span>🌫️ Visibilità: Buona</span>
+    </div>
+    <div class="affected-vessels">
+      <div class="vessel-status">Tutti i collegamenti operativi</div>
+    </div>
+  </div>
+  
+  <div class="routes-grid">
+    
+      <div class="route-card">
+        <h4>Procida → Napoli Beverello</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar / SNAV</span>
+          <span class="type">Traghetti + Aliscafi</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">06:20</span><span class="hour">07:50</span><span class="hour">09:30</span><span class="hour">12:00</span><span class="hour">14:30</span><span class="hour">16:50</span><span class="hour">18:30</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
+    
+      <div class="route-card">
+        <h4>Napoli Beverello → Procida</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar / SNAV</span>
+          <span class="type">Traghetti + Aliscafi</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">07:00</span><span class="hour">09:00</span><span class="hour">11:30</span><span class="hour">13:50</span><span class="hour">16:00</span><span class="hour">17:40</span><span class="hour">19:15</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
+    
+      <div class="route-card">
+        <h4>Procida → Pozzuoli</h4>
+        <div class="route-info">
+          <span class="company">🚢 Gestour / Medmar</span>
+          <span class="type">Traghetti</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">05:45</span><span class="hour">07:20</span><span class="hour">09:00</span><span class="hour">12:30</span><span class="hour">15:00</span><span class="hour">17:30</span><span class="hour">19:45</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
+    
+      <div class="route-card">
+        <h4>Procida ↔ Ischia</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar</span>
+          <span class="type">Traghetti</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">Vari collegamenti giornalieri</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
+    
+  </div>
+  
+  <div class="ferry-footer">
+    <p><strong>⚠️ Nota importante:</strong> Verifica sempre gli orari aggiornati sui siti ufficiali delle compagnie prima della partenza.</p>
+    <div class="company-links">
+      <a href="https://www.traghetti-ischia.info/" target="_blank">Traghetti Ischia Info</a>
+      <a href="https://www.caremar.it" target="_blank">Caremar</a>
+      <a href="https://www.snav.it" target="_blank">SNAV</a>
+      <a href="https://www.medmargroup.it" target="_blank">Medmar</a>
+    </div>
+  </div>
+</section>
 
   </div>
 </body>
