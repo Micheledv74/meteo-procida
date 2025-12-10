@@ -5,220 +5,219 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meteo Procida - 7 Giorni</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
-      color: #333;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    header {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-    
-    h1 {
-      color: #667eea;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    
-    .update-time {
-      color: #666;
-      font-size: 0.9em;
-    }
-    
-    .week-stats {
-      background: rgba(255,255,255,0.95);
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    
-    .stat-box {
-      text-align: center;
-      padding: 15px;
-      background: #f8f9fa;
-      border-radius: 10px;
-    }
-    
-    .stat-label { font-size: 0.85em; color: #666; margin-bottom: 5px; }
-    .stat-value { font-size: 1.5em; font-weight: bold; color: #667eea; }
-    
-    .forecast-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    
-    .day-card {
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-    
-    .day-card:hover { transform: translateY(-5px); }
-    
-    .day-card.today {
-      border: 3px solid #667eea;
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    }
-    
-    .day-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #f0f0f0;
-    }
-    
-    .day-header h3 { color: #667eea; font-size: 1.3em; }
-    .weather-icon { font-size: 2.5em; }
-    
-    .temp-range {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 15px;
-      font-size: 1.8em;
-    }
-    
-    .temp-max { color: #ff6b6b; font-weight: bold; }
-    .temp-min { color: #4ecdc4; }
-    
-    .weather-details {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    
-    .detail {
-      padding: 5px 0;
-      font-size: 0.95em;
-    }
-    
-    .sea-badge {
-      display: inline-block;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.9em;
-      margin-top: 10px;
-    }
-    
-    .sea-badge.verde { background: #51cf66; color: white; }
-    .sea-badge.gialla { background: #ffd43b; color: #333; }
-    .sea-badge.arancione { background: #ff922b; color: white; }
-    .sea-badge.rossa { background: #ff6b6b; color: white; }
-    
-    .ai-section {
-      margin-top: 20px;
-      padding: 20px;
-      background: linear-gradient(135deg, #667eea15, #764ba215);
-      border-radius: 10px;
-      border-left: 4px solid #667eea;
-    }
-    
-    .ai-section h3 { color: #667eea; margin-bottom: 10px; }
-    .ai-section h4 { color: #764ba2; margin: 15px 0 10px; font-size: 1em; }
-    
-    .summary {
-      line-height: 1.6;
-      margin-bottom: 15px;
-      color: #555;
-    }
-    
-    .advice {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .advice li {
-      padding: 8px 0 8px 25px;
-      position: relative;
-      color: #555;
-    }
-    
-    .advice li:before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: #51cf66;
-      font-weight: bold;
-    }
-    
-    .alert {
-      padding: 12px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
-    
-    .alert-verde { background: #51cf6620; border-left: 4px solid #51cf66; }
-    .alert-gialla { background: #ffd43b20; border-left: 4px solid #ffd43b; }
-    .alert-arancione { background: #ff922b20; border-left: 4px solid #ff922b; }
-    .alert-rossa { background: #ff6b6b20; border-left: 4px solid #ff6b6b; }
-    
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      color: white;
-      font-size: 0.9em;
-    }
-    
-    @media (max-width: 768px) {
-      .forecast-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 1.8em; }
-    }
-  </style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+h1 {
+  color: #667eea;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.update-time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.week-stats {
+  background: rgba(255,255,255,0.95);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.stat-label { font-size: 0.85em; color: #666; margin-bottom: 5px; }
+.stat-value { font-size: 1.5em; font-weight: bold; color: #667eea; }
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.day-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.day-card:hover { transform: translateY(-5px); }
+
+.day-card.today {
+  border: 3px solid #667eea;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.day-header h3 { color: #667eea; font-size: 1.3em; }
+.weather-icon { font-size: 2.5em; }
+
+.temp-range {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+.temp-max { color: #ff6b6b; font-weight: bold; }
+.temp-min { color: #4ecdc4; }
+
+.weather-details {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.detail {
+  padding: 5px 0;
+  font-size: 0.95em;
+}
+
+.sea-badge {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.sea-badge.verde { background: #51cf66; color: white; }
+.sea-badge.gialla { background: #ffd43b; color: #333; }
+.sea-badge.arancione { background: #ff922b; color: white; }
+.sea-badge.rossa { background: #ff6b6b; color: white; }
+
+.ai-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea15, #764ba215);
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.ai-section h3 { color: #667eea; margin-bottom: 10px; }
+.ai-section h4 { color: #764ba2; margin: 15px 0 10px; font-size: 1em; }
+
+.summary {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.advice {
+  list-style: none;
+  padding: 0;
+}
+
+.advice li {
+  padding: 8px 0 8px 25px;
+  position: relative;
+  color: #555;
+}
+
+.advice li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #51cf66;
+  font-weight: bold;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.alert-verde { background: #51cf6620; border-left: 4px solid #51cf66; }
+.alert-gialla { background: #ffd43b20; border-left: 4px solid #ffd43b; }
+.alert-arancione { background: #ff922b20; border-left: 4px solid #ff922b; }
+.alert-rossa { background: #ff6b6b20; border-left: 4px solid #ff6b6b; }
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: white;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  .forecast-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 1.8em; }
+}
+</style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>🌊 Meteo Procida</h1>
-      <p class="update-time">Aggiornato: 10/12/2025, 15:23:16</p>
+    
+<header>
+  <h1>🌊 Meteo Procida</h1>
+  <p class="update-time">Aggiornato: 10/12/2025, 15:52:30</p>
+</header>
 
-    </header>
-    
-    <div class="week-stats">
-      <div class="stat-box">
-        <div class="stat-label">Temp. Media Max</div>
-        <div class="stat-value">15.0°C</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Temp. Media Min</div>
-        <div class="stat-value">13.6°C</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Pioggia Totale</div>
-        <div class="stat-value">2.2mm</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Giorni di Pioggia</div>
-        <div class="stat-value">1</div>
-      </div>
-    </div>
-    
+<div class="week-stats">
+  <div class="stat-box">
+    <div class="stat-label">Temp. Media Max</div>
+    <div class="stat-value">15.0°C</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Temp. Media Min</div>
+    <div class="stat-value">13.6°C</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Pioggia Totale</div>
+    <div class="stat-value">2.2mm</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Giorni di Pioggia</div>
+    <div class="stat-value">1</div>
+  </div>
+</div>
+
     <div class="forecast-grid">
-      
-    <div class="day-card today">
+    <div class="day-card today" data-day="0">
       <div class="day-header">
         <h3>OGGI 10/12</h3>
         <div class="weather-icon">⛅</div>
@@ -240,10 +239,10 @@
         <div class="sea-badge verde">VERDE</div>
       </div>
       
-      
+      <div id="ai-placeholder"></div>
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="1">
       <div class="day-header">
         <h3>Gio 11/12</h3>
         <div class="weather-icon">⛅</div>
@@ -268,7 +267,7 @@
       
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="2">
       <div class="day-header">
         <h3>Ven 12/12</h3>
         <div class="weather-icon">☁️</div>
@@ -293,7 +292,7 @@
       
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="3">
       <div class="day-header">
         <h3>Sab 13/12</h3>
         <div class="weather-icon">🌤️</div>
@@ -318,7 +317,7 @@
       
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="4">
       <div class="day-header">
         <h3>Dom 14/12</h3>
         <div class="weather-icon">🌤️</div>
@@ -343,7 +342,7 @@
       
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="5">
       <div class="day-header">
         <h3>Lun 15/12</h3>
         <div class="weather-icon">☁️</div>
@@ -368,7 +367,7 @@
       
     </div>
   
-    <div class="day-card ">
+    <div class="day-card " data-day="6">
       <div class="day-header">
         <h3>Mar 16/12</h3>
         <div class="weather-icon">🌧️</div>
@@ -392,13 +391,14 @@
       
       
     </div>
-  
-    </div>
+  </div>
     
-    <footer>
-      <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
-      <p>Pressione atmosferica: stabile</p>
-    </footer>
+    
+<footer>
+  <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
+  <p>Pressione atmosferica: stabile</p>
+</footer>
+
   </div>
 </body>
 </html>
