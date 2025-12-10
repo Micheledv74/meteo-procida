@@ -1,81 +1,4 @@
-const data = $input.first().json;
-
-// Helper function per le icone meteo
-function getWeatherIcon(code) {
-  const icons = {
-    0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
-    45: '🌫️', 48: '🌫️',
-    51: '🌦️', 53: '🌦️', 55: '🌧️',
-    61: '🌧️', 63: '🌧️', 65: '🌧️',
-    71: '🌨️', 73: '🌨️', 75: '🌨️',
-    80: '🌦️', 81: '🌧️', 82: '⛈️',
-    95: '⛈️', 96: '⛈️', 99: '⛈️'
-  };
-  return icons[code] || '🌤️';
-}
-
-// Helper function per i nomi dei giorni abbreviati
-function getDayName(date) {
-  const days = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-  const d = new Date(date);
-  return days[d.getDay()];
-}
-
-// Genera le card per i prossimi 7 giorni
-let weekForecast = '';
-data.daily.forEach((day, index) => {
-  const isToday = index === 0;
-  const aiSection = isToday && day.ai_analysis ? `
-    <div class="ai-section">
-      <h3>📊 Analisi AI</h3>
-      <p class="summary">${day.ai_analysis.summary}</p>
-      
-      <h4>💡 Consigli:</h4>
-      <ul class="advice">
-        ${day.ai_analysis.advice.map(a => `<li>${a}</li>`).join('')}
-      </ul>
-      
-      ${day.ai_analysis.alerts && day.ai_analysis.alerts.length > 0 ? `
-        <h4>⚠️ Allerte:</h4>
-        ${day.ai_analysis.alerts.map(alert => `
-          <div class="alert alert-${alert.severity.toLowerCase()}">
-            <strong>${alert.type}</strong>: ${alert.description}
-          </div>
-        `).join('')}
-      ` : ''}
-    </div>
-  ` : '';
-
-  weekForecast += `
-    <div class="day-card ${isToday ? 'today' : ''}">
-      <div class="day-header">
-        <h3>${isToday ? 'OGGI' : getDayName(day.date)} ${day.date.split('-')[2]}/${day.date.split('-')[1]}</h3>
-        <div class="weather-icon">${getWeatherIcon(day.weather_code)}</div>
-      </div>
-      
-      <div class="day-info">
-        <div class="temp-range">
-          <span class="temp-max">${day.temp_max}°</span>
-          <span class="temp-min">${day.temp_min}°</span>
-        </div>
-        
-        <div class="weather-details">
-          <div class="detail">💧 Pioggia: ${day.precipitation_sum}mm (${day.precipitation_probability_max}%)</div>
-          <div class="detail">💨 Vento: ${day.wind_speed_max} km/h (raffiche ${day.wind_gusts_max} km/h)</div>
-          <div class="detail">🌊 Onde: ${day.wave_height_max}m - ${day.sea_state}</div>
-          <div class="detail">☀️ UV: ${day.uv_index_max}</div>
-        </div>
-        
-        <div class="sea-badge ${day.sea_severity.toLowerCase()}">${day.sea_severity}</div>
-      </div>
-      
-      ${aiSection}
-    </div>
-  `;
-});
-
-// HTML completo
-const html = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -270,44 +193,212 @@ const html = `<!DOCTYPE html>
   <div class="container">
     <header>
       <h1>🌊 Meteo Procida</h1>
-      <p class="update-time">Aggiornato: ${new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' })}</p>
+      <p class="update-time">Aggiornato: 10/12/2025, 15:23:16</p>
 
     </header>
     
     <div class="week-stats">
       <div class="stat-box">
         <div class="stat-label">Temp. Media Max</div>
-        <div class="stat-value">${data.weekly_stats.temp_max_avg}°C</div>
+        <div class="stat-value">15.0°C</div>
       </div>
       <div class="stat-box">
         <div class="stat-label">Temp. Media Min</div>
-        <div class="stat-value">${data.weekly_stats.temp_min_avg}°C</div>
+        <div class="stat-value">13.6°C</div>
       </div>
       <div class="stat-box">
         <div class="stat-label">Pioggia Totale</div>
-        <div class="stat-value">${data.weekly_stats.precipitation_total}mm</div>
+        <div class="stat-value">2.2mm</div>
       </div>
       <div class="stat-box">
         <div class="stat-label">Giorni di Pioggia</div>
-        <div class="stat-value">${data.weekly_stats.rainy_days}</div>
+        <div class="stat-value">1</div>
       </div>
     </div>
     
     <div class="forecast-grid">
-      ${weekForecast}
+      
+    <div class="day-card today">
+      <div class="day-header">
+        <h3>OGGI 10/12</h3>
+        <div class="weather-icon">⛅</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15.4°</span>
+          <span class="temp-min">14.5°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (0%)</div>
+          <div class="detail">💨 Vento: 7.5 km/h (raffiche 10.4 km/h)</div>
+          <div class="detail">🌊 Onde: 0.3m - Calmo</div>
+          <div class="detail">☀️ UV: 2.5</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Gio 11/12</h3>
+        <div class="weather-icon">⛅</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15°</span>
+          <span class="temp-min">14.2°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (0%)</div>
+          <div class="detail">💨 Vento: 4.2 km/h (raffiche 6.1 km/h)</div>
+          <div class="detail">🌊 Onde: 0.1m - Calmo</div>
+          <div class="detail">☀️ UV: 2.55</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Ven 12/12</h3>
+        <div class="weather-icon">☁️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">14.8°</span>
+          <span class="temp-min">14°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (0%)</div>
+          <div class="detail">💨 Vento: 6.7 km/h (raffiche 9.7 km/h)</div>
+          <div class="detail">🌊 Onde: 0.06m - Calmo</div>
+          <div class="detail">☀️ UV: 2.55</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Sab 13/12</h3>
+        <div class="weather-icon">🌤️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">14.6°</span>
+          <span class="temp-min">13°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (0%)</div>
+          <div class="detail">💨 Vento: 7.7 km/h (raffiche 10.8 km/h)</div>
+          <div class="detail">🌊 Onde: 0.04m - Calmo</div>
+          <div class="detail">☀️ UV: 2.55</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Dom 14/12</h3>
+        <div class="weather-icon">🌤️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">14.5°</span>
+          <span class="temp-min">13.6°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (0%)</div>
+          <div class="detail">💨 Vento: 6.1 km/h (raffiche 9.7 km/h)</div>
+          <div class="detail">🌊 Onde: 0.04m - Calmo</div>
+          <div class="detail">☀️ UV: 2.55</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Lun 15/12</h3>
+        <div class="weather-icon">☁️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15.3°</span>
+          <span class="temp-min">11.9°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 0mm (3%)</div>
+          <div class="detail">💨 Vento: 12.4 km/h (raffiche 18.7 km/h)</div>
+          <div class="detail">🌊 Onde: 0.04m - Calmo</div>
+          <div class="detail">☀️ UV: 2.05</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card ">
+      <div class="day-header">
+        <h3>Mar 16/12</h3>
+        <div class="weather-icon">🌧️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15.4°</span>
+          <span class="temp-min">14.1°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail">💧 Pioggia: 2.2mm (45%)</div>
+          <div class="detail">💨 Vento: 14.3 km/h (raffiche 20.5 km/h)</div>
+          <div class="detail">🌊 Onde: 0.82m - Poco mosso</div>
+          <div class="detail">☀️ UV: 1.25</div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
     </div>
     
     <footer>
-      <p>Dati da Open-Meteo • Analisi AI powered by Groq • ${data.location.moon_phase} 🌙</p>
-      <p>Pressione atmosferica: ${data.pressure_trend}</p>
+      <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
+      <p>Pressione atmosferica: stabile</p>
     </footer>
   </div>
 </body>
-</html>`;
-
-return {
-  json: {
-    html: html,
-    weather_data: data
-  }
-};
+</html>
