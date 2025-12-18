@@ -739,7 +739,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 18/12/2025, 01:00:01</p>
+  <p class="update-time">Aggiornato: 18/12/2025, 02:00:01</p>
 </header>
 
 <div class="week-stats">
@@ -771,7 +771,7 @@ footer {
       <div class="day-info">
         <div class="temp-range">
           <span class="temp-max">17.2°</span>
-          <span class="temp-min">16.2°</span>
+          <span class="temp-min">16.3°</span>
         </div>
         
         <div class="weather-details">
@@ -780,11 +780,11 @@ footer {
   <span class="detail-hint">📊 Clicca per dettagli</span>
 </div>
 <div class="detail clickable-detail" onclick="document.getElementById('windModal').showModal()">
-  💨 Vento: 5.3 km/h (raffiche 7.6 km/h)
+  💨 Vento: 5.1 km/h (raffiche 7.2 km/h)
   <span class="detail-hint">📊 Clicca per dettagli</span>
 </div>
 
-          <div class="detail">🌊 Onde: 0.48m - Calmo</div>
+          <div class="detail">🌊 Onde: 0.44m - Calmo</div>
           <div class="detail">☀️ UV: 2.1</div>
         </div>
         
@@ -802,7 +802,7 @@ footer {
       
       <div class="day-info">
         <div class="temp-range">
-          <span class="temp-max">16.4°</span>
+          <span class="temp-max">16.3°</span>
           <span class="temp-min">15.4°</span>
         </div>
         
@@ -816,7 +816,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 0.18m - Calmo</div>
+          <div class="detail">🌊 Onde: 0.22m - Calmo</div>
           <div class="detail">☀️ UV: 2.4</div>
         </div>
         
@@ -848,7 +848,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 0.34m - Calmo</div>
+          <div class="detail">🌊 Onde: 0.36m - Calmo</div>
           <div class="detail">☀️ UV: 2.35</div>
         </div>
         
@@ -912,7 +912,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.06m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 1.04m - Poco mosso</div>
           <div class="detail">☀️ UV: 2</div>
         </div>
         
@@ -944,7 +944,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.3m - Mosso</div>
+          <div class="detail">🌊 Onde: 1.48m - Mosso</div>
           <div class="detail">☀️ UV: 1.9</div>
         </div>
         
@@ -976,11 +976,11 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.22m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 1.52m - Mosso</div>
           <div class="detail">☀️ UV: 2.15</div>
         </div>
         
-        <div class="sea-badge verde">VERDE</div>
+        <div class="sea-badge gialla">GIALLA</div>
       </div>
       
       
@@ -1051,7 +1051,7 @@ footer {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const chartData = {"labels":["18/12","19/12","20/12","21/12","22/12","23/12","24/12"],"tempMax":[17.2,16.4,16.6,16.4,15.8,14.9,15.3],"tempMin":[16.2,15.4,14.2,14.3,14,13.8,13.4],"precipitation":[0,0,0,0,0,16.5,3.3],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[5.3,8.6,12.2,11.5,16.6,22.2,12.2],"waveHeight":[0.48,0.18,0.34,0.28,1.06,1.3,1.22],"seaTemp":[15,15,15,15,15,15,15]};
+const chartData = {"labels":["18/12","19/12","20/12","21/12","22/12","23/12","24/12"],"tempMax":[17.2,16.3,16.6,16.4,15.8,14.9,15.3],"tempMin":[16.3,15.4,14.2,14.3,14,13.8,13.4],"precipitation":[0,0,0,0,0,16.5,3.3],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[5.1,8.6,12.2,11.5,16.6,22.2,12.2],"waveHeight":[0.44,0.22,0.36,0.28,1.04,1.48,1.52],"seaTemp":[15,15,15,15,15,15,15]};
 
 // Configurazione comune
 const commonOptions = {
@@ -1255,8 +1255,8 @@ new Chart(document.getElementById('marineChart'), {
     </div>
     <p class="alert-details">Condizioni meteo-marine favorevoli. Collegamenti operativi.</p>
     <div class="alert-conditions">
-      <span>🌊 Onde: 0.48m</span>
-      <span>💨 Vento: 5.3 km/h</span>
+      <span>🌊 Onde: 0.44m</span>
+      <span>💨 Vento: 5.1 km/h</span>
       <span>🌫️ Visibilità: Buona</span>
     </div>
     <div class="affected-vessels">
@@ -1388,15 +1388,15 @@ new Chart(document.getElementById('marineChart'), {
     <div class="modal-stats">
       <div class="stat-item">
         <span class="stat-label">Velocità Media</span>
-        <span class="stat-value">3.7 km/h</span>
+        <span class="stat-value">3.6 km/h</span>
       </div>
       <div class="stat-item">
         <span class="stat-label">Raffica Max</span>
-        <span class="stat-value">7.6 km/h</span>
+        <span class="stat-value">7.2 km/h</span>
       </div>
       <div class="stat-item">
         <span class="stat-label">Direzione Prevalente</span>
-        <span class="stat-value">E (80°)</span>
+        <span class="stat-value">E (83°)</span>
       </div>
     </div>
   </div>
@@ -1404,7 +1404,7 @@ new Chart(document.getElementById('marineChart'), {
 
 <script>
 // Dati orari per i grafici
-const hourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipProb":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"windSpeed":[3.9,3.3,3.6,3.4,2.8,3.3,3.5,4.4,4.3,4.7,3.5,3.2,3.6,4,3.9,3.7,4.2,3.3,1.5,2.6,5.3,4,4.1,4.2],"windGusts":[6.1,5.4,5.4,5.4,5,4.7,5,6.1,6.5,6.8,6.8,5,5,6.1,6.5,5.8,6.5,6.5,4.3,4,7.6,7.6,5.8,6.1]};
+const hourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipProb":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"windSpeed":[4.1,3.8,4,3.7,2.9,3.1,3.3,4.2,4.7,5.1,4.2,2.9,2.8,3.3,3.7,4.4,3.4,2.6,1.6,2.1,4.7,4.1,4.1,4.6],"windGusts":[6.1,5.8,5.8,5.8,5,4.3,4.7,6.1,6.5,7.2,7.2,5.8,4.3,4.7,5.4,6.5,6.5,5,3.6,2.9,6.5,6.5,6.1,6.5]};
 
 // Grafico Pioggia 24h
 function initRainChart() {
