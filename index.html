@@ -739,7 +739,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 01/01/2026, 01:00:12</p>
+  <p class="update-time">Aggiornato: 01/01/2026, 02:00:01</p>
 </header>
 
 <div class="week-stats">
@@ -753,7 +753,7 @@ footer {
   </div>
   <div class="stat-box">
     <div class="stat-label">Pioggia Totale</div>
-    <div class="stat-value">88.7mm</div>
+    <div class="stat-value">88.3mm</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Giorni di Pioggia</div>
@@ -771,7 +771,7 @@ footer {
       <div class="day-info">
         <div class="temp-range">
           <span class="temp-max">13°</span>
-          <span class="temp-min">7.5°</span>
+          <span class="temp-min">7.6°</span>
         </div>
         
         <div class="weather-details">
@@ -780,11 +780,11 @@ footer {
   <span class="detail-hint">📊 Clicca per dettagli</span>
 </div>
 <div class="detail clickable-detail" onclick="document.getElementById('windModal').showModal()">
-  💨 Vento: 24.8 km/h (raffiche 32.8 km/h)
+  💨 Vento: 27 km/h (raffiche 35.6 km/h)
   <span class="detail-hint">📊 Clicca per dettagli</span>
 </div>
 
-          <div class="detail">🌊 Onde: 0.6m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 0.56m - Poco mosso</div>
           <div class="detail">☀️ UV: 2.55</div>
         </div>
         
@@ -808,15 +808,15 @@ footer {
         
         <div class="weather-details">
        <div class="detail " >
-  💧 Pioggia: 8.9mm (95%)
+  💧 Pioggia: 8.6mm (95%)
   
 </div>
 <div class="detail " >
-  💨 Vento: 27 km/h (raffiche 37.1 km/h)
+  💨 Vento: 27.7 km/h (raffiche 38.2 km/h)
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.64m - Mosso</div>
+          <div class="detail">🌊 Onde: 1.68m - Mosso</div>
           <div class="detail">☀️ UV: 2.55</div>
         </div>
         
@@ -880,7 +880,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.52m - Mosso</div>
+          <div class="detail">🌊 Onde: 1.44m - Mosso</div>
           <div class="detail">☀️ UV: 0.4</div>
         </div>
         
@@ -912,7 +912,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 0.94m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 1.04m - Poco mosso</div>
           <div class="detail">☀️ UV: 1.6</div>
         </div>
         
@@ -944,7 +944,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 0.92m - Poco mosso</div>
           <div class="detail">☀️ UV: 0.2</div>
         </div>
         
@@ -976,7 +976,7 @@ footer {
   
 </div>
 
-          <div class="detail">🌊 Onde: 1.22m - Poco mosso</div>
+          <div class="detail">🌊 Onde: 0.98m - Poco mosso</div>
           <div class="detail">☀️ UV: 2.35</div>
         </div>
         
@@ -1011,7 +1011,7 @@ footer {
     </div>
     <div class="morning-stat">
       <div class="stat-icon">🌊</div>
-      <div class="stat-value">1.60m</div>
+      <div class="stat-value">1.59m</div>
       <div class="stat-label">Onde</div>
     </div>
   </div>
@@ -1051,7 +1051,7 @@ footer {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const chartData = {"labels":["01/01","02/01","03/01","04/01","05/01","06/01","07/01"],"tempMax":[13,15,16.4,16.5,15.8,15.4,15.2],"tempMin":[7.5,12.6,15,15.6,12.4,12.6,9.6],"precipitation":[0,8.9,0.5,0.9,29.25,26.7,22.4],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[24.8,27,25.1,25.8,20.6,27.1,20.9],"waveHeight":[0.6,1.64,1.76,1.52,0.94,1,1.22],"seaTemp":[15,15,15,15,15,15,15]};
+const chartData = {"labels":["01/01","02/01","03/01","04/01","05/01","06/01","07/01"],"tempMax":[13,15,16.4,16.5,15.8,15.4,15.2],"tempMin":[7.6,12.6,15,15.6,12.4,12.6,9.6],"precipitation":[0,8.6,0.5,0.9,29.25,26.7,22.4],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,27.7,25.1,25.8,20.6,27.1,20.9],"waveHeight":[0.56,1.68,1.76,1.44,1.04,0.92,0.98],"seaTemp":[15,15,15,15,15,15,15]};
 
 // Configurazione comune
 const commonOptions = {
@@ -1255,8 +1255,8 @@ new Chart(document.getElementById('marineChart'), {
     </div>
     <p class="alert-details">Condizioni meteo-marine favorevoli. Collegamenti operativi.</p>
     <div class="alert-conditions">
-      <span>🌊 Onde: 0.6m</span>
-      <span>💨 Vento: 24.8 km/h</span>
+      <span>🌊 Onde: 0.56m</span>
+      <span>💨 Vento: 27 km/h</span>
       <span>🌫️ Visibilità: Buona</span>
     </div>
     <div class="affected-vessels">
@@ -1388,15 +1388,15 @@ new Chart(document.getElementById('marineChart'), {
     <div class="modal-stats">
       <div class="stat-item">
         <span class="stat-label">Velocità Media</span>
-        <span class="stat-value">12.9 km/h</span>
+        <span class="stat-value">13.3 km/h</span>
       </div>
       <div class="stat-item">
         <span class="stat-label">Raffica Max</span>
-        <span class="stat-value">32.8 km/h</span>
+        <span class="stat-value">35.6 km/h</span>
       </div>
       <div class="stat-item">
         <span class="stat-label">Direzione Prevalente</span>
-        <span class="stat-value">ESE (111°)</span>
+        <span class="stat-value">ESE (107°)</span>
       </div>
     </div>
   </div>
@@ -1404,7 +1404,7 @@ new Chart(document.getElementById('marineChart'), {
 
 <script>
 // Dati orari per i grafici
-const hourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipProb":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,20],"windSpeed":[13.3,12.7,11.7,10.5,10.7,10.2,9.2,8.8,8.2,7.7,7.2,6.7,7.8,10.7,14.3,14.7,14.5,15.5,14.8,16.7,18.9,19,22,24.8],"windGusts":[20.2,18.4,17.3,15.8,14.8,14.8,13.7,12.6,12.2,11.5,10.4,10.1,10.8,14.8,19.1,20.2,20.5,20.5,20.5,22.3,25.6,25.9,29.2,32.8]};
+const hourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipProb":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,20],"windSpeed":[14.8,13.5,12.8,11.7,12,11.5,10.5,9.7,8.6,7.9,7.3,6.9,7.4,10,13.6,13.7,14.3,14.8,14.2,16.6,18.9,19.9,22.3,27],"windGusts":[21.6,20.2,18.4,17.3,16.2,16.2,15.5,14,13.7,11.9,10.8,10.1,10.1,13.7,18.7,19.4,19.4,20.2,19.8,22.3,25.6,27,29.5,35.6]};
 
 // Grafico Pioggia 24h
 function initRainChart() {
