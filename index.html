@@ -473,12 +473,30 @@ h1 {
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .boat-stat:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+}
+
+.clickable-boat-stat {
+  cursor: pointer;
+  position: relative;
+}
+
+.clickable-boat-stat:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+}
+
+.click-hint {
+  font-size: 0.7em;
+  color: #2196f3;
+  margin-top: 8px;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 .boat-stat-icon {
@@ -508,7 +526,7 @@ h1 {
 
 .boat-advice {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.7);
@@ -530,12 +548,21 @@ h1 {
   color: #0d47a1;
 }
 
+.boat-type-advice {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+}
+
 .boat-forecast {
   text-align: center;
   padding: 15px;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   font-size: 1.05em;
+  margin-bottom: 20px;
 }
 
 .forecast-label {
@@ -547,6 +574,34 @@ h1 {
 .forecast-value {
   color: #424242;
   font-weight: 500;
+}
+
+.boat-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.boat-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background: white;
+  color: #2196f3;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 2px solid #2196f3;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+}
+
+.boat-link:hover {
+  background: #2196f3;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
 }
 
 @media (max-width: 768px) {
@@ -565,6 +620,10 @@ h1 {
   
   .verdict-icon-large {
     font-size: 2.5em;
+  }
+  
+  .boat-links {
+    flex-direction: column;
   }
 }
 
@@ -923,25 +982,25 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 03/01/2026, 17:04:43</p>
+  <p class="update-time">Aggiornato: 03/01/2026, 17:19:27</p>
 </header>
 
 <div class="week-stats">
   <div class="stat-box">
     <div class="stat-label">Temp. Media Max</div>
-    <div class="stat-value">13.7°C</div>
+    <div class="stat-value">14.2°C</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Temp. Media Min</div>
-    <div class="stat-value">11.9°C</div>
+    <div class="stat-value">11.7°C</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Pioggia Totale</div>
-    <div class="stat-value">120.0mm</div>
+    <div class="stat-value">107.3mm</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Giorni di Pioggia</div>
-    <div class="stat-value">6</div>
+    <div class="stat-value">7</div>
   </div>
 </div>
 
@@ -1114,17 +1173,17 @@ footer {
       
       <div class="day-info">
         <div class="temp-range">
-          <span class="temp-max">10.2°</span>
+          <span class="temp-max">8.7°</span>
           <span class="temp-min">7.8°</span>
         </div>
         
         <div class="weather-details">
        <div class="detail " >
-  💧 Pioggia: 13.95mm (48%)
+  💧 Pioggia: 0.6mm (48%)
   
 </div>
 <div class="detail " >
-  💨 Vento: 33.2 km/h (raffiche 46.4 km/h)
+  💨 Vento: 28.4 km/h (raffiche 23.4 km/h)
   
 </div>
 
@@ -1146,17 +1205,17 @@ footer {
       
       <div class="day-info">
         <div class="temp-range">
-          <span class="temp-max">10.3°</span>
-          <span class="temp-min">9.2°</span>
+          <span class="temp-max">15.5°</span>
+          <span class="temp-min">8°</span>
         </div>
         
         <div class="weather-details">
        <div class="detail " >
-  💧 Pioggia: 0mm (54%)
+  💧 Pioggia: 0.7mm (54%)
   
 </div>
 <div class="detail " >
-  💨 Vento: 39.9 km/h (raffiche 61.6 km/h)
+  💨 Vento: 35.6 km/h (raffiche 50.4 km/h)
   
 </div>
 
@@ -1228,18 +1287,20 @@ footer {
   </div>
   
   <div class="boat-conditions-grid">
-    <div class="boat-stat">
+    <div class="boat-stat clickable-boat-stat" onclick="document.getElementById('wavesModal').showModal()">
       <div class="boat-stat-icon">🌊</div>
       <div class="boat-stat-value">1.82m</div>
       <div class="boat-stat-label">Onde</div>
-      <div class="boat-stat-desc">Mosso</div>
+      <div class="boat-stat-desc">Mosso - WSW</div>
+      <div class="click-hint">📊 Clicca per dettagli</div>
     </div>
     
-    <div class="boat-stat">
+    <div class="boat-stat clickable-boat-stat" onclick="document.getElementById('windBoatModal').showModal()">
       <div class="boat-stat-icon">💨</div>
       <div class="boat-stat-value">27 km/h</div>
       <div class="boat-stat-label">Vento</div>
       <div class="boat-stat-desc">Moderato</div>
+      <div class="click-hint">📊 Clicca per dettagli</div>
     </div>
     
     <div class="boat-stat">
@@ -1255,12 +1316,20 @@ footer {
       <div class="boat-stat-label">Temp. Mare</div>
       <div class="boat-stat-desc">Stimata</div>
     </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">📊</div>
+      <div class="boat-stat-value">1007.4 hPa</div>
+      <div class="boat-stat-label">Pressione</div>
+      <div class="boat-stat-desc">→ Stabile</div>
+    </div>
   </div>
   
   <div class="boat-advice">
     <div class="advice-icon">💡</div>
     <div class="advice-text">
-      <strong>Consiglio:</strong> Evitare se non necessario. Prestare massima attenzione.
+      <strong>Consiglio:</strong> Evitare se non necessario. Prestare massima attenzione.<br>
+      <span class="boat-type-advice">Adatto solo: Cabinati > 7m, gommoni > 6m con pilota esperto</span>
     </div>
   </div>
   
@@ -1268,7 +1337,191 @@ footer {
     <span class="forecast-label">📅 Prossime 48h:</span>
     <span class="forecast-value">→ Condizioni stabili</span>
   </div>
+  
+  <div class="boat-links">
+    <a href="https://www.windy.com/?40.791,14.042,11" target="_blank" class="boat-link">
+      🌐 Radar Meteo Live
+    </a>
+    <a href="https://www.meteomar.it/campania" target="_blank" class="boat-link">
+      📡 Meteomare Campania
+    </a>
+  </div>
 </section>
+
+<!-- Modal Onde 24h -->
+<dialog id="wavesModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>🌊 Andamento Onde Oggi (24h)</h3>
+    <button onclick="document.getElementById('wavesModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="wavesChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Altezza Media</span>
+        <span class="stat-value">1.65m</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Altezza Max</span>
+        <span class="stat-value">1.82m</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Direzione</span>
+        <span class="stat-value">WSW (246°)</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal Vento Navigazione 24h -->
+<dialog id="windBoatModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>💨 Andamento Vento Oggi (24h)</h3>
+    <button onclick="document.getElementById('windBoatModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="windBoatChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Velocità Media</span>
+        <span class="stat-value">19.9 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Raffica Max</span>
+        <span class="stat-value">35.6 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Categoria</span>
+        <span class="stat-value">Moderato</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Dati orari per i grafici
+const boatHourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"waves":[1.82,1.8,1.78,1.78,1.76,1.74,1.72,1.7,1.68,1.68,1.66,1.66,1.66,1.66,1.64,1.64,1.62,1.58,1.56,1.52,1.5,1.46,1.44,1.42],"windSpeed":[24.9,24.4,24.1,27,22.4,23.9,21.2,20.9,16.5,15.6,15.5,13.6,15.3,18.4,18,17.7,16.7,16.5,16.1,18.1,21.3,23,23.7,22.5],"windGusts":[34.9,34.2,33.5,35.6,35.6,32,31.7,28.8,27.4,22,24.8,25.2,22,23.4,26.3,25.6,23.8,28.4,22.3,24.1,28.1,30.6,31.3,31.3]};
+
+// Grafico Onde 24h
+function initWavesChart() {
+  const ctx = document.getElementById('wavesChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: boatHourlyData.labels,
+      datasets: [{
+        label: 'Altezza Onde (m)',
+        data: boatHourlyData.waves,
+        borderColor: '#0288d1',
+        backgroundColor: 'rgba(2, 136, 209, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12 }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Altezza (m)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// Grafico Vento Navigazione 24h
+function initWindBoatChart() {
+  const ctx = document.getElementById('windBoatChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: boatHourlyData.labels,
+      datasets: [
+        {
+          label: 'Velocità (km/h)',
+          data: boatHourlyData.windSpeed,
+          borderColor: '#0288d1',
+          backgroundColor: 'rgba(2, 136, 209, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          fill: true
+        },
+        {
+          label: 'Raffiche (km/h)',
+          data: boatHourlyData.windGusts,
+          borderColor: '#ff6f00',
+          backgroundColor: 'rgba(255, 111, 0, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          borderDash: [5, 5]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12 }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Velocità (km/h)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// Inizializza grafici
+let wavesChartInitialized = false;
+let windBoatChartInitialized = false;
+
+document.getElementById('wavesModal').addEventListener('click', (e) => {
+  if (!wavesChartInitialized) {
+    setTimeout(initWavesChart, 100);
+    wavesChartInitialized = true;
+  }
+});
+
+document.getElementById('windBoatModal').addEventListener('click', (e) => {
+  if (!windBoatChartInitialized) {
+    setTimeout(initWindBoatChart, 100);
+    windBoatChartInitialized = true;
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    initWavesChart();
+    initWindBoatChart();
+  }, 1500);
+});
+</script>
 
     
     
@@ -1293,7 +1546,7 @@ footer {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,10.2,10.3],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,9.2],"precipitation":[0.8,2.6,33.2,59.5,9.9,13.95,0],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,33.2,39.9],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
+const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,8.7,15.5],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,8],"precipitation":[0.8,2.6,33.2,59.5,9.9,0.6,0.7],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,28.4,35.6],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
 
 // Configurazione comune
 const commonOptions = {
