@@ -626,6 +626,187 @@ h1 {
     flex-direction: column;
   }
 }
+.civil-protection-alert {
+  padding: 0;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+  border: 4px solid;
+  animation: pulseAlert 2s ease-in-out infinite;
+}
+
+@keyframes pulseAlert {
+  0%, 100% { box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 10px 60px rgba(255,0,0,0.4); }
+}
+
+.civil-protection-alert.alert-level-verde {
+  border-color: #4caf50;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.civil-protection-alert.alert-level-gialla {
+  border-color: #ffd600;
+  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+}
+
+.civil-protection-alert.alert-level-arancione {
+  border-color: #ff6f00;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+}
+
+.civil-protection-alert.alert-level-rossa {
+  border-color: #d32f2f;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+}
+
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.3);
+  border-bottom: 3px solid rgba(0,0,0,0.1);
+}
+
+.alert-icon-big {
+  font-size: 4em;
+  flex-shrink: 0;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.alert-header-content {
+  flex-grow: 1;
+}
+
+.alert-main-title {
+  color: #b71c1c;
+  font-size: 1.6em;
+  margin-bottom: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.alert-level-title {
+  font-size: 1.8em;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.alert-level-verde .alert-level-title { color: #2e7d32; }
+.alert-level-gialla .alert-level-title { color: #f57f17; }
+.alert-level-arancione .alert-level-title { color: #e65100; }
+.alert-level-rossa .alert-level-title { color: #b71c1c; }
+
+.alert-type {
+  font-size: 1.1em;
+  color: #424242;
+  font-weight: 600;
+}
+
+.alert-details {
+  padding: 30px;
+}
+
+.alert-validity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2196f3;
+}
+
+.validity-icon {
+  font-size: 1.8em;
+}
+
+.validity-text {
+  font-size: 1.05em;
+  color: #424242;
+}
+
+.validity-text strong {
+  color: #1565c0;
+}
+
+.alert-description {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #ff6f00;
+}
+
+.description-icon {
+  font-size: 2em;
+  flex-shrink: 0;
+}
+
+.alert-description p {
+  color: #333;
+  font-size: 1.05em;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.alert-footer {
+  text-align: center;
+}
+
+.alert-link {
+  display: inline-block;
+  padding: 15px 30px;
+  background: #1565c0;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05em;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+}
+
+.alert-link:hover {
+  background: #0d47a1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.5);
+}
+
+@media (max-width: 768px) {
+  .alert-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .alert-icon-big {
+    font-size: 3em;
+  }
+  
+  .alert-main-title {
+    font-size: 1.3em;
+  }
+  
+  .alert-level-title {
+    font-size: 1.5em;
+  }
+  
+  .alert-details {
+    padding: 20px;
+  }
+}
 
 .alert-header {
   display: flex;
@@ -982,7 +1163,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 03/01/2026, 19:00:16</p>
+  <p class="update-time">Aggiornato: 03/01/2026, 19:03:40</p>
 </header>
 
 <div class="week-stats">
@@ -996,7 +1177,7 @@ footer {
   </div>
   <div class="stat-box">
     <div class="stat-label">Pioggia Totale</div>
-    <div class="stat-value">107.3mm</div>
+    <div class="stat-value">110.1mm</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Giorni di Pioggia</div>
@@ -1004,6 +1185,7 @@ footer {
   </div>
 </div>
 
+    
     <div class="forecast-grid">
     <div class="day-card today" data-day="0">
       <div class="day-header">
@@ -1051,7 +1233,7 @@ footer {
         
         <div class="weather-details">
        <div class="detail " >
-  💧 Pioggia: 2.6mm (80%)
+  💧 Pioggia: 5.4mm (80%)
   
 </div>
 <div class="detail " >
@@ -1549,7 +1731,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,8.7,15.5],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,8],"precipitation":[0.8,2.6,33.2,59.5,9.9,0.6,0.7],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,15,35.6],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
+const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,8.7,15.5],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,8],"precipitation":[0.8,5.4,33.2,59.5,9.9,0.6,0.7],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,15,35.6],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
 
 // Configurazione comune
 const commonOptions = {
