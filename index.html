@@ -383,6 +383,190 @@ h1 {
     padding: 20px;
   }
 }
+.boat-conditions-section {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
+  border: 3px solid #2196f3;
+}
+
+.boat-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.boat-header h2 {
+  color: #0d47a1;
+  font-size: 1.8em;
+  margin-bottom: 5px;
+}
+
+.today-label {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.boat-verdict {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  border-left: 6px solid;
+}
+
+.boat-verdict.verdict-verde {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-left-color: #4caf50;
+}
+
+.boat-verdict.verdict-gialla {
+  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+  border-left-color: #ffd600;
+}
+
+.boat-verdict.verdict-arancione {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left-color: #ff6f00;
+}
+
+.boat-verdict.verdict-rossa {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-left-color: #d32f2f;
+}
+
+.verdict-icon-large {
+  font-size: 3em;
+  flex-shrink: 0;
+}
+
+.verdict-content {
+  flex-grow: 1;
+}
+
+.verdict-title {
+  color: #0d47a1;
+  font-size: 1.4em;
+  margin-bottom: 8px;
+}
+
+.verdict-description {
+  color: #424242;
+  font-size: 1.05em;
+  line-height: 1.5;
+}
+
+.boat-conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.boat-stat {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.boat-stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+}
+
+.boat-stat-icon {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+.boat-stat-value {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #2196f3;
+  margin-bottom: 5px;
+}
+
+.boat-stat-label {
+  font-size: 0.85em;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.boat-stat-desc {
+  font-size: 0.8em;
+  color: #999;
+  font-style: italic;
+}
+
+.boat-advice {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.boat-advice .advice-icon {
+  font-size: 2em;
+  flex-shrink: 0;
+}
+
+.boat-advice .advice-text {
+  color: #424242;
+  line-height: 1.6;
+}
+
+.boat-advice strong {
+  color: #0d47a1;
+}
+
+.boat-forecast {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  font-size: 1.05em;
+}
+
+.forecast-label {
+  font-weight: 600;
+  color: #1976d2;
+  margin-right: 10px;
+}
+
+.forecast-value {
+  color: #424242;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .boat-conditions-section {
+    padding: 20px;
+  }
+  
+  .boat-conditions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .boat-verdict {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .verdict-icon-large {
+    font-size: 2.5em;
+  }
+}
 
 .alert-header {
   display: flex;
@@ -739,7 +923,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 03/01/2026, 17:00:16</p>
+  <p class="update-time">Aggiornato: 03/01/2026, 17:04:43</p>
 </header>
 
 <div class="week-stats">
@@ -1025,6 +1209,64 @@ footer {
       <span class="advice-icon">💡</span>
       <span>Porta ombrello e prevedi tempo extra • 👕 Felpa o giacca leggera</span>
     </div>
+  </div>
+</section>
+
+    
+<section class="boat-conditions-section">
+  <div class="boat-header">
+    <h2>⛵ Condizioni Navigazione</h2>
+    <span class="today-label">Oggi - sabato 3/1</span>
+  </div>
+  
+  <div class="boat-verdict verdict-arancione">
+    <div class="verdict-icon-large">🟠</div>
+    <div class="verdict-content">
+      <h3 class="verdict-title">SCONSIGLIATO</h3>
+      <p class="verdict-description">Mare mosso con vento sostenuto. Solo per navigatori esperti.</p>
+    </div>
+  </div>
+  
+  <div class="boat-conditions-grid">
+    <div class="boat-stat">
+      <div class="boat-stat-icon">🌊</div>
+      <div class="boat-stat-value">1.82m</div>
+      <div class="boat-stat-label">Onde</div>
+      <div class="boat-stat-desc">Mosso</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">💨</div>
+      <div class="boat-stat-value">27 km/h</div>
+      <div class="boat-stat-label">Vento</div>
+      <div class="boat-stat-desc">Moderato</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">👁️</div>
+      <div class="boat-stat-value">39 km</div>
+      <div class="boat-stat-label">Visibilità</div>
+      <div class="boat-stat-desc">Ottima</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">🌡️</div>
+      <div class="boat-stat-value">14°C</div>
+      <div class="boat-stat-label">Temp. Mare</div>
+      <div class="boat-stat-desc">Stimata</div>
+    </div>
+  </div>
+  
+  <div class="boat-advice">
+    <div class="advice-icon">💡</div>
+    <div class="advice-text">
+      <strong>Consiglio:</strong> Evitare se non necessario. Prestare massima attenzione.
+    </div>
+  </div>
+  
+  <div class="boat-forecast">
+    <span class="forecast-label">📅 Prossime 48h:</span>
+    <span class="forecast-value">→ Condizioni stabili</span>
   </div>
 </section>
 
