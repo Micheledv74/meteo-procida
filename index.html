@@ -982,7 +982,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 03/01/2026, 17:19:27</p>
+  <p class="update-time">Aggiornato: 03/01/2026, 17:32:49</p>
 </header>
 
 <div class="week-stats">
@@ -1183,7 +1183,7 @@ footer {
   
 </div>
 <div class="detail " >
-  💨 Vento: 28.4 km/h (raffiche 23.4 km/h)
+  💨 Vento: 15 km/h (raffiche 23.4 km/h)
   
 </div>
 
@@ -1339,14 +1339,17 @@ footer {
   </div>
   
   <div class="boat-links">
-    <a href="https://www.windy.com/?40.791,14.042,11" target="_blank" class="boat-link">
-      🌐 Radar Meteo Live
-    </a>
-    <a href="https://www.meteomar.it/campania" target="_blank" class="boat-link">
-      📡 Meteomare Campania
-    </a>
-  </div>
-</section>
+  <a href="https://www.windy.com/?40.791,14.042,11" target="_blank" class="boat-link">
+    🌐 Radar Meteo Live
+  </a>
+  <a href="https://www.windfinder.com/forecast/procida" target="_blank" class="boat-link">
+    🌊 Windfinder Procida
+  </a>
+  <a href="https://www.marinetraffic.com/en/ais/home/centerx:14.042/centery:40.791/zoom:11" target="_blank" class="boat-link">
+    🚢 Traffico Navi
+  </a>
+</div>
+
 
 <!-- Modal Onde 24h -->
 <dialog id="wavesModal" class="weather-modal">
@@ -1546,7 +1549,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,8.7,15.5],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,8],"precipitation":[0.8,2.6,33.2,59.5,9.9,0.6,0.7],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,28.4,35.6],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
+const chartData = {"labels":["03/01","04/01","05/01","06/01","07/01","08/01","09/01"],"tempMax":[15.9,16.7,15.8,14.5,12.5,8.7,15.5],"tempMin":[15.2,15.7,14.4,12.6,8.1,7.8,8],"precipitation":[0.8,2.6,33.2,59.5,9.9,0.6,0.7],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[27,25.9,26.2,26.6,25.7,15,35.6],"waveHeight":[1.82,1.38,1.14,0.68,1.56,1.54,1.58],"seaTemp":[15,15,15,15,15,15,15]};
 
 // Configurazione comune
 const commonOptions = {
