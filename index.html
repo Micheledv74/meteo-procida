@@ -1148,6 +1148,21 @@ footer {
   color: white;
   font-size: 0.9em;
 }
+.sunrise-sunset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px !important;
+  background: linear-gradient(90deg, #fff3e0 0%, #ffecb3 50%, #ffe0b2 100%);
+  border-radius: 8px;
+  font-weight: 600;
+  color: #e65100;
+  margin-top: 8px;
+}
+
+.sunrise-sunset span {
+  font-size: 0.95em;
+}
 
 @media (max-width: 768px) {
   .forecast-grid { grid-template-columns: 1fr; }
@@ -1163,7 +1178,7 @@ footer {
     
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 05/01/2026, 12:00:18</p>
+  <p class="update-time">Aggiornato: 05/01/2026, 12:58:10</p>
 </header>
 
 <div class="week-stats">
@@ -1304,17 +1319,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail clickable-detail" onclick="document.getElementById('rainModal').showModal()">
-  💧 Pioggia: 9.3mm (93%)
-  <span class="detail-hint">📊 Clicca per dettagli</span>
-</div>
-<div class="detail clickable-detail" onclick="document.getElementById('windModal').showModal()">
-  💨 Vento: 22.9 km/h (raffiche 37.8 km/h)
-  <span class="detail-hint">📊 Clicca per dettagli</span>
-</div>
-
+          <div class="detail clickable-detail" onclick="document.getElementById('rainModal').showModal()">
+            💧 Pioggia: 9.3mm (93%)
+            <span class="detail-hint">📊 Clicca per dettagli</span>
+          </div>
+          <div class="detail clickable-detail" onclick="document.getElementById('windModal').showModal()">
+            💨 Vento: 22.9 km/h (raffiche 37.8 km/h)
+            <span class="detail-hint">📊 Clicca per dettagli</span>
+          </div>
           <div class="detail">🌊 Onde: 1.06m - Poco mosso</div>
-          <div class="detail">☀️ UV: 1.1</div>
+          <div class="detail">☀️ UV: 2.1</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:50</span>
+          </div>
         </div>
         
         <div class="sea-badge verde">VERDE</div>
@@ -1336,17 +1355,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 38.6mm (100%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 31.8 km/h (raffiche 45.4 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 38.6mm (100%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 31.8 km/h (raffiche 45.4 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 0.78m - Poco mosso</div>
-          <div class="detail">☀️ UV: 1.6</div>
+          <div class="detail">☀️ UV: 1.8</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:51</span>
+          </div>
         </div>
         
         <div class="sea-badge verde">VERDE</div>
@@ -1368,17 +1391,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 6.9mm (64%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 15.2 km/h (raffiche 27.4 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 6.9mm (64%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 15.2 km/h (raffiche 27.4 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 1.24m - Poco mosso</div>
-          <div class="detail">☀️ UV: 0.95</div>
+          <div class="detail">☀️ UV: 1.7</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:52</span>
+          </div>
         </div>
         
         <div class="sea-badge verde">VERDE</div>
@@ -1400,17 +1427,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 0.1mm (30%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 16.2 km/h (raffiche 22.7 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 0.1mm (30%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 16.2 km/h (raffiche 22.7 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 1.8m - Mosso</div>
           <div class="detail">☀️ UV: 2.6</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:53</span>
+          </div>
         </div>
         
         <div class="sea-badge gialla">GIALLA</div>
@@ -1432,17 +1463,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 6.8mm (76%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 45.9 km/h (raffiche 67 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 6.8mm (76%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 45.9 km/h (raffiche 67 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 2.56m - Molto mosso</div>
-          <div class="detail">☀️ UV: 1.1</div>
+          <div class="detail">☀️ UV: 1.65</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:54</span>
+          </div>
         </div>
         
         <div class="sea-badge arancione">ARANCIONE</div>
@@ -1464,17 +1499,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 19.9mm (96%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 37.2 km/h (raffiche 55.1 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 19.9mm (96%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 37.2 km/h (raffiche 55.1 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 2.98m - Molto mosso</div>
-          <div class="detail">☀️ UV: 2.35</div>
+          <div class="detail">☀️ UV: 2</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:55</span>
+          </div>
         </div>
         
         <div class="sea-badge arancione">ARANCIONE</div>
@@ -1496,17 +1535,21 @@ footer {
         </div>
         
         <div class="weather-details">
-       <div class="detail " >
-  💧 Pioggia: 0.1mm (47%)
-  
-</div>
-<div class="detail " >
-  💨 Vento: 24.3 km/h (raffiche 33.8 km/h)
-  
-</div>
-
+          <div class="detail " >
+            💧 Pioggia: 0.1mm (47%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 24.3 km/h (raffiche 33.8 km/h)
+            
+          </div>
           <div class="detail">🌊 Onde: 2.08m - Mosso</div>
           <div class="detail">☀️ UV: 2.45</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:56</span>
+          </div>
         </div>
         
         <div class="sea-badge gialla">GIALLA</div>
