@@ -1,148 +1,288 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meteo Procida - 7 Giorni</title>
-  <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+<!DOCTYPE html><html lang="it"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <meta name="description" content="Previsioni meteo dettagliate per Procida - 7 giorni">  <title>Meteo Procida - Previsioni 7 Giorni</title>  <style>
+/* ========================================
+   METEO PROCIDA - MODERN DARK DESIGN
+   Versione 2.0 - Stile Apple Minimal
+======================================== */
+
+/* Import Font Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  /* Palette Dark */
+  --bg-primary: #1E2126;
+  --bg-card: #2C2F36;
+  --bg-card-hover: #363A43;
+  --bg-emphasis: rgba(44, 47, 54, 0.95);
+
+  /* Testi */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A8ABB4;
+  --text-muted: #6C757D;
+
+  /* Accenti */
+  --color-temp-warm: #FFA94D;
+  --color-temp-cold: #4A90E2;
+  --color-ocean: #3BAADC;
+  --color-success: #2ECC71;
+  --color-warning: #F39C12;
+  --color-alert: #E67E22;
+  --color-danger: #E74C3C;
+
+  /* Stati alert */
+  --alert-verde: #2ECC71;
+  --alert-gialla: #F39C12;
+  --alert-arancione: #E67E22;
+  --alert-rossa: #E74C3C;
+
+  /* Effetti */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --border-radius: 16px;
+  --border-radius-small: 12px;
+  --border-radius-large: 20px;
+
+  /* Spaziature */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+/* ===== RESET & BASE ===== */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
-  color: #333;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: var(--spacing-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
+/* ===== HEADER ===== */
 header {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  background: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 h1 {
-  color: #667eea;
+  color: var(--color-temp-warm);
   font-size: 2.5em;
-  margin-bottom: 10px;
+  font-weight: 800;
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
 }
 
 .update-time {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.9em;
+  font-weight: 500;
 }
 
+/* ===== STATISTICHE SETTIMANALI ===== */
 .week-stats {
-  background: rgba(255,255,255,0.95);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 30px;
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .stat-box {
   text-align: center;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 10px;
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-small);
+  transition: all 0.3s ease;
 }
 
-.stat-label { font-size: 0.85em; color: #666; margin-bottom: 5px; }
-.stat-value { font-size: 1.5em; font-weight: bold; color: #667eea; }
+.stat-box:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
 
+.stat-label { 
+  font-size: 0.85em; 
+  color: var(--text-secondary); 
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value { 
+  font-size: 1.8em; 
+  font-weight: 700; 
+  color: var(--color-temp-warm);
+  line-height: 1.2;
+}
+
+/* ===== CARD PREVISIONI GIORNALIERE ===== */
 .forecast-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .day-card {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.day-card:hover { transform: translateY(-5px); }
+.day-card:hover { 
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(255, 255, 255, 0.1);
+}
 
 .day-card.today {
-  border: 3px solid #667eea;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  border: 2px solid var(--color-temp-warm);
+  box-shadow: 0 10px 40px rgba(255, 169, 77, 0.3);
 }
 
 .day-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 
-.day-header h3 { color: #667eea; font-size: 1.3em; }
-.weather-icon { font-size: 2.5em; }
+.day-header h3 { 
+  color: var(--text-primary); 
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+.weather-icon { 
+  font-size: 2.5em;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
 
 .temp-range {
   display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  font-size: 1.8em;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-size: 2em;
+  font-weight: 700;
 }
 
-.temp-max { color: #ff6b6b; font-weight: bold; }
-.temp-min { color: #4ecdc4; }
+.temp-max { 
+  color: var(--color-temp-warm);
+}
+
+.temp-min { 
+  color: var(--color-temp-cold);
+}
 
 .weather-details {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-md);
 }
 
 .detail {
-  padding: 5px 0;
+  padding: var(--spacing-xs) 0;
   font-size: 0.95em;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
 }
 
+.detail strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ===== BADGE MARE ===== */
 .sea-badge {
   display: inline-block;
-  padding: 8px 15px;
+  padding: var(--spacing-sm) var(--spacing-md);
   border-radius: 20px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 0.9em;
-  margin-top: 10px;
+  margin-top: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.sea-badge.verde { background: #51cf66; color: white; }
-.sea-badge.gialla { background: #ffd43b; color: #333; }
-.sea-badge.arancione { background: #ff922b; color: white; }
-.sea-badge.rossa { background: #ff6b6b; color: white; }
+.sea-badge.verde { 
+  background: var(--alert-verde); 
+  color: white; 
+}
 
+.sea-badge.gialla { 
+  background: var(--alert-gialla); 
+  color: #1E2126; 
+}
+
+.sea-badge.arancione { 
+  background: var(--alert-arancione); 
+  color: white; 
+}
+
+.sea-badge.rossa { 
+  background: var(--alert-rossa); 
+  color: white; 
+}
+
+/* ===== SEZIONE AI ===== */
 .ai-section {
-  margin-top: 20px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea15, #764ba215);
-  border-radius: 10px;
-  border-left: 4px solid #667eea;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: rgba(255, 169, 77, 0.08);
+  border-radius: var(--border-radius-small);
+  border-left: 4px solid var(--color-temp-warm);
 }
 
-.ai-section h3 { color: #667eea; margin-bottom: 10px; }
-.ai-section h4 { color: #764ba2; margin: 15px 0 10px; font-size: 1em; }
+.ai-section h3 { 
+  color: var(--color-temp-warm); 
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.ai-section h4 { 
+  color: var(--text-primary); 
+  margin: var(--spacing-md) 0 var(--spacing-sm); 
+  font-size: 1em;
+  font-weight: 600;
+}
 
 .summary {
-  line-height: 1.6;
-  margin-bottom: 15px;
-  color: #555;
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
 }
 
 .advice {
@@ -151,125 +291,155 @@ h1 {
 }
 
 .advice li {
-  padding: 8px 0 8px 25px;
+  padding: var(--spacing-xs) 0 var(--spacing-xs) 25px;
   position: relative;
-  color: #555;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .advice li:before {
   content: "✓";
   position: absolute;
   left: 0;
-  color: #51cf66;
+  color: var(--alert-verde);
   font-weight: bold;
+  font-size: 1.2em;
 }
 
+/* ===== ALERT ===== */
 .alert {
-  padding: 12px;
-  border-radius: 8px;
-  margin: 10px 0;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-small);
+  margin: var(--spacing-sm) 0;
+  border-left: 4px solid;
 }
 
-.alert-verde { background: #51cf6620; border-left: 4px solid #51cf66; }
-.alert-gialla { background: #ffd43b20; border-left: 4px solid #ffd43b; }
-.alert-arancione { background: #ff922b20; border-left: 4px solid #ff922b; }
-.alert-rossa { background: #ff6b6b20; border-left: 4px solid #ff6b6b; }
+.alert-verde { 
+  background: rgba(46, 204, 113, 0.15); 
+  border-left-color: var(--alert-verde); 
+}
 
+.alert-gialla { 
+  background: rgba(243, 156, 18, 0.15); 
+  border-left-color: var(--alert-gialla); 
+}
+
+.alert-arancione { 
+  background: rgba(230, 126, 34, 0.15); 
+  border-left-color: var(--alert-arancione); 
+}
+
+.alert-rossa { 
+  background: rgba(231, 76, 60, 0.15); 
+  border-left-color: var(--alert-rossa); 
+}
+
+/* ===== SEZIONE GRAFICI ===== */
 .charts-section {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin: 30px 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin: var(--spacing-lg) 0;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .charts-section > h2 {
-  color: #667eea;
+  color: var(--text-primary);
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-xl);
   font-size: 1.8em;
+  font-weight: 700;
 }
 
 .chart-container {
-  margin: 40px 0;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 15px;
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius);
 }
 
 .chart-container h3 {
-  color: #495057;
-  margin-bottom: 20px;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
   font-size: 1.2em;
   text-align: center;
+  font-weight: 600;
 }
 
 .chart-container canvas {
   max-height: 300px;
 }
+
+/* ===== SEZIONE TRAGHETTI ===== */
 .ferries-section {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin: 30px 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin: var(--spacing-lg) 0;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ferries-section > h2 {
-  color: #667eea;
+  color: var(--text-primary);
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-xl);
   font-size: 1.8em;
+  font-weight: 700;
 }
 
 .ferry-alert {
-  padding: 25px;
-  border-radius: 15px;
-  margin-bottom: 30px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
   border-left: 6px solid;
 }
 
 .ferry-alert.alert-verde {
-  background: #51cf6615;
-  border-left-color: #51cf66;
+  background: rgba(46, 204, 113, 0.12);
+  border-left-color: var(--alert-verde);
 }
 
 .ferry-alert.alert-gialla {
-  background: #ffd43b15;
-  border-left-color: #ffd43b;
+  background: rgba(243, 156, 18, 0.12);
+  border-left-color: var(--alert-gialla);
 }
 
 .ferry-alert.alert-arancione {
-  background: #ff922b15;
-  border-left-color: #ff922b;
+  background: rgba(230, 126, 34, 0.12);
+  border-left-color: var(--alert-arancione);
 }
 
 .ferry-alert.alert-rossa {
-  background: #ff6b6b15;
-  border-left-color: #ff6b6b;
+  background: rgba(231, 76, 60, 0.12);
+  border-left-color: var(--alert-rossa);
 }
+
+/* ===== DOMANI MATTINA ===== */
 .tomorrow-morning-section {
-  background: linear-gradient(135deg, #fff5e6 0%, #ffe5cc 100%);
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(255, 152, 0, 0.2);
-  border: 3px solid #ff9800;
+  background: linear-gradient(135deg, rgba(255, 169, 77, 0.15) 0%, rgba(230, 126, 34, 0.1) 100%);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  border: 3px solid var(--color-temp-warm);
 }
 
 .tomorrow-header {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .tomorrow-header h2 {
-  color: #e65100;
+  color: var(--color-temp-warm);
   font-size: 1.8em;
-  margin-bottom: 5px;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 800;
 }
 
 .time-range {
-  color: #f57c00;
+  color: var(--text-secondary);
   font-weight: 600;
   font-size: 0.95em;
 }
@@ -277,17 +447,18 @@ h1 {
 .morning-conditions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-  margin-bottom: 25px;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .morning-stat {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
   text-align: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-subtle);
   transition: transform 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .morning-stat:hover {
@@ -296,147 +467,768 @@ h1 {
 
 .stat-icon {
   font-size: 2em;
-  margin-bottom: 10px;
-}
-
-.stat-value {
-  font-size: 1.6em;
-  font-weight: bold;
-  color: #ff9800;
-  margin-bottom: 5px;
-}
-
-.stat-label {
-  font-size: 0.85em;
-  color: #666;
-  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
 }
 
 .morning-verdict {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
   border-left: 6px solid;
 }
 
 .morning-verdict.verdict-verde {
-  border-left-color: #51cf66;
-  background: linear-gradient(135deg, #ffffff 0%, #e8f5e9 100%);
+  border-left-color: var(--alert-verde);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(46, 204, 113, 0.05) 100%);
 }
 
 .morning-verdict.verdict-gialla {
-  border-left-color: #ffd43b;
-  background: linear-gradient(135deg, #ffffff 0%, #fffde7 100%);
+  border-left-color: var(--alert-gialla);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(243, 156, 18, 0.05) 100%);
 }
 
 .morning-verdict.verdict-arancione {
-  border-left-color: #ff922b;
-  background: linear-gradient(135deg, #ffffff 0%, #fff3e0 100%);
+  border-left-color: var(--alert-arancione);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(230, 126, 34, 0.05) 100%);
 }
 
 .morning-verdict.verdict-rossa {
-  border-left-color: #ff6b6b;
-  background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
-}
-
-.verdict-header {
-  margin-bottom: 15px;
-}
-
-.verdict-badge {
-  font-size: 1.1em;
-  padding: 10px 20px;
+  border-left-color: var(--alert-rossa);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(231, 76, 60, 0.05) 100%);
 }
 
 .verdict-message {
   font-size: 1.05em;
-  color: #333;
+  color: var(--text-primary);
   line-height: 1.6;
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
   font-weight: 500;
 }
 
-.verdict-advice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
+.verdict-badge {
+  font-size: 1.1em;
+  padding: var(--spacing-sm) var(--spacing-md);
 }
 
-.advice-icon {
-  font-size: 1.5em;
-}
-
-.verdict-advice span:last-child {
-  color: #555;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .morning-conditions-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .tomorrow-morning-section {
-    padding: 20px;
-  }
-}
+/* ===== CONDIZIONI BARCA ===== */
 .boat-conditions-section {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
-  border: 3px solid #2196f3;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.12) 0%, rgba(59, 170, 220, 0.08) 100%);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  border: 3px solid var(--color-ocean);
 }
 
 .boat-header {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .boat-header h2 {
-  color: #0d47a1;
+  color: var(--color-ocean);
   font-size: 1.8em;
-  margin-bottom: 5px;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 800;
 }
 
-.today-label {
-  color: #1976d2;
+.boat-conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.boat-stat {
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.boat-stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(59, 170, 220, 0.3);
+}
+
+.boat-stat-value {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--color-ocean);
+  margin-bottom: var(--spacing-xs);
+}
+
+.boat-stat-label {
+  font-size: 0.85em;
+  color: var(--text-secondary);
   font-weight: 600;
-  font-size: 0.95em;
+}
+
+/* ===== PROTEZIONE CIVILE ===== */
+.civil-protection-alert {
+  padding: 0;
+  border-radius: var(--border-radius-large);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  border: 4px solid;
+}
+
+.civil-protection-alert.alert-level-verde {
+  border-color: var(--alert-verde);
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.12) 0%, rgba(46, 204, 113, 0.05) 100%);
+}
+
+.civil-protection-alert.alert-level-gialla {
+  border-color: var(--alert-gialla);
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.12) 0%, rgba(243, 156, 18, 0.05) 100%);
+}
+
+.civil-protection-alert.alert-level-arancione {
+  border-color: var(--alert-arancione);
+  background: linear-gradient(135deg, rgba(230, 126, 34, 0.12) 0%, rgba(230, 126, 34, 0.05) 100%);
+}
+
+.civil-protection-alert.alert-level-rossa {
+  border-color: var(--alert-rossa);
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.12) 0%, rgba(231, 76, 60, 0.05) 100%);
+}
+
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+.alert-icon-big {
+  font-size: 4em;
+  flex-shrink: 0;
+}
+
+.alert-main-title {
+  color: var(--text-primary);
+  font-size: 1.6em;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.alert-level-title {
+  font-size: 1.8em;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
+}
+
+.alert-level-verde .alert-level-title { color: var(--alert-verde); }
+.alert-level-gialla .alert-level-title { color: var(--alert-gialla); }
+.alert-level-arancione .alert-level-title { color: var(--alert-arancione); }
+.alert-level-rossa .alert-level-title { color: var(--alert-rossa); }
+
+.alert-type {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.alert-details {
+  padding: var(--spacing-xl);
+}
+
+.alert-validity {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-md);
+  border-left: 4px solid var(--color-ocean);
+}
+
+.validity-icon {
+  font-size: 1.8em;
+}
+
+.validity-text {
+  font-size: 1.05em;
+  color: var(--text-secondary);
+}
+
+.validity-text strong {
+  color: var(--text-primary);
+}
+
+.alert-description {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-md);
+  border-left: 4px solid var(--color-alert);
+}
+
+.description-icon {
+  font-size: 2em;
+  flex-shrink: 0;
+}
+
+.alert-description p {
+  color: var(--text-secondary);
+  font-size: 1.05em;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.alert-footer {
+  text-align: center;
+}
+
+.alert-link {
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-ocean);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  font-weight: 700;
+  font-size: 1.05em;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(59, 170, 220, 0.3);
+}
+
+.alert-link:hover {
+  background: var(--color-temp-cold);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.alert-icon {
+  font-size: 2.5em;
+}
+
+.alert-header h3 {
+  font-size: 1.3em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.alert-main {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.alert-conditions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  padding: var(--spacing-md);
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-md);
+}
+
+.alert-conditions span {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.affected-vessels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.vessel-status {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--border-radius-small);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ===== DUAL POINT ===== */
+.dual-point-container {
+  background: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  margin: var(--spacing-lg) 0;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dual-point-header h2 {
+  color: var(--text-primary);
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  font-weight: 700;
+}
+
+.travel-status {
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  border-left: 6px solid;
+}
+
+.travel-status.verde {
+  background: rgba(46, 204, 113, 0.12);
+  border-left-color: var(--alert-verde);
+}
+
+.travel-status.gialla {
+  background: rgba(243, 156, 18, 0.12);
+  border-left-color: var(--alert-gialla);
+}
+
+.travel-status.arancione {
+  background: rgba(230, 126, 34, 0.12);
+  border-left-color: var(--alert-arancione);
+}
+
+.travel-status.rossa {
+  background: rgba(231, 76, 60, 0.12);
+  border-left-color: var(--alert-rossa);
+}
+
+.status-icon {
+  font-size: 2.5em;
+}
+
+.status-message {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dual-point-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.location-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border: 2px solid;
+  transition: transform 0.3s;
+}
+
+.location-card:hover {
+  transform: translateY(-5px);
+}
+
+.location-card.procida {
+  border-color: var(--color-ocean);
+}
+
+.location-card.napoli {
+  border-color: var(--color-temp-warm);
+}
+
+.location-header {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.location-header h3 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 1.3em;
+  color: var(--text-primary);
+}
+
+.location-header p {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+.current-weather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-small);
+}
+
+.weather-icon-large {
+  font-size: 4em;
+}
+
+.temperature-large {
+  font-size: 3em;
+  font-weight: 700;
+  color: var(--color-temp-warm);
+}
+
+.weather-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-small);
+}
+
+.dual-point-footer {
+  text-align: center;
+  padding-top: var(--spacing-md);
+  border-top: 2px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  margin-top: var(--spacing-md);
+}
+
+/* ===== COLLEGAMENTI MARITTIMI ===== */
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.route-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s;
+}
+
+.route-card:hover {
+  border-color: var(--color-temp-warm);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 169, 77, 0.2);
+}
+
+.route-card h4 {
+  color: var(--color-temp-warm);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.route-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.company {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.type {
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+.hours {
+  margin: var(--spacing-md) 0;
+}
+
+.hours strong {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.hours-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.hour {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.verify-link {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-temp-warm);
+  color: #1E2126;
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s;
+}
+
+.verify-link:hover {
+  background: var(--color-alert);
+  transform: translateY(-2px);
+}
+
+.ferry-footer {
+  background: rgba(255, 255, 255, 0.02);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.ferry-footer p {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.company-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.company-links a {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-temp-warm);
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  border: 2px solid var(--color-temp-warm);
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s;
+}
+
+.company-links a:hover {
+  background: var(--color-temp-warm);
+  color: #1E2126;
+}
+
+/* ===== LIVE WIDGETS ===== */
+.live-widgets-section {
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.widget-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-small);
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.widget-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-3px);
+}
+
+.widget-icon {
+  font-size: 2em;
+  margin-bottom: var(--spacing-sm);
+}
+
+.widget-value {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--color-temp-warm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.widget-label {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ===== MODAL ===== */
+.weather-modal {
+  border: none;
+  border-radius: var(--border-radius-large);
+  padding: 0;
+  max-width: 900px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weather-modal::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-header h3 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: all 0.3s;
+}
+
+.close-btn:hover {
+  color: var(--color-temp-warm);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: var(--spacing-xl);
+}
+
+.modal-body canvas {
+  max-height: 350px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.02);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+}
+
+.clickable-detail {
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-small);
+  transition: all 0.3s;
+  background: rgba(255, 169, 77, 0.05);
+  border-left: 3px solid transparent;
+}
+
+.clickable-detail:hover {
+  background: rgba(255, 169, 77, 0.15);
+  border-left-color: var(--color-temp-warm);
+  transform: translateX(5px);
+}
+
+.detail-hint {
+  display: block;
+  font-size: 0.75em;
+  color: var(--color-temp-warm);
+  margin-top: var(--spacing-xs);
+  font-style: italic;
+}
+
+.clickable-boat-stat {
+  cursor: pointer;
+}
+
+.clickable-boat-stat:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(59, 170, 220, 0.4);
+}
+
+.click-hint {
+  font-size: 0.7em;
+  color: var(--color-ocean);
+  margin-top: var(--spacing-xs);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.boat-stat-icon {
+  font-size: 2.2em;
+  margin-bottom: var(--spacing-sm);
+}
+
+.boat-stat-desc {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--spacing-xs);
 }
 
 .boat-verdict {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 25px;
-  border-radius: 15px;
-  margin-bottom: 25px;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
   border-left: 6px solid;
 }
 
 .boat-verdict.verdict-verde {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  border-left-color: #4caf50;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.08) 100%);
+  border-left-color: var(--alert-verde);
 }
 
 .boat-verdict.verdict-gialla {
-  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
-  border-left-color: #ffd600;
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(243, 156, 18, 0.08) 100%);
+  border-left-color: var(--alert-gialla);
 }
 
 .boat-verdict.verdict-arancione {
-  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-  border-left-color: #ff6f00;
+  background: linear-gradient(135deg, rgba(230, 126, 34, 0.15) 0%, rgba(230, 126, 34, 0.08) 100%);
+  border-left-color: var(--alert-arancione);
 }
 
 .boat-verdict.verdict-rossa {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-  border-left-color: #d32f2f;
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(231, 76, 60, 0.08) 100%);
+  border-left-color: var(--alert-rossa);
 }
 
 .verdict-icon-large {
@@ -449,89 +1241,26 @@ h1 {
 }
 
 .verdict-title {
-  color: #0d47a1;
+  color: var(--text-primary);
   font-size: 1.4em;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
 }
 
 .verdict-description {
-  color: #424242;
+  color: var(--text-secondary);
   font-size: 1.05em;
   line-height: 1.5;
-}
-
-.boat-conditions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.boat-stat {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.boat-stat:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
-}
-
-.clickable-boat-stat {
-  cursor: pointer;
-  position: relative;
-}
-
-.clickable-boat-stat:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
-}
-
-.click-hint {
-  font-size: 0.7em;
-  color: #2196f3;
-  margin-top: 8px;
-  font-style: italic;
-  opacity: 0.8;
-}
-
-.boat-stat-icon {
-  font-size: 2.2em;
-  margin-bottom: 10px;
-}
-
-.boat-stat-value {
-  font-size: 1.6em;
-  font-weight: bold;
-  color: #2196f3;
-  margin-bottom: 5px;
-}
-
-.boat-stat-label {
-  font-size: 0.85em;
-  color: #666;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.boat-stat-desc {
-  font-size: 0.8em;
-  color: #999;
-  font-style: italic;
 }
 
 .boat-advice {
   display: flex;
   align-items: flex-start;
-  gap: 15px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 12px;
-  margin-bottom: 20px;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-md);
 }
 
 .boat-advice .advice-icon {
@@ -540,808 +1269,283 @@ h1 {
 }
 
 .boat-advice .advice-text {
-  color: #424242;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
 .boat-advice strong {
-  color: #0d47a1;
+  color: var(--text-primary);
 }
 
 .boat-type-advice {
   display: block;
-  margin-top: 8px;
+  margin-top: var(--spacing-xs);
   font-size: 0.9em;
-  color: #666;
+  color: var(--text-muted);
   font-style: italic;
 }
 
 .boat-forecast {
   text-align: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-small);
   font-size: 1.05em;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-md);
 }
 
 .forecast-label {
   font-weight: 600;
-  color: #1976d2;
-  margin-right: 10px;
+  color: var(--color-ocean);
+  margin-right: var(--spacing-sm);
 }
 
 .forecast-value {
-  color: #424242;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .boat-links {
   display: flex;
-  gap: 15px;
+  gap: var(--spacing-md);
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .boat-link {
   display: inline-block;
-  padding: 12px 24px;
-  background: white;
-  color: #2196f3;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-ocean);
   text-decoration: none;
-  border-radius: 10px;
-  border: 2px solid #2196f3;
+  border-radius: var(--border-radius-small);
+  border: 2px solid var(--color-ocean);
   font-weight: 600;
   font-size: 0.9em;
   transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+  box-shadow: 0 2px 8px rgba(59, 170, 220, 0.2);
 }
 
 .boat-link:hover {
-  background: #2196f3;
+  background: var(--color-ocean);
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+  box-shadow: 0 5px 15px rgba(59, 170, 220, 0.4);
 }
 
-@media (max-width: 768px) {
-  .boat-conditions-section {
-    padding: 20px;
-  }
-  
-  .boat-conditions-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .boat-verdict {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .verdict-icon-large {
-    font-size: 2.5em;
-  }
-  
-  .boat-links {
-    flex-direction: column;
-  }
-}
-.civil-protection-alert {
-  padding: 0;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  overflow: hidden;
-  border: 4px solid;
-  animation: pulseAlert 2s ease-in-out infinite;
+.today-label {
+  color: var(--color-ocean);
+  font-weight: 600;
+  font-size: 0.95em;
 }
 
-@keyframes pulseAlert {
-  0%, 100% { box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-  50% { box-shadow: 0 10px 60px rgba(255,0,0,0.4); }
+.verdict-header {
+  margin-bottom: var(--spacing-md);
 }
 
-.civil-protection-alert.alert-level-verde {
-  border-color: #4caf50;
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-}
-
-.civil-protection-alert.alert-level-gialla {
-  border-color: #ffd600;
-  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
-}
-
-.civil-protection-alert.alert-level-arancione {
-  border-color: #ff6f00;
-  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-}
-
-.civil-protection-alert.alert-level-rossa {
-  border-color: #d32f2f;
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-}
-
-.alert-banner {
+.verdict-advice {
   display: flex;
   align-items: center;
-  gap: 25px;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.3);
-  border-bottom: 3px solid rgba(0,0,0,0.1);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-small);
 }
 
-.alert-icon-big {
-  font-size: 4em;
-  flex-shrink: 0;
-  animation: bounce 1s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.alert-header-content {
-  flex-grow: 1;
-}
-
-.alert-main-title {
-  color: #b71c1c;
-  font-size: 1.6em;
-  margin-bottom: 8px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.alert-level-title {
-  font-size: 1.8em;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
-
-.alert-level-verde .alert-level-title { color: #2e7d32; }
-.alert-level-gialla .alert-level-title { color: #f57f17; }
-.alert-level-arancione .alert-level-title { color: #e65100; }
-.alert-level-rossa .alert-level-title { color: #b71c1c; }
-
-.alert-type {
-  font-size: 1.1em;
-  color: #424242;
-  font-weight: 600;
-}
-
-.alert-details {
-  padding: 30px;
-}
-
-.alert-validity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border-left: 4px solid #2196f3;
-}
-
-.validity-icon {
-  font-size: 1.8em;
-}
-
-.validity-text {
-  font-size: 1.05em;
-  color: #424242;
-}
-
-.validity-text strong {
-  color: #1565c0;
-}
-
-.alert-description {
-  display: flex;
-  gap: 15px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border-left: 4px solid #ff6f00;
-}
-
-.description-icon {
-  font-size: 2em;
-  flex-shrink: 0;
-}
-
-.alert-description p {
-  color: #333;
-  font-size: 1.05em;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.alert-footer {
-  text-align: center;
-}
-
-.alert-link {
-  display: inline-block;
-  padding: 15px 30px;
-  background: #1565c0;
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1.05em;
-  transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
-}
-
-.alert-link:hover {
-  background: #0d47a1;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.5);
-}
-
-@media (max-width: 768px) {
-  .alert-banner {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .alert-icon-big {
-    font-size: 3em;
-  }
-  
-  .alert-main-title {
-    font-size: 1.3em;
-  }
-  
-  .alert-level-title {
-    font-size: 1.5em;
-  }
-  
-  .alert-details {
-    padding: 20px;
-  }
-}
-
-.alert-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.alert-icon {
-  font-size: 2.5em;
-}
-
-.alert-header h3 {
-  font-size: 1.3em;
-  margin-bottom: 5px;
-}
-
-.alert-main {
-  font-size: 1.05em;
-  font-weight: 600;
-  color: #333;
-}
-
-.alert-details {
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-.alert-conditions {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 15px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.alert-conditions span {
-  font-weight: 600;
-  color: #495057;
-}
-
-.affected-vessels {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.vessel-status {
-  padding: 10px 15px;
-  background: rgba(255,255,255,0.7);
-  border-radius: 8px;
-  font-weight: 500;
-  color: #495057;
-}
-
-.routes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.route-card {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 15px;
-  border: 2px solid #e9ecef;
-  transition: all 0.3s;
-}
-
-.route-card:hover {
-  border-color: #667eea;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(102,126,234,0.2);
-}
-
-.route-card h4 {
-  color: #667eea;
-  margin-bottom: 15px;
-  font-size: 1.1em;
-}
-
-.route-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.company {
-  font-weight: 600;
-  color: #495057;
-}
-
-.type {
-  font-size: 0.9em;
-  color: #6c757d;
-}
-
-.hours {
-  margin: 15px 0;
-}
-
-.hours strong {
-  display: block;
-  margin-bottom: 10px;
-  color: #495057;
-}
-
-.hours-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.hour {
-  display: inline-block;
-  padding: 6px 12px;
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  font-size: 0.9em;
-  font-weight: 500;
-  color: #495057;
-}
-
-.verify-link {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #667eea;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9em;
-  transition: background 0.3s;
-}
-
-.verify-link:hover {
-  background: #764ba2;
-}
-
-.ferry-footer {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-}
-
-.ferry-footer p {
-  color: #495057;
-  margin-bottom: 15px;
-  line-height: 1.6;
-}
-
-.company-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-}
-
-.company-links a {
-  padding: 8px 16px;
-  background: white;
-  color: #667eea;
-  text-decoration: none;
-  border-radius: 8px;
-  border: 2px solid #667eea;
-  font-weight: 600;
-  font-size: 0.9em;
-  transition: all 0.3s;
-}
-
-.company-links a:hover {
-  background: #667eea;
-  color: white;
-}
-
-@media (max-width: 768px) {
-  .routes-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .alert-conditions {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .company-links {
-    flex-direction: column;
-  }
-/* ===== DUAL POINT CONTAINER ===== */
-.dual-point-container {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin: 30px 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.dual-point-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.dual-point-header h2 {
-  color: #667eea;
-  font-size: 1.8em;
-  margin: 0;
-}
-
-.travel-status {
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-left: 6px solid;
-}
-
-.travel-status.verde {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  border-left-color: #4caf50;
-}
-
-.travel-status.gialla {
-  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
-  border-left-color: #ffd600;
-}
-
-.travel-status.arancione {
-  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-  border-left-color: #ff6f00;
-}
-
-.travel-status.rossa {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-  border-left-color: #d32f2f;
-}
-
-.status-icon {
-  font-size: 2.5em;
-}
-
-.status-message {
-  font-size: 1.2em;
-  font-weight: 600;
-  color: #333;
-}
-
-.dual-point-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  margin-bottom: 20px;
-}
-
-.location-card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 25px;
-  border-radius: 15px;
-  border: 3px solid;
-  transition: transform 0.3s;
-}
-
-.location-card:hover {
-  transform: translateY(-5px);
-}
-
-.location-card.procida {
-  border-color: #2196f3;
-}
-
-.location-card.napoli {
-  border-color: #667eea;
-}
-
-.location-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.location-header h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.3em;
-  color: #333;
-}
-
-.location-header p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #666;
-}
-
-.current-weather {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-}
-
-.weather-icon-large {
-  font-size: 4em;
-}
-
-.temperature-large {
-  font-size: 3em;
-  font-weight: bold;
-  color: #667eea;
-}
-
-.weather-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  background: white;
-  border-radius: 8px;
-}
-
-.stat-label {
-  font-weight: 600;
-  color: #666;
-}
-
-.stat-value {
-  font-weight: bold;
-  color: #333;
-}
-
-.dual-point-footer {
-  text-align: center;
-  padding-top: 15px;
-  border-top: 2px solid #e9ecef;
-  color: #666;
-  font-size: 0.9em;
-}
-
-@media (max-width: 768px) {
-  .dual-point-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* Modal Styles */
-.weather-modal {
-  border: none;
-  border-radius: 20px;
-  padding: 0;
-  max-width: 900px;
-  width: 90%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  background: white;
-}
-
-.weather-modal::backdrop {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 30px;
-  border-bottom: 2px solid #f0f0f0;
-  background: linear-gradient(135deg, #667eea15, #764ba215);
-}
-
-.modal-header h3 {
-  color: #667eea;
-  margin: 0;
-  font-size: 1.4em;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 1.8em;
-  color: #999;
-  cursor: pointer;
-  padding: 5px 10px;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.close-btn:hover {
-  color: #667eea;
-  transform: rotate(90deg);
-}
-
-.modal-body {
-  padding: 30px;
-}
-
-.modal-body canvas {
-  max-height: 350px;
-  margin-bottom: 25px;
-}
-
-.modal-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.stat-item {
-  text-align: center;
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
-  border: 2px solid #e9ecef;
-}
-
-.stat-label {
-  display: block;
-  font-size: 0.85em;
-  color: #666;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.stat-value {
-  display: block;
+.advice-icon {
   font-size: 1.5em;
-  color: #667eea;
-  font-weight: bold;
 }
 
-/* Clickable Details in Cards */
-.clickable-detail {
-  cursor: pointer;
-  padding: 8px 10px !important;
-  border-radius: 8px;
-  transition: all 0.3s;
-  position: relative;
-  background: rgba(102, 126, 234, 0.05);
-  border-left: 3px solid transparent;
+.verdict-advice span:last-child {
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
-.clickable-detail:hover {
-  background: rgba(102, 126, 234, 0.15);
-  border-left-color: #667eea;
-  transform: translateX(5px);
-}
-
-.detail-hint {
-  display: block;
-  font-size: 0.75em;
-  color: #667eea;
-  margin-top: 5px;
-  font-style: italic;
-}
-
-@media (max-width: 768px) {
-  .weather-modal {
-    width: 95%;
-    max-width: 100%;
-  }
-  
-  .modal-header {
-    padding: 20px;
-  }
-  
-  .modal-body {
-    padding: 20px;
-  }
-  
-  .modal-body canvas {
-    max-height: 250px;
-  }
-  
-  .modal-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
-footer {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  color: white;
-  font-size: 0.9em;
-}
 .sunrise-sunset {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px !important;
-  background: linear-gradient(90deg, #fff3e0 0%, #ffecb3 50%, #ffe0b2 100%);
-  border-radius: 8px;
+  padding: var(--spacing-xs);
+  background: linear-gradient(90deg, rgba(255, 169, 77, 0.15) 0%, rgba(230, 126, 34, 0.1) 100%);
+  border-radius: var(--border-radius-small);
   font-weight: 600;
-  color: #e65100;
-  margin-top: 8px;
+  color: var(--color-temp-warm);
+  margin-top: var(--spacing-xs);
 }
 
 .sunrise-sunset span {
   font-size: 0.95em;
 }
 
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .forecast-grid { grid-template-columns: 1fr; }
-  h1 { font-size: 1.8em; }
+  body {
+    padding: var(--spacing-sm);
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  header {
+    padding: var(--spacing-lg);
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .forecast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .week-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .morning-conditions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .boat-conditions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dual-point-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .routes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alert-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
   .chart-container canvas {
     max-height: 250px;
   }
+
+  .weather-modal {
+    width: 95%;
+  }
+
+  .modal-body canvas {
+    max-height: 250px;
+  }
+
+  .modal-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .boat-verdict {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .verdict-icon-large {
+    font-size: 2.5em;
+  }
+
+  .boat-links {
+    flex-direction: column;
+  }
+
+  .alert-conditions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .company-links {
+    flex-direction: column;
+  }
 }
-</style>
-</head>
-<body>
-  <div class="container">
-    
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .stat-value {
+    font-size: 1.4em;
+  }
+
+  .temp-range {
+    font-size: 1.6em;
+  }
+
+  .tomorrow-header h2 {
+    font-size: 1.5em;
+  }
+
+  .boat-header h2 {
+    font-size: 1.5em;
+  }
+
+  .tomorrow-morning-section {
+    padding: var(--spacing-md);
+  }
+
+  .boat-conditions-section {
+    padding: var(--spacing-md);
+  }
+
+  .alert-details {
+    padding: var(--spacing-md);
+  }
+
+  .alert-icon-big {
+    font-size: 3em;
+  }
+
+  .alert-main-title {
+    font-size: 1.3em;
+  }
+
+  .alert-level-title {
+    font-size: 1.5em;
+  }
+}
+
+/* ===== ANIMAZIONI ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.day-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.day-card:nth-child(1) { animation-delay: 0.05s; }
+.day-card:nth-child(2) { animation-delay: 0.1s; }
+.day-card:nth-child(3) { animation-delay: 0.15s; }
+.day-card:nth-child(4) { animation-delay: 0.2s; }
+.day-card:nth-child(5) { animation-delay: 0.25s; }
+.day-card:nth-child(6) { animation-delay: 0.3s; }
+.day-card:nth-child(7) { animation-delay: 0.35s; }
+</style></head><body>  <div class="container">
 <header>
   <h1>🌊 Meteo Procida</h1>
-  <p class="update-time">Aggiornato: 05/01/2026, 19:00:18</p>
+  <p class="update-time">Aggiornato: 05/01/2026, 19:44:59</p>
 </header>
 
 <div class="week-stats">
@@ -1363,7 +1567,6 @@ footer {
   </div>
 </div>
 
-    
 <div style="
   background: linear-gradient(135deg, #d4edda 0%, #d4eddadd 100%);
   border-left: 6px solid #28a745;
@@ -1467,10 +1670,7 @@ footer {
   </a>
   
 </div>
-
-    <div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 25px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">⛴️ CONDIZIONI TRAVERSATA PROCIDA - NAPOLI</h2></div><div style="padding: 20px; border-radius: 15px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; border-left: 6px solid #ffd600; background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);"><div style="font-size: 2.5em;">⚠️</div><div style="font-size: 1.2em; font-weight: 600; color: #333;">✅ Prestare attenzione - Condizioni variabili</div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 20px;"><div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; border: 3px solid #2196f3;"><div style="text-align: center; margin-bottom: 20px;"><h3 style="margin: 0 0 5px 0; font-size: 1.3em; color: #333;">⛵ MARINA GRANDE</h3><p style="margin: 0; font-size: 0.9em; color: #666;">Procida</p></div><div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 20px; background: white; border-radius: 12px;"><div style="font-size: 4em;">🌦️</div><div style="font-size: 3em; font-weight: bold; color: #667eea;">14°C</div></div><div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Vento</span><span style="font-weight: bold; color: #333;">6 km/h NE</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Raffiche</span><span style="font-weight: bold; color: #333;">9 km/h</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💧 Pioggia</span><span style="font-weight: bold; color: #333;">0.6 mm</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">☁️ Nuvolosità</span><span style="font-weight: bold; color: #333;">100%</span></div></div></div><div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; border: 3px solid #667eea;"><div style="text-align: center; margin-bottom: 20px;"><h3 style="margin: 0 0 5px 0; font-size: 1.3em; color: #333;">🏛️ MOLO BEVERELLO</h3><p style="margin: 0; font-size: 0.9em; color: #666;">Napoli</p></div><div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 20px; background: white; border-radius: 12px;"><div style="font-size: 4em;">🌦️</div><div style="font-size: 3em; font-weight: bold; color: #667eea;">14°C</div></div><div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Vento</span><span style="font-weight: bold; color: #333;">5 km/h NE</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Raffiche</span><span style="font-weight: bold; color: #333;">8 km/h</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💧 Pioggia</span><span style="font-weight: bold; color: #333;">0.6 mm</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">☁️ Nuvolosità</span><span style="font-weight: bold; color: #333;">100%</span></div></div></div></div><div style="text-align: center; padding-top: 15px; border-top: 2px solid #e9ecef; color: #666; font-size: 0.9em;"><p>🕐 Aggiornato: 18:00</p><p style="font-size: 0.85em; color: #999; margin-top: 5px;"><em>Dati Napoli stimati da Procida</em></p></div></div>
-    <div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 30px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">🔴 LIVE - Traffico Marittimo & Meteo</h2><p style="color: #666; margin-top: 10px;">Aggiornamento in tempo reale</p></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 25px;"><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #2196f3;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #2196f3; margin: 0; font-size: 1.2em;">🚢 Traffico Marittimo</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Posizione traghetti in tempo reale</p></div><div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 10px; background: #e3f2fd;"><iframe src="https://www.marinetraffic.com/en/ais/embed/zoom:11/centery:40.7583/centerx:14.0183/maptype:0/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe></div><div style="margin-top: 15px; text-align: center;"><a href="https://www.marinetraffic.com/en/ais/home/centerx:14.0183/centery:40.7583/zoom:11" target="_blank" style="display: inline-block; padding: 10px 20px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">📍 Mappa Completa</a></div></div><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #ff9800;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #ff9800; margin: 0; font-size: 1.2em;">🌧️ Radar Pioggia Live</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Aggiornato ogni 10 minuti</p></div><div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 10px; background: #fff3e0;"><iframe src="https://www.rainviewer.com/map.html?loc=40.7583,14.0183,9&oFa=1&oC=1&oU=1&oCS=1&oF=1&oAP=1&rmt=4&c=3&o=83&lm=1&layer=radar&sm=1&sn=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe></div><div style="margin-top: 15px; text-align: center;"><a href="https://www.rainviewer.com/map.html?loc=40.7583,14.0183,9&oFa=1&oC=1&oU=1&oCS=1&oF=1&oAP=1&rmt=4&c=3&o=83&lm=1&layer=radar&sm=1&sn=1" target="_blank" style="display: inline-block; padding: 10px 20px; background: #ff9800; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">🌦️ Radar Completo</a></div></div><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #4caf50;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #4caf50; margin: 0; font-size: 1.2em;">📹 Webcam Live</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Vista in tempo reale</p></div><div style="background: white; padding: 18px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #2196f3; transition: all 0.3s;"><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="font-size: 1.8em;">⛵</div><div><h4 style="margin: 0; color: #2196f3; font-size: 1em;">Porto di Procida</h4><p style="margin: 3px 0 0 0; color: #666; font-size: 0.8em;">Vista Marina Grande</p></div></div><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/procida-porto.html" target="_blank" style="display: block; padding: 10px 16px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">📹 Apri Webcam</a></div><div style="background: white; padding: 18px; border-radius: 12px; border-left: 4px solid #667eea; transition: all 0.3s;"><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="font-size: 1.8em;">🏛️</div><div><h4 style="margin: 0; color: #667eea; font-size: 1em;">Napoli Beverello</h4><p style="margin: 3px 0 0 0; color: #666; font-size: 0.8em;">Vista Maschio Angioino</p></div></div><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/napoli-maschio-angioino.html" target="_blank" style="display: block; padding: 10px 16px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">📹 Apri Webcam</a></div></div></div><div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #2196f3; margin-top: 25px;"><div style="display: flex; align-items: center; gap: 15px;"><div style="font-size: 2em;">💡</div><div><p style="margin: 0; font-weight: 600; color: #1565c0; font-size: 1.05em;">Guida rapida:</p><p style="margin: 5px 0 0 0; color: #424242; line-height: 1.6; font-size: 0.95em;"><strong>🚢 Marine Traffic:</strong> Clicca sulle navi per vedere destinazione e orario arrivo • <strong>🌧️ RainViewer:</strong> Premi play per animazione pioggia prossime 2 ore • <strong>📹 Webcam:</strong> Vista live condizioni mare prima di partire</p></div></div></div></div>
-    
+<div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 25px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">⛴️ CONDIZIONI TRAVERSATA PROCIDA - NAPOLI</h2></div><div style="padding: 20px; border-radius: 15px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; border-left: 6px solid #ffd600; background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);"><div style="font-size: 2.5em;">⚠️</div><div style="font-size: 1.2em; font-weight: 600; color: #333;">✅ Prestare attenzione - Condizioni variabili</div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 20px;"><div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; border: 3px solid #2196f3;"><div style="text-align: center; margin-bottom: 20px;"><h3 style="margin: 0 0 5px 0; font-size: 1.3em; color: #333;">⛵ MARINA GRANDE</h3><p style="margin: 0; font-size: 0.9em; color: #666;">Procida</p></div><div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 20px; background: white; border-radius: 12px;"><div style="font-size: 4em;">🌦️</div><div style="font-size: 3em; font-weight: bold; color: #667eea;">14°C</div></div><div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Vento</span><span style="font-weight: bold; color: #333;">6 km/h NE</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Raffiche</span><span style="font-weight: bold; color: #333;">9 km/h</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💧 Pioggia</span><span style="font-weight: bold; color: #333;">0.6 mm</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">☁️ Nuvolosità</span><span style="font-weight: bold; color: #333;">100%</span></div></div></div><div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; border: 3px solid #667eea;"><div style="text-align: center; margin-bottom: 20px;"><h3 style="margin: 0 0 5px 0; font-size: 1.3em; color: #333;">🏛️ MOLO BEVERELLO</h3><p style="margin: 0; font-size: 0.9em; color: #666;">Napoli</p></div><div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 20px; background: white; border-radius: 12px;"><div style="font-size: 4em;">🌦️</div><div style="font-size: 3em; font-weight: bold; color: #667eea;">14°C</div></div><div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Vento</span><span style="font-weight: bold; color: #333;">5 km/h NE</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💨 Raffiche</span><span style="font-weight: bold; color: #333;">8 km/h</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">💧 Pioggia</span><span style="font-weight: bold; color: #333;">0.6 mm</span></div><div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 8px;"><span style="font-weight: 600; color: #666;">☁️ Nuvolosità</span><span style="font-weight: bold; color: #333;">100%</span></div></div></div></div><div style="text-align: center; padding-top: 15px; border-top: 2px solid #e9ecef; color: #666; font-size: 0.9em;"><p>🕐 Aggiornato: 18:45</p><p style="font-size: 0.85em; color: #999; margin-top: 5px;"><em>Dati Napoli stimati da Procida</em></p></div></div>
 <section class="tomorrow-morning-section">
   <div class="tomorrow-header">
     <h2>🌅 Domani Mattina - Mar 06/01</h2>
@@ -1512,7 +1712,6 @@ footer {
   </div>
 </section>
 
-    
 <section class="boat-conditions-section">
   <div class="boat-header">
     <h2>⛵ Condizioni Navigazione</h2>
@@ -1766,8 +1965,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-
-    <div class="forecast-grid">
+<div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 30px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">🔴 LIVE - Traffico Marittimo & Meteo</h2><p style="color: #666; margin-top: 10px;">Aggiornamento in tempo reale</p></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 25px;"><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #2196f3;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #2196f3; margin: 0; font-size: 1.2em;">🚢 Traffico Marittimo</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Posizione traghetti in tempo reale</p></div><div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 10px; background: #e3f2fd;"><iframe src="https://www.marinetraffic.com/en/ais/embed/zoom:11/centery:40.7583/centerx:14.0183/maptype:0/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe></div><div style="margin-top: 15px; text-align: center;"><a href="https://www.marinetraffic.com/en/ais/home/centerx:14.0183/centery:40.7583/zoom:11" target="_blank" style="display: inline-block; padding: 10px 20px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">📍 Mappa Completa</a></div></div><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #ff9800;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #ff9800; margin: 0; font-size: 1.2em;">🌧️ Radar Pioggia Live</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Aggiornato ogni 10 minuti</p></div><div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 10px; background: #fff3e0;"><iframe src="https://www.rainviewer.com/map.html?loc=40.7583,14.0183,9&oFa=1&oC=1&oU=1&oCS=1&oF=1&oAP=1&rmt=4&c=3&o=83&lm=1&layer=radar&sm=1&sn=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe></div><div style="margin-top: 15px; text-align: center;"><a href="https://www.rainviewer.com/map.html?loc=40.7583,14.0183,9&oFa=1&oC=1&oU=1&oCS=1&oF=1&oAP=1&rmt=4&c=3&o=83&lm=1&layer=radar&sm=1&sn=1" target="_blank" style="display: inline-block; padding: 10px 20px; background: #ff9800; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">🌦️ Radar Completo</a></div></div><div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border: 3px solid #4caf50;"><div style="text-align: center; margin-bottom: 15px;"><h3 style="color: #4caf50; margin: 0; font-size: 1.2em;">📹 Webcam Live</h3><p style="color: #666; font-size: 0.85em; margin: 5px 0;">Vista in tempo reale</p></div><div style="background: white; padding: 18px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #2196f3; transition: all 0.3s;"><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="font-size: 1.8em;">⛵</div><div><h4 style="margin: 0; color: #2196f3; font-size: 1em;">Porto di Procida</h4><p style="margin: 3px 0 0 0; color: #666; font-size: 0.8em;">Vista Marina Grande</p></div></div><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/procida-porto.html" target="_blank" style="display: block; padding: 10px 16px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">📹 Apri Webcam</a></div><div style="background: white; padding: 18px; border-radius: 12px; border-left: 4px solid #667eea; transition: all 0.3s;"><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="font-size: 1.8em;">🏛️</div><div><h4 style="margin: 0; color: #667eea; font-size: 1em;">Napoli Beverello</h4><p style="margin: 3px 0 0 0; color: #666; font-size: 0.8em;">Vista Maschio Angioino</p></div></div><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/napoli-maschio-angioino.html" target="_blank" style="display: block; padding: 10px 16px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">📹 Apri Webcam</a></div></div></div><div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #2196f3; margin-top: 25px;"><div style="display: flex; align-items: center; gap: 15px;"><div style="font-size: 2em;">💡</div><div><p style="margin: 0; font-weight: 600; color: #1565c0; font-size: 1.05em;">Guida rapida:</p><p style="margin: 5px 0 0 0; color: #424242; line-height: 1.6; font-size: 0.95em;"><strong>🚢 Marine Traffic:</strong> Clicca sulle navi per vedere destinazione e orario arrivo • <strong>🌧️ RainViewer:</strong> Premi play per animazione pioggia prossime 2 ore • <strong>📹 Webcam:</strong> Vista live condizioni mare prima di partire</p></div></div></div></div><div class="forecast-grid">
     <div class="day-card today" data-day="0">
       <div class="day-header">
         <h3>OGGI 05/01</h3>
@@ -1826,7 +2024,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
           </div>
           <div class="detail">🌊 Onde: 0.98m - Poco mosso</div>
-          <div class="detail">☀️ UV: 1.8</div>
+          <div class="detail">☀️ UV: 1.65</div>
           <div class="detail sunrise-sunset">
             <span>🌅 07:28</span>
             <span style="margin: 0 10px;">•</span>
@@ -1862,7 +2060,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
           </div>
           <div class="detail">🌊 Onde: 1.56m - Mosso</div>
-          <div class="detail">☀️ UV: 1.7</div>
+          <div class="detail">☀️ UV: 1.4</div>
           <div class="detail sunrise-sunset">
             <span>🌅 07:28</span>
             <span style="margin: 0 10px;">•</span>
@@ -1934,7 +2132,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
           </div>
           <div class="detail">🌊 Onde: 2.9m - Molto mosso</div>
-          <div class="detail">☀️ UV: 1.65</div>
+          <div class="detail">☀️ UV: 2.25</div>
           <div class="detail sunrise-sunset">
             <span>🌅 07:27</span>
             <span style="margin: 0 10px;">•</span>
@@ -1970,7 +2168,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
           </div>
           <div class="detail">🌊 Onde: 2.92m - Molto mosso</div>
-          <div class="detail">☀️ UV: 2</div>
+          <div class="detail">☀️ UV: 2.4</div>
           <div class="detail sunrise-sunset">
             <span>🌅 07:27</span>
             <span style="margin: 0 10px;">•</span>
@@ -2006,7 +2204,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
           </div>
           <div class="detail">🌊 Onde: 2.4m - Mosso</div>
-          <div class="detail">☀️ UV: 2.45</div>
+          <div class="detail">☀️ UV: 2.4</div>
           <div class="detail sunrise-sunset">
             <span>🌅 07:27</span>
             <span style="margin: 0 10px;">•</span>
@@ -2020,8 +2218,6 @@ window.addEventListener('DOMContentLoaded', () => {
       
     </div>
   </div>
-    
-    
 <section class="charts-section">
   <h2>📊 Andamento Settimanale</h2>
   
@@ -2226,13 +2422,11 @@ new Chart(document.getElementById('marineChart'), {
   }
 });
 </script>
-
-     <div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 25px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">🚢 COLLEGAMENTI PROCIDA ⇄ NAPOLI</h2><p style="color: #666; margin-top: 8px; font-size: 0.95em;">⚡ Stato LIVE | Aggiornato 18:00</p></div><div style="padding: 15px; border-radius: 12px; margin-bottom: 25px; background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%); border-left: 6px solid #0288d1;"><div style="display: flex; align-items: center; gap: 10px;"><div style="font-size: 1.8em;">ℹ️</div><div style="font-size: 0.9em; color: #01579b; line-height: 1.6;"><strong>Dati in tempo reale</strong> da mobile.caremar.it<br>Vento: 0 km/h | Raffiche: 0 km/h | Onde: 0.0m</div></div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;"><div><div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #2196f3;"><h3 style="margin: 0; color: #1565c0; font-size: 1.2em;">⛵ PROCIDA → NAPOLI</h3><p style="margin: 5px 0 0 0; color: #424242; font-size: 0.85em;">Fascia 6:45 - 9:30</p></div><p style="color: #999; text-align: center; padding: 20px;">Nessuna corsa disponibile</p></div><div><div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #ff9800;"><h3 style="margin: 0; color: #e65100; font-size: 1.2em;">🏛️ NAPOLI → PROCIDA</h3><p style="margin: 5px 0 0 0; color: #424242; font-size: 0.85em;">Fascia 17:20 - 20:00</p></div><div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background: #e8f5e9; border-left: 4px solid #66bb6a; border-radius: 8px; margin-bottom: 10px;"><div style="display: flex; align-items: center; gap: 12px; flex: 1;"><div style="font-size: 1.5em;">⛴️</div><div><div style="font-size: 1.1em; font-weight: 700; color: #1565c0;">19:25&nbsp;</div><div style="font-size: 0.85em; color: #666; margin-top: 2px;">&nbsp;Ferry
+<div style="background: white; padding: 30px; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"><div style="text-align: center; margin-bottom: 25px;"><h2 style="color: #667eea; font-size: 1.8em; margin: 0;">🚢 COLLEGAMENTI PROCIDA ⇄ NAPOLI</h2><p style="color: #666; margin-top: 8px; font-size: 0.95em;">⚡ Stato in tempo reale | Aggiornato 18:45</p></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;"><div><div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #2196f3;"><h3 style="margin: 0; color: #1565c0; font-size: 1.2em;">⛵ PROCIDA → NAPOLI</h3><p style="margin: 5px 0 0 0; color: #424242; font-size: 0.85em;">Fascia oraria 6:45 - 9:30</p></div><p style="color: #999; text-align: center; padding: 20px;">Nessuna corsa disponibile nella fascia oraria</p></div><div><div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #ff9800;"><h3 style="margin: 0; color: #e65100; font-size: 1.2em;">🏛️ NAPOLI → PROCIDA</h3><p style="margin: 5px 0 0 0; color: #424242; font-size: 0.85em;">Fascia oraria 17:20 - 20:00</p></div><div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background: #fffde7; border-left: 4px solid #ffeb3b; border-radius: 8px; margin-bottom: 10px;"><div style="display: flex; align-items: center; gap: 12px; flex: 1;"><div style="font-size: 1.5em;">⛴️</div><div><div style="font-size: 1.1em; font-weight: 700; color: #1565c0;">19:25&nbsp;</div><div style="font-size: 0.85em; color: #666; margin-top: 2px;">&nbsp;Ferry
                         
-                    &nbsp;</div><div style="font-size: 0.75em; color: #999; margin-top: 2px;">On Time</div></div></div><div style="font-size: 1.2em;">✅</div></div><div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background: #e8f5e9; border-left: 4px solid #66bb6a; border-radius: 8px; margin-bottom: 10px;"><div style="display: flex; align-items: center; gap: 12px; flex: 1;"><div style="font-size: 1.5em;">🚤</div><div><div style="font-size: 1.1em; font-weight: 700; color: #1565c0;">20:05&nbsp;</div><div style="font-size: 0.85em; color: #666; margin-top: 2px;">&nbsp;Hydrofoil
+                    &nbsp;</div><div style="font-size: 0.75em; color: #ff9800; margin-top: 2px; font-weight: 600;">Close</div></div></div><div style="font-size: 1.2em;">🟡</div></div><div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background: #e8f5e9; border-left: 4px solid #66bb6a; border-radius: 8px; margin-bottom: 10px;"><div style="display: flex; align-items: center; gap: 12px; flex: 1;"><div style="font-size: 1.5em;">🚤</div><div><div style="font-size: 1.1em; font-weight: 700; color: #1565c0;">20:05&nbsp;</div><div style="font-size: 0.85em; color: #666; margin-top: 2px;">&nbsp;Hydrofoil
                         
-                    &nbsp;</div><div style="font-size: 0.75em; color: #999; margin-top: 2px;">On Time</div></div></div><div style="font-size: 1.2em;">✅</div></div></div></div><div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #e0e0e0;"><div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; font-size: 0.9em;"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">✅</span> <span>Regolare</span></div><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">🟡</span> <span>Ritardi/Terminata</span></div><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">🔴</span> <span>Cancellata</span></div></div></div><div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;"><a href="https://mobile.caremar.it/en/next-departures/" target="_blank" style="padding: 10px 20px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">🔄 Aggiorna Stato Live</a><a href="https://www.traghetti-ischia.info/tratte/procida-napoli" target="_blank" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em;">📅 Tutti gli Orari</a></div></div>
-    
+                    &nbsp;</div><div style="font-size: 0.75em; color: #4caf50; margin-top: 2px; font-weight: 600;">On Time</div></div></div><div style="font-size: 1.2em;">✅</div></div></div></div><div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #e0e0e0;"><div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; font-size: 0.9em;"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">✅</span> <span>Regolare</span></div><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">🟡</span> <span>Ritardi/Terminata</span></div><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2em;">🔴</span> <span>Cancellata</span></div><div style="margin-left: 15px; padding-left: 15px; border-left: 2px solid #ddd; color: #666;">Dati da mobile.caremar.it</div></div></div><div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;"><a href="https://mobile.caremar.it/en/next-departures/" target="_blank" style="padding: 10px 20px; background: #2196f3; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">🔄 Aggiorna Stato Live</a><a href="https://www.traghetti-ischia.info/tratte/procida-napoli" target="_blank" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9em; transition: all 0.3s;">📅 Tutti gli Orari</a></div></div>
 <section class="ferries-section">
   <h2>⛴️ Collegamenti Marittimi</h2>
   
@@ -2338,7 +2532,6 @@ new Chart(document.getElementById('marineChart'), {
   </div>
 </section>
 
-    
 <!-- Modal Pioggia -->
 <dialog id="rainModal" class="weather-modal">
   <div class="modal-header">
@@ -2557,12 +2750,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-    
 <footer>
   <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
   <p>Pressione atmosferica: in aumento</p>
 </footer>
-
-  </div>
-</body>
-</html>
+  </div></body></html>
