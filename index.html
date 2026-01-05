@@ -1338,26 +1338,1224 @@ footer {
 <body>
   <div class="container">
     
+<header>
+  <h1>🌊 Meteo Procida</h1>
+  <p class="update-time">Aggiornato: 05/01/2026, 13:15:56</p>
+</header>
+
+<div class="week-stats">
+  <div class="stat-box">
+    <div class="stat-label">Temp. Media Max</div>
+    <div class="stat-value">13.5°C</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Temp. Media Min</div>
+    <div class="stat-value">11.0°C</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Pioggia Totale</div>
+    <div class="stat-value">79.0mm</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Giorni di Pioggia</div>
+    <div class="stat-value">5</div>
+  </div>
+</div>
+
+    
+<div style="
+  background: linear-gradient(135deg, #d4edda 0%, #d4eddadd 100%);
+  border-left: 6px solid #28a745;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+">
+  <!-- Header -->
+  <div style="
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  ">
+    <div style="
+      font-size: 32px;
+      margin-right: 15px;
+    ">✅</div>
+    <div>
+      <div style="
+        font-size: 22px;
+        font-weight: bold;
+        color: #155724;
+        margin-bottom: 4px;
+      ">
+        SITUAZIONE METEO REGOLARE
+      </div>
+      <div style="
+        font-size: 16px;
+        color: #155724;
+        opacity: 0.9;
+      ">
+        Livello: <span style="
+          text-transform: uppercase;
+          font-weight: bold;
+          background: #28a745;
+          color: white;
+          padding: 2px 12px;
+          border-radius: 4px;
+        ">verde</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tipo e Validità -->
+  
+  <div style="
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+  ">
+    <div style="
+      font-size: 18px;
+      font-weight: bold;
+      color: #155724;
+      margin-bottom: 8px;
+    ">
+      📋 Condizioni Meteo
+    </div>
+    
+    <div style="
+      font-size: 14px;
+      color: #155724;
+      opacity: 0.85;
+    ">
+      🕐 Validità: <strong>In corso</strong> → <strong>24:00</strong>
+    </div>
+    
+  </div>
+  
+
+  <!-- Descrizione -->
+  <div style="
+    font-size: 15px;
+    line-height: 1.6;
+    color: #155724;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 6px;
+  ">
+    Seguire le indicazioni della Protezione Civile.
+  </div>
+
+  <!-- Link -->
+  
+  <a href="https://bollettinimeteo.regione.campania.it/" target="_blank" style="
+    display: inline-block;
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  " onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+    🔗 Maggiori Informazioni
+  </a>
+  
+</div>
+
     
     
+<section class="tomorrow-morning-section">
+  <div class="tomorrow-header">
+    <h2>🌅 Domani Mattina - Mar 06/01</h2>
+    <span class="time-range">Ore 06:00 - 10:00</span>
+  </div>
+  
+  <div class="morning-conditions-grid">
+    <div class="morning-stat">
+      <div class="stat-icon">🌡️</div>
+      <div class="stat-value">14.5°C</div>
+      <div class="stat-label">Temperatura</div>
+    </div>
+    <div class="morning-stat">
+      <div class="stat-icon">☔</div>
+      <div class="stat-value">90%</div>
+      <div class="stat-label">Pioggia</div>
+    </div>
+    <div class="morning-stat">
+      <div class="stat-icon">💨</div>
+      <div class="stat-value">18.1 km/h</div>
+      <div class="stat-label">Vento</div>
+    </div>
+    <div class="morning-stat">
+      <div class="stat-icon">🌊</div>
+      <div class="stat-value">0.56m</div>
+      <div class="stat-label">Onde</div>
+    </div>
+  </div>
+  
+  <div class="morning-verdict verdict-rossa">
+    <div class="verdict-header">
+      <span class="verdict-badge sea-badge rossa">CONDIZIONI CRITICHE</span>
+    </div>
+    <p class="verdict-message">Mare mosso e/o maltempo. Possibili cancellazioni traghetti. Verifica prima di partire.</p>
+    <div class="verdict-advice">
+      <span class="advice-icon">💡</span>
+      <span>Controlla compagnie navali prima di uscire • 🧥 Giacca media consigliata</span>
+    </div>
+  </div>
+</section>
+
     
-        <div class="dual-point-container">
-          <div class="dual-point-header">
-            <h2>⛴️ CONDIZIONI TRAVERSATA PROCIDA - NAPOLI</h2>
+<section class="boat-conditions-section">
+  <div class="boat-header">
+    <h2>⛵ Condizioni Navigazione</h2>
+    <span class="today-label">Oggi - lunedì 5/1</span>
+  </div>
+  
+  <div class="boat-verdict verdict-gialla">
+    <div class="verdict-icon-large">🟡</div>
+    <div class="verdict-content">
+      <h3 class="verdict-title">CONDIZIONI ACCETTABILI</h3>
+      <p class="verdict-description">Mare poco mosso, navigazione possibile con attenzione.</p>
+    </div>
+  </div>
+  
+  <div class="boat-conditions-grid">
+    <div class="boat-stat clickable-boat-stat" onclick="document.getElementById('wavesModal').showModal()">
+      <div class="boat-stat-icon">🌊</div>
+      <div class="boat-stat-value">1.06m</div>
+      <div class="boat-stat-label">Onde</div>
+      <div class="boat-stat-desc">Poco mosso - SSW</div>
+      <div class="click-hint">📊 Clicca per dettagli</div>
+    </div>
+    
+    <div class="boat-stat clickable-boat-stat" onclick="document.getElementById('windBoatModal').showModal()">
+      <div class="boat-stat-icon">💨</div>
+      <div class="boat-stat-value">22.9 km/h</div>
+      <div class="boat-stat-label">Vento</div>
+      <div class="boat-stat-desc">Moderato</div>
+      <div class="click-hint">📊 Clicca per dettagli</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">👁️</div>
+      <div class="boat-stat-value">27 km</div>
+      <div class="boat-stat-label">Visibilità</div>
+      <div class="boat-stat-desc">Ottima</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">🌡️</div>
+      <div class="boat-stat-value">14°C</div>
+      <div class="boat-stat-label">Temp. Mare</div>
+      <div class="boat-stat-desc">Stimata</div>
+    </div>
+    
+    <div class="boat-stat">
+      <div class="boat-stat-icon">📊</div>
+      <div class="boat-stat-value">1004.2 hPa</div>
+      <div class="boat-stat-label">Pressione</div>
+      <div class="boat-stat-desc">↘️ In calo</div>
+    </div>
+  </div>
+  
+  <div class="boat-advice">
+    <div class="advice-icon">💡</div>
+    <div class="advice-text">
+      <strong>Consiglio:</strong> Condizioni normali. Adatta per navigazione costiera.<br>
+      <span class="boat-type-advice">Adatto: Gommoni > 5m, cabinati, barche a vela</span>
+    </div>
+  </div>
+  
+  <div class="boat-forecast">
+    <span class="forecast-label">📅 Prossime 48h:</span>
+    <span class="forecast-value">→ Condizioni stabili</span>
+  </div>
+  
+  <div class="boat-links">
+  <a href="https://www.windy.com/?40.791,14.042,11" target="_blank" class="boat-link">
+    🌐 Radar Meteo Live
+  </a>
+  <a href="https://www.windfinder.com/forecast/procida" target="_blank" class="boat-link">
+    🌊 Windfinder Procida
+  </a>
+  <a href="https://www.marinetraffic.com/en/ais/home/centerx:14.042/centery:40.791/zoom:11" target="_blank" class="boat-link">
+    🚢 Traffico Navi
+  </a>
+</div>
+
+
+<!-- Modal Onde 24h -->
+<dialog id="wavesModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>🌊 Andamento Onde Oggi (24h)</h3>
+    <button onclick="document.getElementById('wavesModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="wavesChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Altezza Media</span>
+        <span class="stat-value">0.87m</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Altezza Max</span>
+        <span class="stat-value">1.06m</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Direzione</span>
+        <span class="stat-value">SSW (202°)</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal Vento Navigazione 24h -->
+<dialog id="windBoatModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>💨 Andamento Vento Oggi (24h)</h3>
+    <button onclick="document.getElementById('windBoatModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="windBoatChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Velocità Media</span>
+        <span class="stat-value">13.3 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Raffica Max</span>
+        <span class="stat-value">37.8 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Categoria</span>
+        <span class="stat-value">Moderato</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Dati orari per i grafici
+const boatHourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"waves":[1.06,1.04,1.04,1.06,1.06,1.04,1.02,1,0.98,0.96,0.94,0.92,0.92,0.9,0.86,0.8,0.76,0.72,0.7,0.66,0.62,0.6,0.56,0.54],"windSpeed":[22.7,20.8,20.5,19.8,20.9,22.9,18.9,18.5,20.3,17.7,18.2,11.8,14.7,4.7,3.8,9.6,9.1,7.6,4.9,4.8,5,5.1,7.6,8.6],"windGusts":[37.8,35.3,34.2,34.2,29.5,33.8,29.9,35.3,37.8,34.9,26.6,24.8,22.3,19.4,6.8,13.3,14.8,13,10.8,7.2,7.2,7.2,11.2,12.2]};
+
+// Grafico Onde 24h
+function initWavesChart() {
+  const ctx = document.getElementById('wavesChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: boatHourlyData.labels,
+      datasets: [{
+        label: 'Altezza Onde (m)',
+        data: boatHourlyData.waves,
+        borderColor: '#0288d1',
+        backgroundColor: 'rgba(2, 136, 209, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12 }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Altezza (m)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// Grafico Vento Navigazione 24h
+function initWindBoatChart() {
+  const ctx = document.getElementById('windBoatChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: boatHourlyData.labels,
+      datasets: [
+        {
+          label: 'Velocità (km/h)',
+          data: boatHourlyData.windSpeed,
+          borderColor: '#0288d1',
+          backgroundColor: 'rgba(2, 136, 209, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          fill: true
+        },
+        {
+          label: 'Raffiche (km/h)',
+          data: boatHourlyData.windGusts,
+          borderColor: '#ff6f00',
+          backgroundColor: 'rgba(255, 111, 0, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          borderDash: [5, 5]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12 }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Velocità (km/h)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// Inizializza grafici
+let wavesChartInitialized = false;
+let windBoatChartInitialized = false;
+
+document.getElementById('wavesModal').addEventListener('click', (e) => {
+  if (!wavesChartInitialized) {
+    setTimeout(initWavesChart, 100);
+    wavesChartInitialized = true;
+  }
+});
+
+document.getElementById('windBoatModal').addEventListener('click', (e) => {
+  if (!windBoatChartInitialized) {
+    setTimeout(initWindBoatChart, 100);
+    windBoatChartInitialized = true;
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    initWavesChart();
+    initWindBoatChart();
+  }, 1500);
+});
+</script>
+
+    <div class="forecast-grid">
+    <div class="day-card today" data-day="0">
+      <div class="day-header">
+        <h3>OGGI 05/01</h3>
+        <div class="weather-icon">🌦️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15.5°</span>
+          <span class="temp-min">14.6°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail clickable-detail" onclick="document.getElementById('rainModal').showModal()">
+            💧 Pioggia: 9.4mm (93%)
+            <span class="detail-hint">📊 Clicca per dettagli</span>
           </div>
-          <div class="travel-status gialla">
-            <div class="status-icon">⚠️</div>
-            <div class="status-message">Dati meteo non disponibili al momento</div>
+          <div class="detail clickable-detail" onclick="document.getElementById('windModal').showModal()">
+            💨 Vento: 22.9 km/h (raffiche 37.8 km/h)
+            <span class="detail-hint">📊 Clicca per dettagli</span>
+          </div>
+          <div class="detail">🌊 Onde: 1.06m - Poco mosso</div>
+          <div class="detail">☀️ UV: 2.1</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:50</span>
           </div>
         </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
       
+      <div id="ai-placeholder"></div>
+    </div>
+  
+    <div class="day-card " data-day="1">
+      <div class="day-header">
+        <h3>Mar 06/01</h3>
+        <div class="weather-icon">⛈️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">14.9°</span>
+          <span class="temp-min">12.9°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 35.8mm (100%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 31.9 km/h (raffiche 46.4 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 0.78m - Poco mosso</div>
+          <div class="detail">☀️ UV: 1.8</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:51</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card " data-day="2">
+      <div class="day-header">
+        <h3>Mer 07/01</h3>
+        <div class="weather-icon">🌧️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">12.9°</span>
+          <span class="temp-min">9.7°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 6.9mm (64%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 15.2 km/h (raffiche 27.4 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 1.24m - Poco mosso</div>
+          <div class="detail">☀️ UV: 1.7</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:28</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:52</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge verde">VERDE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card " data-day="3">
+      <div class="day-header">
+        <h3>Gio 08/01</h3>
+        <div class="weather-icon">☁️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">10.6°</span>
+          <span class="temp-min">7.5°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 0.1mm (30%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 16.2 km/h (raffiche 22.7 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 1.8m - Mosso</div>
+          <div class="detail">☀️ UV: 2.6</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:53</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge gialla">GIALLA</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card " data-day="4">
+      <div class="day-header">
+        <h3>Ven 09/01</h3>
+        <div class="weather-icon">⛈️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">15.1°</span>
+          <span class="temp-min">10.8°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 6.8mm (76%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 45.9 km/h (raffiche 67 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 2.56m - Molto mosso</div>
+          <div class="detail">☀️ UV: 1.65</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:54</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge arancione">ARANCIONE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card " data-day="5">
+      <div class="day-header">
+        <h3>Sab 10/01</h3>
+        <div class="weather-icon">⛈️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">12.1°</span>
+          <span class="temp-min">10.5°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 19.9mm (96%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 37.2 km/h (raffiche 55.1 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 2.98m - Molto mosso</div>
+          <div class="detail">☀️ UV: 2</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:55</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge arancione">ARANCIONE</div>
+      </div>
+      
+      
+    </div>
+  
+    <div class="day-card " data-day="6">
+      <div class="day-header">
+        <h3>Dom 11/01</h3>
+        <div class="weather-icon">🌦️</div>
+      </div>
+      
+      <div class="day-info">
+        <div class="temp-range">
+          <span class="temp-max">13.3°</span>
+          <span class="temp-min">10.7°</span>
+        </div>
+        
+        <div class="weather-details">
+          <div class="detail " >
+            💧 Pioggia: 0.1mm (47%)
+            
+          </div>
+          <div class="detail " >
+            💨 Vento: 24.3 km/h (raffiche 33.8 km/h)
+            
+          </div>
+          <div class="detail">🌊 Onde: 2.08m - Mosso</div>
+          <div class="detail">☀️ UV: 2.45</div>
+          <div class="detail sunrise-sunset">
+            <span>🌅 07:27</span>
+            <span style="margin: 0 10px;">•</span>
+            <span>🌇 16:56</span>
+          </div>
+        </div>
+        
+        <div class="sea-badge gialla">GIALLA</div>
+      </div>
+      
+      
+    </div>
+  </div>
     
     
+<section class="charts-section">
+  <h2>📊 Andamento Settimanale</h2>
+  
+  <div class="chart-container">
+    <h3>🌡️ Temperature & Precipitazioni</h3>
+    <canvas id="tempRainChart"></canvas>
+  </div>
+  
+  <div class="chart-container">
+    <h3>💨 Pressione & Vento</h3>
+    <canvas id="pressureWindChart"></canvas>
+  </div>
+  
+  <div class="chart-container">
+    <h3>🌊 Condizioni Meteomarine</h3>
+    <canvas id="marineChart"></canvas>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const chartData = {"labels":["05/01","06/01","07/01","08/01","09/01","10/01","11/01"],"tempMax":[15.5,14.9,12.9,10.6,15.1,12.1,13.3],"tempMin":[14.6,12.9,9.7,7.5,10.8,10.5,10.7],"precipitation":[9.4,35.8,6.9,0.1,6.8,19.9,0.1],"pressure":[1013,1013,1013,1013,1013,1013,1013],"windMax":[22.9,31.9,15.2,16.2,45.9,37.2,24.3],"waveHeight":[1.06,0.78,1.24,1.8,2.56,2.98,2.08],"seaTemp":[15,15,15,15,15,15,15]};
+
+// Configurazione comune
+const commonOptions = {
+  responsive: true,
+  maintainAspectRatio: true,
+  interaction: {
+    mode: 'index',
+    intersect: false,
+  },
+  plugins: {
+    legend: {
+      position: 'top',
+      labels: { font: { size: 12 } }
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      padding: 12,
+      titleFont: { size: 14 },
+      bodyFont: { size: 13 }
+    }
+  }
+};
+
+// Grafico 1: Temperature & Precipitazioni
+new Chart(document.getElementById('tempRainChart'), {
+  type: 'bar',
+  data: {
+    labels: chartData.labels,
+    datasets: [
+      {
+        type: 'line',
+        label: 'Temp Max (°C)',
+        data: chartData.tempMax,
+        borderColor: '#ff6b6b',
+        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      },
+      {
+        type: 'line',
+        label: 'Temp Min (°C)',
+        data: chartData.tempMin,
+        borderColor: '#4ecdc4',
+        backgroundColor: 'rgba(78, 205, 196, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      },
+      {
+        type: 'bar',
+        label: 'Pioggia (mm)',
+        data: chartData.precipitation,
+        backgroundColor: 'rgba(102, 126, 234, 0.6)',
+        borderColor: '#667eea',
+        borderWidth: 2,
+        yAxisID: 'y1'
+      }
+    ]
+  },
+  options: {
+    ...commonOptions,
+    scales: {
+      y: {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Temperatura (°C)', font: { weight: 'bold' } },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: 'Precipitazioni (mm)', font: { weight: 'bold' } },
+        grid: { drawOnChartArea: false }
+      }
+    }
+  }
+});
+
+// Grafico 2: Pressione & Vento
+new Chart(document.getElementById('pressureWindChart'), {
+  type: 'line',
+  data: {
+    labels: chartData.labels,
+    datasets: [
+      {
+        label: 'Pressione (hPa)',
+        data: chartData.pressure,
+        borderColor: '#51cf66',
+        backgroundColor: 'rgba(81, 207, 102, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      },
+      {
+        label: 'Vento Max (km/h)',
+        data: chartData.windMax,
+        borderColor: '#74c0fc',
+        backgroundColor: 'rgba(116, 192, 252, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y1',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }
+    ]
+  },
+  options: {
+    ...commonOptions,
+    scales: {
+      y: {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Pressione (hPa)', font: { weight: 'bold' } },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: 'Vento (km/h)', font: { weight: 'bold' } },
+        grid: { drawOnChartArea: false }
+      }
+    }
+  }
+});
+
+// Grafico 3: Condizioni Meteomarine
+new Chart(document.getElementById('marineChart'), {
+  type: 'line',
+  data: {
+    labels: chartData.labels,
+    datasets: [
+      {
+        label: 'Altezza Onde (m)',
+        data: chartData.waveHeight,
+        borderColor: '#339af0',
+        backgroundColor: 'rgba(51, 154, 240, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      },
+      {
+        label: 'Temp Mare (°C)',
+        data: chartData.seaTemp,
+        borderColor: '#ff922b',
+        backgroundColor: 'rgba(255, 146, 43, 0.1)',
+        borderWidth: 3,
+        tension: 0.4,
+        yAxisID: 'y1',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }
+    ]
+  },
+  options: {
+    ...commonOptions,
+    scales: {
+      y: {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Altezza Onde (m)', font: { weight: 'bold' } },
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        beginAtZero: true
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: 'Temperatura Mare (°C)', font: { weight: 'bold' } },
+        grid: { drawOnChartArea: false }
+      }
+    }
+  }
+});
+</script>
+
     
+<section class="ferries-section">
+  <h2>⛴️ Collegamenti Marittimi</h2>
+  
+  <div class="ferry-alert alert-verde">
+    <div class="alert-header">
+      <span class="alert-icon">🟢</span>
+      <div>
+        <h3>VERDE</h3>
+        <p class="alert-main">Collegamenti marittimi regolari</p>
+      </div>
+    </div>
+    <p class="alert-details">Condizioni meteo-marine favorevoli. Collegamenti operativi.</p>
+    <div class="alert-conditions">
+      <span>🌊 Onde: 1.06m</span>
+      <span>💨 Vento: 22.9 km/h</span>
+      <span>🌫️ Visibilità: Buona</span>
+    </div>
+    <div class="affected-vessels">
+      <div class="vessel-status">Tutti i collegamenti operativi</div>
+    </div>
+  </div>
+  
+  <div class="routes-grid">
     
+      <div class="route-card">
+        <h4>Procida → Napoli Beverello</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar / SNAV</span>
+          <span class="type">Traghetti + Aliscafi</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">06:20</span><span class="hour">07:50</span><span class="hour">09:30</span><span class="hour">12:00</span><span class="hour">14:30</span><span class="hour">16:50</span><span class="hour">18:30</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
     
+      <div class="route-card">
+        <h4>Napoli Beverello → Procida</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar / SNAV</span>
+          <span class="type">Traghetti + Aliscafi</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">07:00</span><span class="hour">09:00</span><span class="hour">11:30</span><span class="hour">13:50</span><span class="hour">16:00</span><span class="hour">17:40</span><span class="hour">19:15</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
     
+      <div class="route-card">
+        <h4>Procida → Pozzuoli</h4>
+        <div class="route-info">
+          <span class="company">🚢 Gestour / Medmar</span>
+          <span class="type">Traghetti</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">05:45</span><span class="hour">07:20</span><span class="hour">09:00</span><span class="hour">12:30</span><span class="hour">15:00</span><span class="hour">17:30</span><span class="hour">19:45</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
     
+      <div class="route-card">
+        <h4>Procida ↔ Ischia</h4>
+        <div class="route-info">
+          <span class="company">🚢 Caremar</span>
+          <span class="type">Traghetti</span>
+        </div>
+        <div class="hours">
+          <strong>Orari principali:</strong>
+          <div class="hours-list">
+            <span class="hour">Vari collegamenti giornalieri</span>
+          </div>
+        </div>
+        <a href="https://www.traghetti-ischia.info/" target="_blank" class="verify-link">
+          Verifica orari aggiornati →
+        </a>
+      </div>
+    
+  </div>
+  
+  <div class="ferry-footer">
+    <p><strong>⚠️ Nota importante:</strong> Verifica sempre gli orari aggiornati sui siti ufficiali delle compagnie prima della partenza.</p>
+    <div class="company-links">
+      <a href="https://www.traghetti-ischia.info/" target="_blank">Traghetti Ischia Info</a>
+      <a href="https://www.caremar.it" target="_blank">Caremar</a>
+      <a href="https://www.snav.it" target="_blank">SNAV</a>
+      <a href="https://www.medmargroup.it" target="_blank">Medmar</a>
+    </div>
+  </div>
+</section>
+
+    
+<!-- Modal Pioggia -->
+<dialog id="rainModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>💧 Andamento Pioggia Oggi (24h)</h3>
+    <button onclick="document.getElementById('rainModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="rainChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Totale</span>
+        <span class="stat-value">9.4 mm</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Picco</span>
+        <span class="stat-value">1.5 mm/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Probabilità Media</span>
+        <span class="stat-value">50%</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal Vento -->
+<dialog id="windModal" class="weather-modal">
+  <div class="modal-header">
+    <h3>💨 Andamento Vento Oggi (24h)</h3>
+    <button onclick="document.getElementById('windModal').close()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="modal-body">
+    <canvas id="windChart24h"></canvas>
+    
+    <div class="modal-stats">
+      <div class="stat-item">
+        <span class="stat-label">Velocità Media</span>
+        <span class="stat-value">13.3 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Raffica Max</span>
+        <span class="stat-value">37.8 km/h</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Direzione Prevalente</span>
+        <span class="stat-value">SE (128°)</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Dati orari per i grafici
+const hourlyData = {"labels":["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],"precipitation":[1,0.9,1,1.5,1,0.6,0.3,0.8,0.6,0.4,0.6,0,0.1,0.4,0,0,0,0,0,0,0,0,0.1,0.1],"precipProb":[93,90,93,90,90,93,93,90,70,60,38,20,10,3,13,10,30,28,25,23,20,20,30,60],"windSpeed":[22.7,20.8,20.5,19.8,20.9,22.9,18.9,18.5,20.3,17.7,18.2,11.8,14.7,4.7,3.8,9.6,9.1,7.6,4.9,4.8,5,5.1,7.6,8.6],"windGusts":[37.8,35.3,34.2,34.2,29.5,33.8,29.9,35.3,37.8,34.9,26.6,24.8,22.3,19.4,6.8,13.3,14.8,13,10.8,7.2,7.2,7.2,11.2,12.2]};
+
+// Grafico Pioggia 24h
+function initRainChart() {
+  const ctx = document.getElementById('rainChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: hourlyData.labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Precipitazioni (mm/h)',
+          data: hourlyData.precipitation,
+          backgroundColor: 'rgba(66, 153, 225, 0.6)',
+          borderColor: '#4299e1',
+          borderWidth: 2,
+          yAxisID: 'y'
+        },
+        {
+          type: 'line',
+          label: 'Probabilità (%)',
+          data: hourlyData.precipProb,
+          borderColor: '#667eea',
+          backgroundColor: 'rgba(102, 126, 234, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          yAxisID: 'y1',
+          pointRadius: 3,
+          pointHoverRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          padding: 12
+        }
+      },
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'Precipitazioni (mm/h)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          beginAtZero: true
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: 'Probabilità (%)', font: { weight: 'bold' } },
+          grid: { drawOnChartArea: false },
+          min: 0,
+          max: 100
+        }
+      }
+    }
+  });
+}
+
+// Grafico Vento 24h
+function initWindChart() {
+  const ctx = document.getElementById('windChart24h');
+  if (!ctx || typeof Chart === 'undefined') return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: hourlyData.labels,
+      datasets: [
+        {
+          label: 'Velocità (km/h)',
+          data: hourlyData.windSpeed,
+          borderColor: '#74c0fc',
+          backgroundColor: 'rgba(116, 192, 252, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          fill: true
+        },
+        {
+          label: 'Raffiche (km/h)',
+          data: hourlyData.windGusts,
+          borderColor: '#ff922b',
+          backgroundColor: 'rgba(255, 146, 43, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          borderDash: [5, 5]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          padding: 12
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Velocità (km/h)', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// Inizializza i grafici quando i modal vengono aperti
+let rainChartInitialized = false;
+let windChartInitialized = false;
+
+document.getElementById('rainModal').addEventListener('click', (e) => {
+  if (!rainChartInitialized) {
+    setTimeout(initRainChart, 100);
+    rainChartInitialized = true;
+  }
+});
+
+document.getElementById('windModal').addEventListener('click', (e) => {
+  if (!windChartInitialized) {
+    setTimeout(initWindChart, 100);
+    windChartInitialized = true;
+  }
+});
+
+// Inizializza al caricamento pagina
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    initRainChart();
+    initWindChart();
+  }, 1000);
+});
+</script>
+
+    
+<footer>
+  <p>Dati da Open-Meteo • Analisi AI powered by Groq • undefined 🌙</p>
+  <p>Pressione atmosferica: stabile</p>
+</footer>
+
   </div>
 </body>
 </html>
