@@ -5,10 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FF9F43">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Meteo Procida">
   <title>Meteo Procida - Dashboard Live</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
@@ -24,39 +20,28 @@
   --color-primary: #FF9F43;
   --color-secondary: #4A90E2;
   --color-napoli: #3B82F6;
-  --color-ocean: #3BAADC;
-  --color-rain: #6C5CE7;
-  --color-pressure: #00B894;
   --alert-verde: #2ECC71;
   --alert-gialla: #F39C12;
   --alert-arancione: #E67E22;
   --alert-rossa: #E74C3C;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  --space-xs: 8px;
   --space-sm: 12px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-  --space-2xl: 48px;
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
-  font-family: 'Inter', -apple-system, sans-serif; 
+  font-family: 'Inter', sans-serif; 
   background: var(--bg-primary); 
   color: var(--text-primary); 
   line-height: 1.6; 
-  -webkit-font-smoothing: antialiased; 
-  overflow-x: hidden; 
 }
 .container { 
   max-width: 1400px; 
@@ -64,13 +49,11 @@ body {
   padding: var(--space-md); 
 }
 
-/* Quick Actions */
 .quick-actions { 
   position: sticky; 
   top: 0; 
   z-index: 100; 
   background: var(--bg-secondary); 
-  backdrop-filter: blur(10px); 
   padding: var(--space-md); 
   box-shadow: var(--shadow-md); 
   margin-bottom: var(--space-lg); 
@@ -83,39 +66,31 @@ body {
   flex-wrap: wrap; 
 }
 .action-btn { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-sm); 
   padding: var(--space-sm) var(--space-lg); 
   background: var(--bg-card); 
   border: 2px solid transparent; 
   border-radius: var(--radius-md); 
   color: var(--text-primary); 
   font-weight: 600; 
-  font-size: 0.9rem; 
   cursor: pointer; 
   transition: all var(--transition-base); 
   text-decoration: none;
 }
 .action-btn:hover { 
-  background: var(--bg-card-hover); 
   border-color: var(--color-primary); 
   transform: translateY(-2px); 
 }
 
-/* Hero Meteo */
 .hero-meteo { 
   background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover)); 
   border-radius: var(--radius-xl); 
-  padding: var(--space-2xl) var(--space-xl); 
+  padding: var(--space-xl); 
   margin-bottom: var(--space-lg); 
   box-shadow: var(--shadow-lg); 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
 }
 .hero-header { 
   display: flex; 
   justify-content: space-between; 
-  align-items: center; 
   margin-bottom: var(--space-xl); 
 }
 .hero-location { 
@@ -130,9 +105,9 @@ body {
 .hero-main { 
   display: grid; 
   grid-template-columns: auto 1fr; 
-  gap: var(--space-2xl); 
+  gap: var(--space-xl); 
   align-items: center; 
-  margin-bottom: var(--space-xl); 
+  margin-bottom: var(--space-lg); 
 }
 .hero-icon-temp { 
   text-align: center; 
@@ -141,11 +116,6 @@ body {
   width: 120px; 
   height: 120px; 
   filter: drop-shadow(0 4px 12px rgba(255, 159, 67, 0.3)); 
-  animation: float 3s ease-in-out infinite; 
-}
-@keyframes float { 
-  0%, 100% { transform: translateY(0); } 
-  50% { transform: translateY(-10px); } 
 }
 .weather-icon-img.sm { 
   width: 64px; 
@@ -163,7 +133,6 @@ body {
 .hero-condition { 
   font-size: 1.5rem; 
   color: var(--text-secondary); 
-  font-weight: 500; 
 }
 .hero-stats { 
   display: grid; 
@@ -177,11 +146,6 @@ body {
   padding: var(--space-md); 
   background: rgba(255, 255, 255, 0.03); 
   border-radius: var(--radius-md); 
-  transition: all var(--transition-base); 
-}
-.hero-stat:hover { 
-  background: rgba(255, 255, 255, 0.06); 
-  transform: scale(1.02); 
 }
 .hero-stat-icon { 
   font-size: 2rem; 
@@ -193,10 +157,8 @@ body {
 .hero-stat-value { 
   font-size: 1.2rem; 
   font-weight: 700; 
-  color: var(--text-primary); 
 }
 
-/* Sezione Napoli */
 .napoli-section { 
   background: linear-gradient(135deg, #1e3a8a, #2563eb); 
   border-radius: var(--radius-lg); 
@@ -218,7 +180,6 @@ body {
 .napoli-subtitle {
   font-size: 0.85rem; 
   opacity: 0.9;
-  color: rgba(255, 255, 255, 0.9);
 }
 .napoli-stats { 
   display: grid; 
@@ -230,17 +191,11 @@ body {
   padding: var(--space-md);
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  transition: all var(--transition-base);
-}
-.napoli-stat:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px);
 }
 .napoli-icon {
   width: 48px;
   height: 48px;
   margin: 0 auto var(--space-sm);
-  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.2));
 }
 .napoli-stat-value { 
   font-size: 1.4rem; 
@@ -251,10 +206,94 @@ body {
   font-size: 0.75rem; 
   color: rgba(255, 255, 255, 0.8); 
   text-transform: uppercase; 
-  letter-spacing: 0.5px;
 }
 
-/* Timeline */
+.tomorrow-section {
+  background: linear-gradient(135deg, rgba(255, 159, 67, 0.15), rgba(74, 144, 226, 0.15));
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-left: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+.tomorrow-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.tomorrow-header h3 {
+  font-size: 1.3rem;
+  color: var(--color-primary);
+}
+.tomorrow-time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.tomorrow-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.tomorrow-stat {
+  text-align: center;
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+.tomorrow-stat-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+.tomorrow-stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.tomorrow-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.tomorrow-verdict {
+  padding: var(--space-md);
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--alert-verde);
+}
+.tomorrow-verdict.gialla {
+  background: rgba(243, 156, 18, 0.1);
+  border-left-color: var(--alert-gialla);
+}
+.verdict-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+.verdict-badge.verde {
+  background: var(--alert-verde);
+  color: white;
+}
+.verdict-badge.gialla {
+  background: var(--alert-gialla);
+  color: #1A1D23;
+}
+.verdict-message {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+.verdict-advice {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 .timeline-section { 
   margin-bottom: var(--space-lg); 
 }
@@ -263,18 +302,6 @@ body {
   gap: var(--space-md); 
   overflow-x: auto; 
   padding: var(--space-sm) 0; 
-  scroll-behavior: smooth; 
-}
-.timeline-scroll::-webkit-scrollbar { 
-  height: 6px; 
-}
-.timeline-scroll::-webkit-scrollbar-track { 
-  background: var(--bg-secondary); 
-  border-radius: 3px; 
-}
-.timeline-scroll::-webkit-scrollbar-thumb { 
-  background: var(--color-primary); 
-  border-radius: 3px; 
 }
 .day-minicard { 
   flex: 0 0 auto; 
@@ -283,32 +310,20 @@ body {
   background: var(--bg-card); 
   border-radius: var(--radius-lg); 
   border: 2px solid transparent; 
-  cursor: pointer; 
-  transition: all var(--transition-base); 
   text-align: center; 
-}
-.day-minicard:hover { 
-  border-color: var(--color-primary); 
-  transform: translateY(-4px); 
-  box-shadow: var(--shadow-md); 
 }
 .day-minicard.active { 
   border-color: var(--color-primary); 
-  background: linear-gradient(135deg, var(--bg-card-hover), var(--bg-card)); 
-  transform: scale(1.05); 
-  box-shadow: var(--shadow-lg); 
 }
 .minicard-day { 
   font-size: 0.85rem; 
   font-weight: 600; 
   color: var(--text-secondary); 
-  margin-bottom: var(--space-xs); 
-  text-transform: uppercase; 
+  margin-bottom: var(--space-sm); 
 }
 .minicard-temp { 
   font-size: 1.6rem; 
   font-weight: 700; 
-  color: var(--text-primary); 
   margin: var(--space-sm) 0; 
 }
 .minicard-rain {
@@ -336,106 +351,140 @@ body {
   background: var(--alert-arancione); 
   color: white; 
 }
-.minicard-badge.rossa { 
-  background: var(--alert-rossa); 
-  color: white; 
+
+.ai-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.ai-summary {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-md);
+  font-size: 1rem;
+}
+.ai-details {
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ai-advice-list {
+  list-style: none;
+  padding: 0;
+}
+.ai-advice-list li {
+  padding: var(--space-sm) 0 var(--space-sm) var(--space-lg);
+  position: relative;
+  color: var(--text-secondary);
+}
+.ai-advice-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--alert-verde);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-/* Navigation */
-.hero-navigation { 
-  background: var(--bg-card); 
-  border-radius: var(--radius-xl); 
-  padding: var(--space-xl); 
-  margin-bottom: var(--space-lg); 
-  box-shadow: var(--shadow-md); 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
+.charts-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
 }
-.navigation-header { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-sm); 
-  margin-bottom: var(--space-lg); 
-  font-size: 1.3rem; 
-  font-weight: 700; 
+.charts-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--space-lg);
 }
-.navigation-grid { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr; 
-  gap: var(--space-lg); 
+.chart-container {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
 }
-.nav-section { 
-  padding: var(--space-lg); 
-  background: rgba(255, 255, 255, 0.02); 
-  border-radius: var(--radius-lg); 
-}
-.nav-section h3 { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-sm); 
-  margin-bottom: var(--space-md); 
-  font-size: 1.1rem; 
-}
-.ferry-item { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  padding: var(--space-md); 
-  background: rgba(255, 255, 255, 0.03); 
-  border-radius: var(--radius-md); 
-  border-left: 3px solid var(--alert-verde); 
-  margin-bottom: var(--space-sm); 
-}
-.ferry-time { 
-  font-size: 1.2rem; 
-  font-weight: 700; 
-}
-.ferry-type { 
-  font-size: 0.85rem; 
-  color: var(--text-muted); 
-}
-.ferry-status { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-xs); 
-  font-size: 0.85rem; 
-  font-weight: 600; 
-}
-.status-dot { 
-  width: 8px; 
-  height: 8px; 
-  border-radius: 50%; 
-  background: var(--alert-verde); 
+.chart-container h3 {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-md);
+  color: var(--text-secondary);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+.ferries-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+.ferries-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--space-lg);
+}
+.ferry-alert {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  border-left: 4px solid;
+}
+.ferry-alert.alert-verde {
+  background: rgba(46, 204, 113, 0.1);
+  border-color: var(--alert-verde);
+}
+.ferry-alert.alert-gialla {
+  background: rgba(243, 156, 18, 0.1);
+  border-color: var(--alert-gialla);
+}
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+.alert-icon {
+  font-size: 2rem;
+}
+.alert-header h3 {
+  font-size: 1.3rem;
+}
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+.route-card {
+  background: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+}
+.route-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-sm);
+}
+
+footer {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
   .hero-main { 
     grid-template-columns: 1fr; 
-    text-align: center; 
   }
   .hero-stats, 
-  .navigation-grid { 
-    grid-template-columns: 1fr; 
-  }
-  .napoli-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 768px) {
-  .container { 
-    padding: var(--space-sm); 
-  }
-  .hero-meteo { 
-    padding: var(--space-lg); 
-  }
-  .hero-temperature { 
-    font-size: 3.5rem; 
-  }
-  .napoli-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .day-minicard {
-    width: 120px;
+  .napoli-stats,
+  .tomorrow-stats { 
+    grid-template-columns: repeat(2, 1fr); 
   }
 }
   </style>
@@ -443,7 +492,6 @@ body {
 <body>
   <div class="container">
 
-    <!-- Quick Actions -->
     <div class="quick-actions">
       <div class="actions-wrapper">
         <a href="https://www.windy.com/?40.791,14.042,11" target="_blank" class="action-btn">📡 Radar</a>
@@ -453,17 +501,16 @@ body {
       </div>
     </div>
 
-    <!-- Hero Meteo Procida -->
     <div class="hero-meteo">
       <div class="hero-header">
         <div class="hero-location">📍 Procida, Italia</div>
-        <div class="hero-update">🔄 Aggiornato: 20:38</div>
+        <div class="hero-update">🔄 Agg: 20:53</div>
       </div>
 
       <div class="hero-main">
         <div class="hero-icon-temp">
           <img src="https://raw.githubusercontent.com/basmilius/weather-icons/dev/production/fill/svg/thunderstorms-day-rain.svg" alt="Meteo" class="weather-icon-img">
-          <div class="hero-temperature">15°C</div>
+          <div class="hero-temperature">15°</div>
           <div class="hero-condition">Mosso</div>
         </div>
 
@@ -472,7 +519,7 @@ body {
             <div class="hero-stat-icon">🌊</div>
             <div>
               <div class="hero-stat-label">Onde</div>
-              <div class="hero-stat-value">1.4m Mosso</div>
+              <div class="hero-stat-value">1.4m</div>
             </div>
           </div>
           <div class="hero-stat">
@@ -500,7 +547,6 @@ body {
       </div>
     </div>
 
-    <!-- Sezione Napoli -->
     <div class="napoli-section">
       <div class="napoli-header">
         <span style="font-size: 2.5rem;">🏙️</span>
@@ -533,7 +579,41 @@ body {
       </div>
     </div>
 
-    <!-- Timeline 7 Giorni -->
+    <div class="tomorrow-section">
+      <div class="tomorrow-header">
+        <span style="font-size: 2rem;">🌅</span>
+        <h3>Domani Mattina - DOMANI</h3>
+        <span class="tomorrow-time">Ore 06:00 - 10:00</span>
+      </div>
+      <div class="tomorrow-stats">
+        <div class="tomorrow-stat">
+          <div class="tomorrow-stat-icon">🌡️</div>
+          <div class="tomorrow-stat-value">10°C</div>
+          <div class="tomorrow-stat-label">Temperatura</div>
+        </div>
+        <div class="tomorrow-stat">
+          <div class="tomorrow-stat-icon">☔</div>
+          <div class="tomorrow-stat-value">45%</div>
+          <div class="tomorrow-stat-label">Pioggia</div>
+        </div>
+        <div class="tomorrow-stat">
+          <div class="tomorrow-stat-icon">💨</div>
+          <div class="tomorrow-stat-value">18 km/h</div>
+          <div class="tomorrow-stat-label">Vento</div>
+        </div>
+        <div class="tomorrow-stat">
+          <div class="tomorrow-stat-icon">🌊</div>
+          <div class="tomorrow-stat-value">0.9m</div>
+          <div class="tomorrow-stat-label">Onde</div>
+        </div>
+      </div>
+      <div class="tomorrow-verdict gialla">
+        <span class="verdict-badge gialla">GIALLA</span>
+        <p class="verdict-message">Collegamenti regolari, possibili piccoli ritardi.</p>
+        <p class="verdict-advice">💡 Giacca impermeabile consigliata</p>
+      </div>
+    </div>
+
     <div class="timeline-section">
       <div class="timeline-scroll">
         
@@ -596,45 +676,265 @@ body {
       </div>
     </div>
 
-    <!-- Navigazione e Traghetti -->
-    <div class="hero-navigation">
-      <div class="navigation-header">
-        ⛴️ Navigazione e Traghetti
+    <div class="ai-section">
+      <div class="ai-header">
+        🤖 Analisi AI
+      </div>
+      <div class="ai-summary">
+        Settimana variabile con piogge intense martedì (44mm) e venerdì. Condizioni mare critiche 9-10 gennaio con onde fino a 3.6m. Possibili cancellazioni aliscafi nei giorni con allerta arancione.
+      </div>
+      <div class="ai-details">
+        <ul class="ai-advice-list">
+          <li>Evitare navigazione 9-10 gennaio se possibile (allerta arancione)</li>
+          <li>Controllare orari traghetti prima della partenza, puntualità 94%</li>
+          <li>Giacca impermeabile indispensabile martedì e venerdì</li>
+          <li>Condizioni migliori previste da domenica 11 gennaio (verde)</li>
+          <li>Mare mosso per tutta la settimana, onde tra 1.4m e 3.6m</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="charts" class="charts-section">
+      <h2>📊 Andamento Settimanale</h2>
+
+      <div class="chart-container">
+        <h3>🌡️ Temperature & Precipitazioni</h3>
+        <canvas id="tempRainChart"></canvas>
       </div>
 
-      <div class="navigation-grid">
-        <div class="nav-section">
-          <h3>🌊 Condizioni Mare</h3>
-          <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-            <div style="display: flex; justify-content: space-between; padding: var(--space-sm) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-              <span>Onde</span>
-              <span style="font-weight: 700;">1.4m Mosso</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: var(--space-sm) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-              <span>Vento</span>
-              <span style="font-weight: 700;">39 km/h</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: var(--space-sm) 0;">
-              <span>Stato</span>
-              <span style="font-weight: 700; color: var(--alert-gialla);">GIALLA</span>
-            </div>
+      <div class="chart-container">
+        <h3>💨 Vento & Pressione</h3>
+        <canvas id="windPressureChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h3>🌊 Condizioni Marine</h3>
+        <canvas id="marineChart"></canvas>
+      </div>
+    </div>
+
+    <div class="ferries-section">
+      <h2>⛴️ Collegamenti Marittimi Procida</h2>
+
+      <div class="ferry-alert alert-gialla">
+        <div class="alert-header">
+          <span class="alert-icon">🚢</span>
+          <div>
+            <h3>Situazione Collegamenti - GIALLA</h3>
+            <p style="color: var(--text-secondary);">Mare Mosso - Monitorare partenze</p>
           </div>
         </div>
+        <p style="color: var(--text-secondary); margin-top: var(--space-sm);">
+          Condizioni: Onde 1.4m | Vento 39 km/h
+        </p>
+      </div>
 
-        <div class="nav-section">
-          <h3>🚢 Prossime Partenze</h3>
-          <div>
-            <p style="text-align: center; color: var(--text-muted);">Nessuna partenza programmata per oggi</p>
-            <div style="text-align: center; margin-top: var(--space-md); font-size: 0.85rem; color: var(--text-muted);">
-              <a href="https://www.traghetti-ischia.info/" target="_blank" style="color: var(--color-primary); text-decoration: none;">
-                Verifica orari aggiornati →
-              </a>
-            </div>
-          </div>
+      <h3 style="margin-bottom: var(--space-md); color: var(--text-secondary);">🚢 Prossime Partenze</h3>
+      <p style="text-align: center; color: var(--text-muted); padding: var(--space-lg);">Nessuna partenza programmata</p>
+
+      <div class="routes-grid" style="margin-top: var(--space-lg);">
+        <div class="route-card">
+          <h4>🚢 Procida → Napoli</h4>
+          <p style="color: var(--text-secondary); margin: var(--space-sm) 0;">Caremar / SNAV</p>
+          <p style="font-size: 0.85rem;">Traghetti + Aliscafi</p>
+          <a href="https://www.traghetti-ischia.info/" target="_blank" style="color: var(--color-primary); text-decoration: none; display: inline-block; margin-top: var(--space-sm);">
+            Verifica orari →
+          </a>
+        </div>
+        <div class="route-card">
+          <h4>🚢 Napoli → Procida</h4>
+          <p style="color: var(--text-secondary); margin: var(--space-sm) 0;">Caremar / SNAV</p>
+          <p style="font-size: 0.85rem;">Traghetti + Aliscafi</p>
+          <a href="https://www.traghetti-ischia.info/" target="_blank" style="color: var(--color-primary); text-decoration: none; display: inline-block; margin-top: var(--space-sm);">
+            Verifica orari →
+          </a>
+        </div>
+        <div class="route-card">
+          <h4>🚢 Procida → Pozzuoli</h4>
+          <p style="color: var(--text-secondary); margin: var(--space-sm) 0;">Gestour / Medmar</p>
+          <p style="font-size: 0.85rem;">Solo Traghetti</p>
+          <a href="https://www.traghetti-ischia.info/" target="_blank" style="color: var(--color-primary); text-decoration: none; display: inline-block; margin-top: var(--space-sm);">
+            Verifica orari →
+          </a>
+        </div>
+        <div class="route-card">
+          <h4>🚢 Procida ↔ Ischia</h4>
+          <p style="color: var(--text-secondary); margin: var(--space-sm) 0;">Caremar</p>
+          <p style="font-size: 0.85rem;">Collegamenti regolari</p>
+          <a href="https://www.traghetti-ischia.info/" target="_blank" style="color: var(--color-primary); text-decoration: none; display: inline-block; margin-top: var(--space-sm);">
+            Verifica orari →
+          </a>
         </div>
       </div>
     </div>
 
+    <footer>
+      <p>🌊 Meteo Procida Dashboard | Dati: Open-Meteo | Aggiornato: 20:53</p>
+      <p style="margin-top: var(--space-sm);">Pressione: 1013 hPa | UV: 1.35</p>
+    </footer>
+
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+  const chartData = {
+    labels: ["06/01","07/01","08/01","09/01","10/01","11/01","12/01"],
+    tempMax: [15,13,12,15,13,12,15],
+    tempMin: [13,9,9,12,11,10,10],
+    precipitation: [44.3,3.5,0.0,4.8,5.5,0.0,0.0],
+    windMax: [39,36,43,41,39,9,9],
+    pressure: [1013,1013,1013,1013,1013,1013,1013],
+    waveHeight: [1.4,1.5,2.1,2.4,3.6,2.3,1.0]
+  };
+
+  const commonOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 12 }, color: '#B4B8C1' } },
+      tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12 }
+    }
+  };
+
+  new Chart(document.getElementById('tempRainChart'), {
+    type: 'bar',
+    data: {
+      labels: chartData.labels,
+      datasets: [
+        {
+          type: 'line',
+          label: 'Temp Max (°C)',
+          data: chartData.tempMax,
+          borderColor: '#FF9F43',
+          backgroundColor: 'rgba(255, 159, 67, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          yAxisID: 'y',
+          pointRadius: 5
+        },
+        {
+          type: 'line',
+          label: 'Temp Min (°C)',
+          data: chartData.tempMin,
+          borderColor: '#4A90E2',
+          backgroundColor: 'rgba(74, 144, 226, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          yAxisID: 'y',
+          pointRadius: 5
+        },
+        {
+          type: 'bar',
+          label: 'Pioggia (mm)',
+          data: chartData.precipitation,
+          backgroundColor: 'rgba(102, 126, 234, 0.6)',
+          borderColor: '#667eea',
+          borderWidth: 2,
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      ...commonOptions,
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'Temperatura (°C)', color: '#B4B8C1' },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: '#B4B8C1' }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: 'Pioggia (mm)', color: '#B4B8C1' },
+          grid: { drawOnChartArea: false },
+          ticks: { color: '#B4B8C1' }
+        },
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#B4B8C1' } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('windPressureChart'), {
+    type: 'line',
+    data: {
+      labels: chartData.labels,
+      datasets: [
+        {
+          label: 'Vento Max (km/h)',
+          data: chartData.windMax,
+          borderColor: '#74c0fc',
+          backgroundColor: 'rgba(116, 192, 252, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          yAxisID: 'y',
+          pointRadius: 5
+        },
+        {
+          label: 'Pressione (hPa)',
+          data: chartData.pressure,
+          borderColor: '#51cf66',
+          backgroundColor: 'rgba(81, 207, 102, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          yAxisID: 'y1',
+          pointRadius: 5
+        }
+      ]
+    },
+    options: {
+      ...commonOptions,
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'Vento (km/h)', color: '#B4B8C1' },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: '#B4B8C1' }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: 'Pressione (hPa)', color: '#B4B8C1' },
+          grid: { drawOnChartArea: false },
+          ticks: { color: '#B4B8C1' }
+        },
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#B4B8C1' } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('marineChart'), {
+    type: 'line',
+    data: {
+      labels: chartData.labels,
+      datasets: [
+        {
+          label: 'Altezza Onde (m)',
+          data: chartData.waveHeight,
+          borderColor: '#339af0',
+          backgroundColor: 'rgba(51, 154, 240, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 5,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      ...commonOptions,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Altezza Onde (m)', color: '#B4B8C1' },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: '#B4B8C1' }
+        },
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#B4B8C1' } }
+      }
+    }
+  });
+  </script>
 </body>
 </html>
