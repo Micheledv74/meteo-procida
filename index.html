@@ -1,1380 +1,835 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#FF9F43">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Meteo Procida">
-  <title>Meteo Procida - Pendolari</title>
-  <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Meteo & Traghetti Procida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-:root {
-  --bg-primary: #1A1D23;
-  --bg-secondary: #22252B;
-  --bg-card: #2A2E35;
-  --bg-card-hover: #33373F;
-  --text-primary: #FFFFFF;
-  --text-secondary: #B4B8C1;
-  --text-muted: #7C8089;
-  --color-primary: #FF9F43;
-  --color-secondary: #4A90E2;
-  --color-napoli: #3B82F6;
-  --alert-verde: #2ECC71;
-  --alert-gialla: #F39C12;
-  --alert-arancione: #E67E22;
-  --alert-rossa: #E74C3C;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --space-xs: 8px;
-  --space-sm: 12px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  font-family: 'Inter', -apple-system, sans-serif; 
-  background: var(--bg-primary); 
-  color: var(--text-primary); 
-  line-height: 1.6; 
-  -webkit-font-smoothing: antialiased; 
-  overflow-x: hidden; 
-}
-.container { max-width: 1400px; margin: 0 auto; padding: 10px; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-@supports (padding: max(0px)) {
-  body {
-    padding-top: max(0px, env(safe-area-inset-top));
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
-  }
-}
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
 
-.quick-actions { 
-  position: sticky; 
-  top: 0; 
-  z-index: 100; 
-  background: var(--bg-secondary); 
-  backdrop-filter: blur(10px); 
-  padding: 10px; 
-  box-shadow: var(--shadow-md); 
-  margin-bottom: 10px; 
-  border-radius: var(--radius-lg); 
-}
-.actions-wrapper { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.action-btn { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-sm); 
-  padding: 8px 16px; 
-  background: var(--bg-card); 
-  border: 2px solid transparent; 
-  border-radius: var(--radius-md); 
-  color: var(--text-primary); 
-  font-weight: 600; 
-  font-size: 0.9rem; 
-  cursor: pointer; 
-  transition: all var(--transition-base); 
-  min-height: 44px; 
-}
-.action-btn:hover { 
-  background: var(--bg-card-hover); 
-  border-color: var(--color-primary); 
-  transform: translateY(-2px); 
-}
-.action-btn svg { flex-shrink: 0; width: 20px; height: 20px; }
+        .header h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
 
-/* ✅ BANNER DOPPIO - PROCIDA + NAPOLI */
-.next-departure-banner { 
-  position: sticky; 
-  top: 75px; 
-  z-index: 90; 
-  background: linear-gradient(135deg, #667eea, #764ba2); 
-  padding: 12px; 
-  border-radius: var(--radius-lg); 
-  margin-bottom: 10px; 
-  box-shadow: var(--shadow-lg); 
-}
-.departure-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.departure-column {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius-md);
-  padding: 10px;
-}
-.departure-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  opacity: 0.9;
-}
-.departure-header svg {
-  width: 20px;
-  height: 20px;
-}
-.departure-time {
-  font-size: 1.3rem;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-.departure-type {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  margin-bottom: 6px;
-}
-.departure-countdown {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #FFD700;
-  margin-bottom: 4px;
-}
-.departure-status-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.75rem;
-}
-.status-dot { width: 8px; height: 8px; border-radius: 50%; }
-.status-dot.verde { background: var(--alert-verde); }
-.status-dot.gialla { background: var(--alert-gialla); }
-.status-dot.rossa { background: var(--alert-rossa); }
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
 
-.hero-meteo-compact { 
-  background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover)); 
-  border-radius: var(--radius-xl); 
-  padding: 16px; 
-  margin-bottom: 10px; 
-  box-shadow: var(--shadow-lg); 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
-}
-.hero-header { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 12px; 
-  font-size: 0.9rem; 
-  color: var(--text-secondary); 
-}
-.hero-main-compact { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  gap: var(--space-lg); 
-  margin-bottom: 12px; 
-}
-.hero-primary { display: flex; align-items: center; gap: var(--space-md); }
-.weather-icon-img { width: 80px; height: 80px; filter: drop-shadow(0 4px 12px rgba(255, 159, 67, 0.3)); }
-.hero-temperature { 
-  font-size: 3.5rem; 
-  font-weight: 900; 
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  background-clip: text; 
-  line-height: 1; 
-}
-.hero-condition { font-size: 1.2rem; color: var(--text-secondary); font-weight: 500; margin-top: var(--space-xs); }
-.hero-stats-compact { display: flex; flex-direction: column; gap: 6px; }
-.stat-mini { font-size: 0.95rem; color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-xs); }
-.stat-mini svg { flex-shrink: 0; width: 20px; height: 20px; }
-.hero-alert-compact { padding: 12px; border-radius: var(--radius-md); display: flex; align-items: center; gap: var(--space-sm); }
-.hero-alert-compact.verde { background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); }
-.hero-alert-compact.gialla { background: rgba(243, 156, 18, 0.1); border: 1px solid rgba(243, 156, 18, 0.3); }
-.hero-alert-compact.arancione { background: rgba(230, 126, 34, 0.1); border: 1px solid rgba(230, 126, 34, 0.3); }
-.alert-badge { padding: 4px 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.8rem; }
-.hero-alert-compact.verde .alert-badge { background: var(--alert-verde); color: white; }
-.hero-alert-compact.gialla .alert-badge { background: var(--alert-gialla); color: #1A1D23; }
-.hero-alert-compact.arancione .alert-badge { background: var(--alert-arancione); color: white; }
-.alert-text { font-size: 0.95rem; color: var(--text-secondary); }
+        .last-update {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #999;
+        }
 
-.tomorrow-napoli-unified { 
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08)); 
-  border: 2px solid rgba(102, 126, 234, 0.3); 
-  border-radius: var(--radius-lg); 
-  padding: 12px; 
-  margin-bottom: 10px; 
-}
-.unified-header h3 { 
-  font-size: 1.1rem; 
-  margin-bottom: 10px; 
-  color: var(--color-primary); 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-xs); 
-}
-.unified-grid { 
-  display: grid; 
-  grid-template-columns: 1fr auto 1fr; 
-  gap: 12px; 
-  align-items: center; 
-  margin-bottom: 10px; 
-}
-.location-column { 
-  background: rgba(255, 255, 255, 0.03); 
-  padding: 10px; 
-  border-radius: var(--radius-md); 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
-}
-.location-column.procida { border-left: 3px solid #FF9F43; }
-.location-column.napoli { border-left: 3px solid #3B82F6; }
-.location-label { 
-  display: flex; 
-  align-items: center; 
-  gap: var(--space-xs); 
-  margin-bottom: 8px; 
-  font-size: 0.9rem; 
-  font-weight: 600; 
-  color: var(--text-secondary); 
-}
-.location-icon { font-size: 1.2rem; }
-.stats-mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.stat-mini-box { 
-  text-align: center; 
-  padding: 8px; 
-  background: rgba(255, 255, 255, 0.05); 
-  border-radius: var(--radius-sm); 
-  position: relative; 
-}
-.stat-icon { font-size: 1.2rem; margin-bottom: 2px; }
-.stat-value { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
-.stat-advice { font-size: 0.85rem; font-weight: 600; }
-.stat-delta { font-size: 0.75rem; font-weight: 700; margin-top: 2px; }
-.stat-delta.positive { color: #ff6b6b; }
-.stat-delta.negative { color: #51cf66; }
-.location-separator { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); }
-.separator-line { width: 2px; height: 30px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); }
-.separator-arrow { font-size: 1.5rem; color: var(--color-primary); font-weight: 700; }
-.ai-summary-unified { 
-  display: flex; 
-  align-items: flex-start; 
-  gap: var(--space-sm); 
-  padding: 10px; 
-  background: rgba(255, 255, 255, 0.05); 
-  border-radius: var(--radius-md); 
-  border-left: 3px solid var(--color-primary); 
-}
-.ai-icon { font-size: 1.3rem; flex-shrink: 0; }
-.ai-text { flex: 1; font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary); }
+        .ferry-banner {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            color: white;
+        }
 
-.widgets-compact { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
-.widget-compact { 
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  gap: 8px; 
-  padding: 12px 8px; 
-  background: var(--bg-card); 
-  border-radius: var(--radius-md); 
-  transition: all var(--transition-base); 
-  min-height: 110px; 
-  text-align: center; 
-}
-.widget-compact:hover { 
-  background: var(--bg-card-hover); 
-  transform: translateY(-2px); 
-  box-shadow: var(--shadow-md);
-}
-.widget-icon { 
-  font-size: 2.5rem; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  color: var(--color-primary); 
-}
-.widget-icon svg { width: 48px; height: 48px; stroke-width: 2; }
-.widget-data { width: 100%; }
-.widget-label { 
-  font-size: 0.7rem; 
-  color: var(--text-muted); 
-  text-transform: uppercase; 
-  margin-bottom: 4px; 
-  letter-spacing: 0.5px;
-}
-.widget-value { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
-.trend-up { color: var(--alert-arancione); }
-.trend-down { color: var(--alert-verde); }
-.trend-stable { color: var(--text-secondary); }
+        .ferry-banner h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-.charts-inline-section { margin-bottom: 10px; }
-.section-title { font-size: 1.3rem; margin-bottom: 10px; display: flex; align-items: center; gap: var(--space-sm); }
-.charts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
-.chart-mini { background: var(--bg-card); padding: 12px; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.05); }
-.chart-mini h3 { font-size: 0.9rem; margin-bottom: 8px; color: var(--text-secondary); }
-.chart-mini canvas { height: 150px !important; }
-.expand-charts-btn { 
-  width: 100%; 
-  padding: 12px; 
-  background: rgba(255, 159, 67, 0.1); 
-  border: 2px solid var(--color-primary); 
-  border-radius: var(--radius-md); 
-  color: var(--color-primary); 
-  font-weight: 600; 
-  cursor: pointer; 
-  transition: all var(--transition-base); 
-  min-height: 44px; 
-}
-.expand-charts-btn:hover { background: var(--color-primary); color: var(--bg-primary); }
+        .ferry-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
 
-/* ✅ SEZIONE ORARI COMPATTA - STILE TABELLONE */
-.ferry-schedule-compact {
-  background: var(--bg-card);
-  border-radius: var(--radius-xl);
-  padding: 12px;
-  margin-bottom: 10px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.ferry-schedule-compact h2 {
-  color: var(--color-primary);
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-.schedule-route {
-  margin-bottom: 12px;
-}
-.schedule-route:last-child {
-  margin-bottom: 0;
-}
-.route-header {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-  padding-left: 4px;
-  border-left: 3px solid var(--color-primary);
-  padding-left: 10px;
-}
-.route-header.napoli-route {
-  border-left-color: var(--color-napoli);
-}
-.schedule-slots {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.schedule-slot {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  transition: all var(--transition-fast);
-  border: 1px solid transparent;
-}
-.schedule-slot:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--color-primary);
-}
-.schedule-slot-time {
-  font-weight: 700;
-  font-size: 1rem;
-}
-.schedule-slot-icon {
-  font-size: 1.1rem;
-}
-.schedule-slot.status-verde {
-  border-left: 3px solid var(--alert-verde);
-}
-.schedule-slot.status-gialla {
-  border-left: 3px solid var(--alert-gialla);
-}
-.schedule-slot.status-rossa {
-  border-left: 3px solid var(--alert-rossa);
-}
+        .ferry-direction {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
 
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); z-index: 998; opacity: 0; visibility: hidden; transition: all var(--transition-base); }
-.drawer-overlay.active { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; right: -750px; width: 750px; max-width: 95vw; height: 100vh; background: var(--bg-secondary); box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5); z-index: 999; transition: right 500ms cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; }
-.drawer.active { right: 0; }
-.drawer-header { position: sticky; top: 0; background: var(--bg-card); padding: var(--space-lg); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); z-index: 10; }
-.drawer-close { background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: var(--space-xs); transition: all var(--transition-base); }
-.drawer-close:hover { color: var(--color-primary); transform: rotate(90deg); }
-.drawer-content { padding: var(--space-lg); }
-.chart-section { margin-bottom: var(--space-xl); }
-.chart-section h3 { margin-bottom: var(--space-md); font-size: 1.1rem; color: var(--text-secondary); }
-.chart-canvas { background: var(--bg-card); padding: var(--space-lg); border-radius: var(--radius-lg); min-height: 250px; }
+        .ferry-direction h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
 
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all var(--transition-base); }
-.modal-overlay.active { opacity: 1; visibility: visible; }
-.modal { background: var(--bg-secondary); border-radius: var(--radius-xl); max-width: 95vw; max-height: 95vh; width: 1200px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); transform: scale(0.9); transition: transform var(--transition-base); display: flex; flex-direction: column; }
-.modal-overlay.active .modal { transform: scale(1); }
-.modal-header { padding: var(--space-lg); background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-.modal-close { background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: var(--space-xs); transition: all var(--transition-base); }
-.modal-close:hover { color: var(--color-primary); transform: rotate(90deg); }
-.modal-body { padding: 0; overflow-y: auto; flex: 1; }
-.modal-iframe { width: 100%; height: 700px; border: none; background: var(--bg-primary); }
-.webcam-links { text-align: center; padding: 60px 40px; }
-.webcam-links h3 { margin-bottom: 30px; font-size: 1.5rem; }
-.webcam-link { display: block; padding: 20px 40px; background: linear-gradient(135deg, var(--color-primary), #FF7F2A); color: white; border-radius: 12px; text-decoration: none; margin: 20px auto; font-weight: 600; max-width: 450px; transition: all 0.3s; font-size: 1.1rem; min-height: 44px; }
-.webcam-link:hover { background: linear-gradient(135deg, var(--color-secondary), #3A7BC8); transform: translateY(-3px); }
+        .ferry-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+            transition: transform 0.2s, box-shadow 0.2s;
+            backdrop-filter: blur(5px);
+        }
 
-@media (max-width: 1024px) {
-  .charts-grid { grid-template-columns: repeat(2, 1fr); }
-  .widgets-compact { grid-template-columns: repeat(2, 1fr); }
-}
+        .ferry-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
 
-@media (max-width: 768px) {
-  .container { padding: 8px; }
-  
-  .quick-actions { padding: 8px; }
-  .actions-wrapper { gap: 6px; }
-  .action-btn { 
-    padding: 8px 12px; 
-    font-size: 0.8rem;
-    flex: 1;
-    min-width: 0;
-    justify-content: center;
-  }
-  .action-btn svg { width: 18px; height: 18px; }
-  
-  .departure-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  .departure-column {
-    padding: 8px;
-  }
-  .departure-time {
-    font-size: 1.1rem;
-  }
-  
-  .hero-meteo-compact { padding: 12px; }
-  .hero-main-compact { 
-    flex-direction: column; 
-    text-align: center; 
-    gap: 12px; 
-  }
-  .hero-temperature { font-size: 3rem; }
-  .hero-stats-compact { align-items: center; }
-  .weather-icon-img { width: 70px; height: 70px; }
-  .stat-mini svg { width: 18px; height: 18px; }
-  
-  .tomorrow-napoli-unified { padding: 12px; }
-  .unified-grid { 
-    grid-template-columns: 1fr; 
-    gap: 10px; 
-  }
-  .location-separator { 
-    flex-direction: row; 
-    justify-content: center; 
-    gap: var(--space-sm);
-  }
-  .separator-line { 
-    width: 40px; 
-    height: 2px; 
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); 
-  }
-  .separator-arrow { 
-    transform: rotate(90deg); 
-    font-size: 1.2rem;
-  }
-  
-  .widgets-compact { 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 6px; 
-  }
-  .widget-compact { 
-    padding: 10px 6px; 
-    min-height: 100px; 
-  }
-  .widget-icon svg { 
-    width: 44px; 
-    height: 44px; 
-  }
-  .widget-label { font-size: 0.65rem; }
-  .widget-value { font-size: 1.05rem; }
-  
-  .charts-grid { 
-    grid-template-columns: 1fr; 
-    gap: 6px; 
-  }
-  .chart-mini { padding: 10px; }
-  .chart-mini canvas { height: 180px !important; }
-  
-  .schedule-slots {
-    gap: 6px;
-  }
-  .schedule-slot {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-  }
-  .schedule-slot-time {
-    font-size: 0.9rem;
-  }
-  
-  .drawer { 
-    width: 100vw !important;
-    right: -100vw !important;
-    max-width: 100vw;
-  }
-  .drawer.active { 
-    right: 0 !important; 
-  }
-  
-  .modal {
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    border-radius: 0;
-  }
-  .modal-iframe {
-    height: 70vh;
-  }
-}
-  </style>
+        .ferry-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .ferry-card.verde { border-left-color: #10b981; }
+        .ferry-card.gialla { border-left-color: #f59e0b; }
+        .ferry-card.rossa { border-left-color: #ef4444; }
+
+        .ferry-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .ferry-info {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ferry-countdown {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.verde { background: #10b981; color: white; }
+        .status-badge.gialla { background: #f59e0b; color: white; }
+        .status-badge.rossa { background: #ef4444; color: white; }
+
+        .no-departures {
+            text-align: center;
+            opacity: 0.7;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .meteo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .meteo-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .meteo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .meteo-card h2 {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meteo-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .meteo-description {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .forecast-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .forecast-section h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .forecast-day {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .forecast-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .forecast-day-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .forecast-icon {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+
+        .forecast-temp {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .forecast-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .schedule-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .schedule-section h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .schedule-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .schedule-slot {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .schedule-slot:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .schedule-slot.verde { 
+            border-color: #10b981; 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+        
+        .schedule-slot.gialla { 
+            border-color: #f59e0b; 
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+        
+        .schedule-slot.rossa { 
+            border-color: #ef4444; 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .slot-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .slot-type {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 3px;
+        }
+
+        .slot-company {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 2px;
+        }
+
+        .slot-destination {
+            font-size: 0.8rem;
+            color: #475569;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .charts-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .charts-section h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .ferry-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .ferry-time {
+                font-size: 1.4rem;
+            }
+
+            .ferry-banner {
+                padding: 20px;
+            }
+
+            .ferry-direction {
+                padding: 15px;
+            }
+
+            .schedule-table {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .slot-time {
+                font-size: 1.3rem;
+            }
+
+            .meteo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .forecast-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-
-    <div class="quick-actions">
-      <div class="actions-wrapper">
-        <button class="action-btn" onclick="openModal('radar')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-          Radar
-        </button>
-        <button class="action-btn" onclick="openDrawer()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3v18h18"/>
-            <path d="M18 17V9"/>
-            <path d="M13 17V5"/>
-            <path d="M8 17v-3"/>
-          </svg>
-          Grafici (5)
-        </button>
-        <button class="action-btn" onclick="openModal('traffic')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 21V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14"/>
-            <path d="M6 21V5"/>
-            <path d="M18 21V5"/>
-          </svg>
-          Traffico
-        </button>
-        <button class="action-btn" onclick="openModal('webcam')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-          Webcam
-        </button>
-      </div>
-    </div>
-
-    <div class="next-departure-banner">
-      <div class="departure-grid">
-        <div class="departure-column">
-          <div class="departure-header">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 21c0-2.4 4-4 10-4s10 1.6 10 4"/>
-              <path d="M2 21l8-11 12 11"/>
-              <path d="M12 2v8"/>
-            </svg>
-            🏝️ DA PROCIDA
-          </div>
-          <div class="departure-time" id="procidaTime">--:--</div>
-          <div class="departure-type" id="procidaType">Caricamento...</div>
-          <div class="departure-countdown" id="procidaCountdown">Calcolo...</div>
-          <div class="departure-status-row">
-            <span class="status-dot verde" id="procidaStatusDot"></span>
-            <span id="procidaStatus">In Orario</span>
-          </div>
+    <div class="container">
+        <div class="header">
+            <h1>🏝️ Dashboard Procida Live</h1>
+            <p>Meteo in tempo reale & Orari Traghetti/Aliscafi</p>
+            <div class="last-update" id="last-update">Caricamento...</div>
         </div>
 
-        <div class="departure-column">
-          <div class="departure-header">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 21c0-2.4 4-4 10-4s10 1.6 10 4"/>
-              <path d="M2 21l8-11 12 11"/>
-              <path d="M12 2v8"/>
-            </svg>
-            🏛️ DA NAPOLI
-          </div>
-          <div class="departure-time" id="napoliTime">--:--</div>
-          <div class="departure-type" id="napoliType">Caricamento...</div>
-          <div class="departure-countdown" id="napoliCountdown">Calcolo...</div>
-          <div class="departure-status-row">
-            <span class="status-dot verde" id="napoliStatusDot"></span>
-            <span id="napoliStatus">In Orario</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-meteo-compact">
-      <div class="hero-header">
-        <div class="hero-location">📍 Procida, Italia</div>
-        <div class="hero-update">🔄 Agg: 16:14</div>
-      </div>
-
-      <div class="hero-main-compact">
-        <div class="hero-primary">
-          <img class="weather-icon-img" id="heroWeatherIcon" src="https://raw.githubusercontent.com/Micheledv74/previsioni/main/icons/meteocons/rain.svg" alt="Meteo">
-          <div>
-            <div class="hero-temperature">15°C</div>
-            <div class="hero-condition">Molto mosso</div>
-          </div>
-        </div>
-
-        <div class="hero-stats-compact">
-          <div class="stat-mini">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-              <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-              <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-            </svg>
-            3.0m Molto mosso
-          </div>
-          <div class="stat-mini">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
-            </svg>
-            47 km/h SE
-          </div>
-          <div class="stat-mini">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            25 km visibilità
-          </div>
-          <div class="stat-mini">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
-            </svg>
-            15°C mare
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-alert-compact arancione">
-        <span class="alert-badge">ARANCIONE</span>
-        <span class="alert-text">Rischio cancellazioni</span>
-      </div>
-    </div>
-
-    <div class="tomorrow-napoli-unified">
-      <div class="unified-header">
-        <h3>🌅 Domani Mattina (06:00-10:00) - Traghetto 07:50</h3>
-      </div>
-      
-      <div class="unified-grid">
-        <div class="location-column procida">
-          <div class="location-label">
-            <span class="location-icon">🏝️</span>
-            <span class="location-name">Procida (Partenza)</span>
-          </div>
-          <div class="stats-mini-grid">
-            <div class="stat-mini-box">
-              <div class="stat-icon">🌡️</div>
-              <div class="stat-value">14°C</div>
+        <div class="ferry-banner">
+            <h2>⛴️ Prossime Partenze in Tempo Reale</h2>
+            <div class="ferry-grid">
+                <div class="ferry-direction">
+                    <h3>⛴️ Procida → Napoli</h3>
+                    <div id="procida-napoli-cards">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+                <div class="ferry-direction">
+                    <h3>🚤 Napoli → Procida</h3>
+                    <div id="napoli-procida-cards">
+                        <div class="loader"></div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">☔</div>
-              <div class="stat-value">6%</div>
-            </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">💨</div>
-              <div class="stat-value">21 km/h</div>
-            </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">🌊</div>
-              <div class="stat-value">2.0m</div>
-            </div>
-          </div>
         </div>
 
-        <div class="location-separator">
-          <div class="separator-line"></div>
-          <div class="separator-arrow">→</div>
-          <div class="separator-line"></div>
+        <div class="meteo-grid">
+            <div class="meteo-card">
+                <h2>🌡️ Temperatura</h2>
+                <div class="meteo-value" id="temperatura">
+                    <div class="loader"></div>
+                </div>
+                <div class="meteo-description" id="temp-desc">Rilevazione in corso...</div>
+            </div>
+            <div class="meteo-card">
+                <h2>🌊 Vento</h2>
+                <div class="meteo-value" id="vento">
+                    <div class="loader"></div>
+                </div>
+                <div class="meteo-description" id="wind-desc">Direzione e intensità</div>
+            </div>
+            <div class="meteo-card">
+                <h2>💧 Umidità</h2>
+                <div class="meteo-value" id="umidita">
+                    <div class="loader"></div>
+                </div>
+                <div class="meteo-description" id="humidity-desc">Umidità relativa</div>
+            </div>
+            <div class="meteo-card">
+                <h2>🌅 Pressione</h2>
+                <div class="meteo-value" id="pressione">
+                    <div class="loader"></div>
+                </div>
+                <div class="meteo-description" id="pressure-desc">hPa</div>
+            </div>
         </div>
 
-        <div class="location-column napoli">
-          <div class="location-label">
-            <span class="location-icon">🏛️</span>
-            <span class="location-name">Napoli (Arrivo)</span>
-          </div>
-          <div class="stats-mini-grid">
-            <div class="stat-mini-box">
-              <div class="stat-icon">🌡️</div>
-              <div class="stat-value">15°C</div>
-              <div class="stat-delta ">0°</div>
+        <div class="forecast-section">
+            <h2>📅 Previsioni 5 Giorni</h2>
+            <div class="forecast-grid" id="forecast-grid">
+                <div class="loader"></div>
             </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">☔</div>
-              <div class="stat-value">100%</div>
-              <div class="stat-delta negative">0%</div>
-            </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">💨</div>
-              <div class="stat-value">33 km/h</div>
-              <div class="stat-delta negative">-14</div>
-            </div>
-            <div class="stat-mini-box">
-              <div class="stat-icon">🧥</div>
-              <div class="stat-value stat-advice">Giacca leggera</div>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <div class="ai-summary-unified">
-        <span class="ai-icon">🤖</span>
-        <span class="ai-text">Mare mosso ARANCIONE. Niente pioggia. A Napoli stessa pioggia.</span>
-      </div>
+        <div class="charts-section">
+            <h2>📊 Andamento Temperatura e Vento</h2>
+            <div class="chart-container">
+                <canvas id="tempChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="windChart"></canvas>
+            </div>
+        </div>
+
+        <div class="schedule-section">
+            <h2>📅 Tutti gli Orari Procida → Napoli</h2>
+            <div class="schedule-table" id="schedule-procida-napoli">
+                <div class="loader"></div>
+            </div>
+        </div>
+
+        <div class="schedule-section">
+            <h2>📅 Tutti gli Orari Napoli → Procida</h2>
+            <div class="schedule-table" id="schedule-napoli-procida">
+                <div class="loader"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Dati aggiornati automaticamente ogni 30 secondi</p>
+            <p>Powered by <a href="https://github.com" target="_blank">GitHub Pages</a> + n8n</p>
+        </div>
     </div>
 
-    <div class="widgets-compact">
-      <div class="widget-compact">
-        <div class="widget-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 21c0-2.4 4-4 10-4s10 1.6 10 4"/>
-            <path d="M2 21l8-11 12 11"/>
-            <path d="M12 2v8"/>
-          </svg>
-        </div>
-        <div class="widget-data">
-          <div class="widget-label">Prossimo</div>
-          <div class="widget-value" id="widgetNextTime">--:--</div>
-        </div>
-      </div>
-      
-      <div class="widget-compact">
-        <div class="widget-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-            <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-          </svg>
-        </div>
-        <div class="widget-data">
-          <div class="widget-label">Onde trend</div>
-          <div class="widget-value trend-up">↗ 3.0m</div>
-        </div>
-      </div>
-      
-      <div class="widget-compact">
-        <div class="widget-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2"/>
-          </svg>
-        </div>
-        <div class="widget-data">
-          <div class="widget-label">Vento trend</div>
-          <div class="widget-value trend-down">↘ 47km/h</div>
-        </div>
-      </div>
-      
-      <div class="widget-compact">
-        <div class="widget-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-        </div>
-        <div class="widget-data">
-          <div class="widget-label">Pressione</div>
-          <div class="widget-value trend-down">↘ 991</div>
-        </div>
-      </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        const FERRY_JSON_URL = 'https://raw.githubusercontent.com/USERNAME/REPO/main/ferry-schedules.json';
+        const METEO_JSON_URL = 'https://raw.githubusercontent.com/USERNAME/REPO/main/meteo-data.json';
 
-    <div class="charts-inline-section">
-      <h2 class="section-title">📊 Andamento 7 Giorni</h2>
-      
-      <div class="charts-grid">
-        <div class="chart-mini">
-          <h3>🌡️ Temperature</h3>
-          <canvas id="tempChartMini"></canvas>
-        </div>
-        
-        <div class="chart-mini">
-          <h3>🌊 Onde</h3>
-          <canvas id="waveChartMini"></canvas>
-        </div>
-        
-        <div class="chart-mini">
-          <h3>💨 Vento</h3>
-          <canvas id="windChartMini"></canvas>
-        </div>
-      </div>
-      
-      <button class="expand-charts-btn" onclick="openDrawer()">
-        📈 Vedi tutti i grafici dettagliati (5)
-      </button>
-    </div>
+        let tempChart = null;
+        let windChart = null;
 
-    <div class="ferry-schedule-compact">
-      <h2>🚢 Orari Traghetti Oggi</h2>
-      
-      <div class="schedule-route">
-        <div class="route-header">🏝️ PROCIDA → NAPOLI</div>
-        <div class="schedule-slots" id="procidaNapoliSlots"></div>
-      </div>
-      
-      <div class="schedule-route">
-        <div class="route-header napoli-route">🏛️ NAPOLI → PROCIDA</div>
-        <div class="schedule-slots" id="napoliProcidaSlots"></div>
-      </div>
-    </div>
-
-    <div class="drawer-overlay" onclick="closeDrawer()"></div>
-    <div class="drawer">
-      <div class="drawer-header">
-        <h2 class="drawer-title">📊 Grafici Settimanali</h2>
-        <button class="drawer-close" onclick="closeDrawer()">✕</button>
-      </div>
-      <div class="drawer-content">
-        <div class="chart-section">
-          <h3>🌡️ Temperature 7 Giorni</h3>
-          <div class="chart-canvas" id="tempChartContainer"></div>
-        </div>
-        <div class="chart-section">
-          <h3>💨 Vento 7 Giorni</h3>
-          <div class="chart-canvas" id="windChartContainer"></div>
-        </div>
-        <div class="chart-section">
-          <h3>🌊 Onde 7 Giorni</h3>
-          <div class="chart-canvas" id="waveChartContainer"></div>
-        </div>
-        <div class="chart-section">
-          <h3>☔ Pioggia 7 Giorni</h3>
-          <div class="chart-canvas" id="rainChartContainer"></div>
-        </div>
-        <div class="chart-section">
-          <h3>📊 Pressione 7 Giorni</h3>
-          <div class="chart-canvas" id="pressureChartContainer"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-overlay" onclick="closeModal()">
-      <div class="modal" onclick="event.stopPropagation()">
-        <div class="modal-header">
-          <h3 class="modal-title" id="modalTitle">Modal</h3>
-          <button class="modal-close" onclick="closeModal()">✕</button>
-        </div>
-        <div class="modal-body" id="modalBody"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script>
-    const weatherData = {"location":{"name":"Procida","latitude":40.791664,"longitude":14.041672,"timezone":"Europe/Rome"},"generated_at":"2026-02-12T16:14:33.243Z","daily":[{"date":"2026-02-12","dayName":"giovedì","weather_code":80,"temp_max":14.9,"temp_min":12.6,"apparent_temp_max":13.9,"apparent_temp_min":7.4,"precipitation_sum":12.9,"precipitation_hours":10,"precipitation_probability_max":100,"wind_speed_max":47.4,"wind_gusts_max":75.2,"wind_direction":280,"uv_index_max":3.7,"sunrise":"2026-02-12T07:01","sunset":"2026-02-12T17:34","wave_height_max":2.98,"wave_direction":262,"wave_period_max":8.6,"sea_state":"Molto mosso","sea_severity":"ARANCIONE","moon_phase":"🌗 Ultimo quarto","hourly":{"time":["2026-02-12T00:00","2026-02-12T01:00","2026-02-12T02:00","2026-02-12T03:00","2026-02-12T04:00","2026-02-12T05:00","2026-02-12T06:00","2026-02-12T07:00","2026-02-12T08:00","2026-02-12T09:00","2026-02-12T10:00","2026-02-12T11:00","2026-02-12T12:00","2026-02-12T13:00","2026-02-12T14:00","2026-02-12T15:00","2026-02-12T16:00","2026-02-12T17:00","2026-02-12T18:00","2026-02-12T19:00","2026-02-12T20:00","2026-02-12T21:00","2026-02-12T22:00","2026-02-12T23:00"],"temperature":[14.4,14.6,14.6,14.5,14.8,14.7,14.8,13.9,13.5,13.1,12.6,12.8,13.6,14.3,14.3,13.7,13.6,13.9,14.4,14.9,14.6,14.9,14.6,14.6],"precipitation":[0,0,0,0,0,0,0,1.4,1.4,1.4,3.7,2.5,0.3,1.3,0,0.2,0.6,0.1,0,0,0,0,0,0],"precipitation_probability":[0,3,5,8,8,3,10,78,100,100,100,100,98,75,63,38,15,0,0,3,3,13,15,20],"wind_speed":[7.1,9,9.8,11.6,11.4,8.1,9.4,18.2,21.9,17.4,7.2,14.7,19.2,43.8,47.4,36.2,29.4,27.8,28.6,33.2,34.3,41.1,38.1,40.5],"wind_gusts":[13,10.4,13.7,16.6,16.2,13,12.6,30.6,29.2,28.8,23,24.5,28.4,60.5,75.2,67.3,50,39.2,38.5,44.6,46.8,62.3,56.9,55.8],"wind_direction":[285,268,262,265,259,249,203,214,225,202,174,149,264,279,285,295,292,289,291,304,303,300,301,299],"humidity":[83,84,82,83,79,79,79,87,84,87,89,90,83,79,75,84,85,81,78,68,72,69,70,70],"pressure":[1000.1,999.3,999.1,998.1,997.6,995.8,994.4,993,992.2,990.4,990.6,988.7,987.8,986.6,986.4,986.4,986.7,986.9,987.5,988.5,989.4,989.4,989.9,990.3],"cloud_cover":[51,64,73,100,100,100,100,100,100,100,100,100,99,100,100,100,100,100,100,100,100,100,100,98],"visibility":[24600,22740,26680,25660,34540,35760,35040,14600,13520,10020,6720,10680,24200,30300,43800,21660,19580,29660,37240,56320,49940,55100,53140,53100],"uv_index":[0,0,0,0,0,0,0,0,0.05,0.05,0.25,0.15,3.7,1.2,3.05,1.4,0.4,0.45,0.05,0,0,0,0,0],"wave_height":[2.1,2.12,2.06,1.98,1.92,1.84,1.78,1.7,1.66,1.6,1.56,1.76,1.96,2.16,2.34,2.54,2.72,2.72,2.72,2.72,2.78,2.84,2.9,2.98]}},{"date":"2026-02-13","dayName":"venerdì","weather_code":3,"temp_max":14.9,"temp_min":13.4,"apparent_temp_max":14.1,"apparent_temp_min":8.4,"precipitation_sum":0,"precipitation_hours":0,"precipitation_probability_max":10,"wind_speed_max":42.4,"wind_gusts_max":59.4,"wind_direction":298,"uv_index_max":4,"sunrise":"2026-02-13T07:00","sunset":"2026-02-13T17:35","wave_height_max":3.34,"wave_direction":262,"wave_period_max":8.95,"sea_state":"Molto mosso","sea_severity":"ARANCIONE","moon_phase":"🌘 Calante","hourly":{"time":["2026-02-13T00:00","2026-02-13T01:00","2026-02-13T02:00","2026-02-13T03:00","2026-02-13T04:00","2026-02-13T05:00","2026-02-13T06:00","2026-02-13T07:00","2026-02-13T08:00","2026-02-13T09:00","2026-02-13T10:00","2026-02-13T11:00","2026-02-13T12:00","2026-02-13T13:00","2026-02-13T14:00","2026-02-13T15:00","2026-02-13T16:00","2026-02-13T17:00","2026-02-13T18:00","2026-02-13T19:00","2026-02-13T20:00","2026-02-13T21:00","2026-02-13T22:00","2026-02-13T23:00"],"temperature":[14.7,14.4,14.5,14.7,14.5,14.5,14.4,14.2,14.1,13.7,13.4,13.6,13.8,14.3,14.7,14.9,14.9,14.9,14.9,14.9,14.7,14.7,14.4,14.3],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipitation_probability":[10,3,0,3,3,0,5,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"wind_speed":[42.4,40.7,37.9,40.9,40.3,38.2,37.4,37.1,35.4,29.8,24.5,21.2,18.9,20.2,22.6,25.4,21.1,13.6,6.5,7.3,8.7,7.1,11.5,14.8],"wind_gusts":[59.4,59.4,56.5,56.9,58.7,55.8,52.2,51.1,50.8,48.2,39.2,32.4,28.4,27,30.2,34.2,33.8,27.7,18.4,10.4,12.2,11.9,15.5,19.8],"wind_direction":[299,296,293,294,299,300,299,304,308,315,317,320,318,310,304,302,303,302,273,213,204,195,176,179],"humidity":[72,77,75,70,72,72,72,73,75,79,81,79,78,76,76,77,76,75,75,71,77,74,82,79],"pressure":[990.9,990.9,991.2,991.2,991.3,991.7,992.1,993.1,994,994.9,995.6,996.1,996.5,996.7,996.5,996.9,997.3,997.8,998.4,998.8,998.8,998.8,998.6,998.5],"cloud_cover":[47,34,40,23,33,57,67,50,69,68,35,25,5,21,25,31,25,30,100,100,93,100,100,100],"visibility":[49780,38780,43580,53800,49380,49880,49360,48620,44060,35120,30700,33500,37100,41660,41120,39080,41800,44220,43760,51220,39720,46020,28220,34620],"uv_index":[0,0,0,0,0,0,0,0,0.2,1.05,2.1,3.15,3.8,4,3.6,2.8,1.7,0.65,0.05,0,0,0,0,0],"wave_height":[3.04,3.12,3.2,3.26,3.34,3.28,3.24,3.18,3.08,2.98,2.88,2.78,2.68,2.58,2.48,2.36,2.26,2.14,2.02,1.9,1.8,1.68,1.58,1.52]}},{"date":"2026-02-14","dayName":"sabato","weather_code":95,"temp_max":14.5,"temp_min":12.9,"apparent_temp_max":12.7,"apparent_temp_min":7.5,"precipitation_sum":18.8,"precipitation_hours":18,"precipitation_probability_max":95,"wind_speed_max":38.3,"wind_gusts_max":52.9,"wind_direction":149,"uv_index_max":0.75,"sunrise":"2026-02-14T06:59","sunset":"2026-02-14T17:37","wave_height_max":2.74,"wave_direction":227,"wave_period_max":8.85,"sea_state":"Molto mosso","sea_severity":"ARANCIONE","moon_phase":"🌘 Calante","hourly":{"time":["2026-02-14T00:00","2026-02-14T01:00","2026-02-14T02:00","2026-02-14T03:00","2026-02-14T04:00","2026-02-14T05:00","2026-02-14T06:00","2026-02-14T07:00","2026-02-14T08:00","2026-02-14T09:00","2026-02-14T10:00","2026-02-14T11:00","2026-02-14T12:00","2026-02-14T13:00","2026-02-14T14:00","2026-02-14T15:00","2026-02-14T16:00","2026-02-14T17:00","2026-02-14T18:00","2026-02-14T19:00","2026-02-14T20:00","2026-02-14T21:00","2026-02-14T22:00","2026-02-14T23:00"],"temperature":[14.3,14.3,14.5,14.5,14.2,14.2,13.7,14,13.5,13.4,13.3,13.4,13.3,14.3,14.4,14.2,13.6,13.1,13,12.9,12.9,12.9,12.9,13],"precipitation":[0,0,0,0,0.1,0.1,0.3,0.2,0,0,0.1,0.1,0.4,0.5,0.8,0.2,0.9,2.9,3.1,2.2,1.9,2.1,2,0.9],"precipitation_probability":[0,5,15,33,45,53,73,85,85,75,75,73,78,85,84,81,80,82,86,90,93,95,95,90],"wind_speed":[16.8,20.5,21.2,22.1,24.1,30,32.9,33,38.3,30.8,33.7,32.8,23.2,13.3,15.2,18.5,22,25.7,26.2,26,25.3,25,27,29.6],"wind_gusts":[22.3,27.4,28.8,29.5,34.6,40,45.4,45.7,52.6,52.9,45.7,47.9,43.9,34.6,29.5,33.1,35.3,38.5,38.5,37.1,34.2,34.2,35.6,39.6],"wind_direction":[165,165,165,161,142,142,150,153,149,127,140,144,152,178,185,159,159,149,146,146,144,139,132,130],"humidity":[76,76,71,71,71,72,77,71,71,74,78,78,86,81,76,77,83,86,87,87,89,89,88,88],"pressure":[998.7,999.2,999.3,998.1,996.2,995.4,995.1,995,995.1,994.8,994.6,994.4,994.4,993.8,993.2,993,993,993.2,993.3,993.4,993.5,993.8,993.8,993.9],"cloud_cover":[97,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],"visibility":[40780,42100,51220,52220,51280,49260,15820,49820,52600,45300,36620,37120,17600,29440,41280,39500,25780,17460,16100,15220,12660,12700,13060,14460],"uv_index":[0,0,0,0,0,0,0,0,0.05,0.25,0.1,0.35,0.3,0.25,0.45,0.75,0.4,0.15,0,0,0,0,0,0],"wave_height":[1.44,1.38,1.36,1.32,1.3,1.36,1.4,1.46,1.48,1.52,1.54,1.7,1.86,2.02,2.12,2.24,2.34,2.38,2.4,2.44,2.54,2.64,2.74,2.7]}},{"date":"2026-02-15","dayName":"domenica","weather_code":80,"temp_max":15.6,"temp_min":12.9,"apparent_temp_max":13.8,"apparent_temp_min":8.7,"precipitation_sum":2,"precipitation_hours":7,"precipitation_probability_max":83,"wind_speed_max":31.1,"wind_gusts_max":41.8,"wind_direction":53,"uv_index_max":2.75,"sunrise":"2026-02-15T06:57","sunset":"2026-02-15T17:38","wave_height_max":2.66,"wave_direction":234,"wave_period_max":8.95,"sea_state":"Molto mosso","sea_severity":"ARANCIONE","moon_phase":"🌘 Calante","hourly":{"time":["2026-02-15T00:00","2026-02-15T01:00","2026-02-15T02:00","2026-02-15T03:00","2026-02-15T04:00","2026-02-15T05:00","2026-02-15T06:00","2026-02-15T07:00","2026-02-15T08:00","2026-02-15T09:00","2026-02-15T10:00","2026-02-15T11:00","2026-02-15T12:00","2026-02-15T13:00","2026-02-15T14:00","2026-02-15T15:00","2026-02-15T16:00","2026-02-15T17:00","2026-02-15T18:00","2026-02-15T19:00","2026-02-15T20:00","2026-02-15T21:00","2026-02-15T22:00","2026-02-15T23:00"],"temperature":[12.9,13,13.2,13.2,13.1,13.2,13.9,13.6,13.7,13.9,14.3,14.8,15.3,15.3,15.4,15.6,15.5,15,14.2,13.9,13.6,13.4,13.2,13],"precipitation":[0.4,0.4,0.4,0.2,0.1,0.2,0,0.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipitation_probability":[83,78,78,80,80,74,66,58,50,41,35,40,36,33,32,33,34,35,36,35,33,29,25,21],"wind_speed":[31.1,29.5,23.9,17,15,16.4,12.9,11.8,13,10.9,8.9,7.7,11.9,11.3,9.7,9,9.1,11.7,13.5,11.2,10.9,9.9,8.7,7.4],"wind_gusts":[41.8,41.8,39.2,31.7,22.7,22.3,22,20.5,18.4,17.6,14.8,12.2,15.8,19.8,15.1,13,12.2,16.6,18.7,18,17.3,15.8,14,13],"wind_direction":[125,117,102,85,42,33,30,20,5,17,27,28,2,351,358,16,34,56,56,48,46,44,42,43],"humidity":[87,86,83,77,75,71,66,69,69,68,65,64,64,66,65,62,61,60,59,59,58,57,56,55],"pressure":[994.2,994.7,995.1,995.2,995.7,996.3,997.2,998.4,999.7,1000.5,1001.5,1002.6,1003.4,1003.7,1003.9,1004.1,1004.6,1005.6,1006.7,1007.9,1008.7,1009.4,1009.8,1010],"cloud_cover":[77,86,89,96,96,87,100,98,83,89,54,33,54,68,49,39,45,51,47,57,50,44,37,34],"visibility":[16840,19360,26080,39000,44400,52820,59520,54080,56400,57340,61220,62900,62680,60820,62620,64920,66560,67100,68360,69240,70120,71000,71880,72500],"uv_index":[0,0,0,0,0,0,0,0,0.1,0.65,1.6,1.65,2.65,2.75,2.7,1.65,1.2,0.6,0.05,0,0,0,0,0],"wave_height":[2.66,2.62,2.54,2.44,2.36,2.28,2.22,2.14,2.04,1.94,1.84,1.74,1.64,1.54,1.5,1.46,1.42,1.4,1.38,1.36,1.3,1.26,1.2,1.18]}},{"date":"2026-02-16","dayName":"lunedì","weather_code":95,"temp_max":13.7,"temp_min":12.4,"apparent_temp_max":12.4,"apparent_temp_min":6,"precipitation_sum":9,"precipitation_hours":15,"precipitation_probability_max":62,"wind_speed_max":46.6,"wind_gusts_max":67.3,"wind_direction":285,"uv_index_max":3.5,"sunrise":"2026-02-16T06:56","sunset":"2026-02-16T17:39","wave_height_max":2.04,"wave_direction":257,"wave_period_max":7.85,"sea_state":"Mosso","sea_severity":"GIALLA","moon_phase":"🌘 Calante","hourly":{"time":["2026-02-16T00:00","2026-02-16T01:00","2026-02-16T02:00","2026-02-16T03:00","2026-02-16T04:00","2026-02-16T05:00","2026-02-16T06:00","2026-02-16T07:00","2026-02-16T08:00","2026-02-16T09:00","2026-02-16T10:00","2026-02-16T11:00","2026-02-16T12:00","2026-02-16T13:00","2026-02-16T14:00","2026-02-16T15:00","2026-02-16T16:00","2026-02-16T17:00","2026-02-16T18:00","2026-02-16T19:00","2026-02-16T20:00","2026-02-16T21:00","2026-02-16T22:00","2026-02-16T23:00"],"temperature":[12.8,12.7,12.6,12.5,12.4,12.5,12.6,12.7,12.9,13,13.1,13,12.8,12.8,13,13.5,13.7,13.7,13.5,13.3,13.2,13.1,13,12.9],"precipitation":[0,0,0,0,0,0,0,0,0.3,0.3,0.3,0.6,0.6,0.6,0.4,0.4,0.4,0.9,0.9,0.9,0.8,0.8,0.8,0],"precipitation_probability":[16,13,9,5,2,0,0,0,6,16,28,41,51,58,61,62,61,59,57,55,54,52,50,48],"wind_speed":[6.1,4.7,2.6,0.5,1,2.5,5.5,6.6,5.8,6.6,8.1,6,2.6,1.8,7,15.4,22.4,27,30.9,34.6,38.9,43.3,46.1,46.6],"wind_gusts":[11.9,10.4,7.9,5,4,6.5,10.8,14,15.5,15.8,15.1,11.9,7.9,7.2,12.6,21.6,30.2,37.8,45,51.5,57.2,61.9,65.5,67.3],"wind_direction":[50,58,56,45,225,172,157,158,184,229,249,253,254,281,282,281,281,283,285,287,289,293,294,294],"humidity":[54,53,53,53,55,58,62,66,70,74,77,79,80,81,83,86,88,88,87,86,84,82,80,79],"pressure":[1010,1009.9,1009.8,1009.7,1009.5,1009.4,1009.3,1009.1,1008.8,1008.3,1007.8,1007.1,1006.4,1005.6,1004.8,1004,1003.3,1002.8,1002.3,1001.9,1001.5,1001.1,1000.8,1000.5],"cloud_cover":[30,27,51,76,100,100,100,100,100,100,100,96,92,88,85,83,80,87,93,100,100,100,100,100],"visibility":[73120,73740,73480,73200,72940,68940,64960,60960,45020,29100,13160,18320,23500,28660,23800,18940,14080,15420,16760,18100,23500,28920,34320,36380],"uv_index":[0,0,0,0,0,0,0,0,0.25,1.1,2.25,2.95,3.3,3.05,3.5,0.6,0.2,0.05,0,0,0,0,0,0],"wave_height":[1.14,1.12,1.1,1.08,1.06,1.04,1.04,1.02,1.02,1.04,1.04,1.16,1.26,1.38,1.52,1.66,1.8,1.84,1.88,1.92,1.96,1.98,2.02,2.04]}},{"date":"2026-02-17","dayName":"martedì","weather_code":3,"temp_max":14.8,"temp_min":12.5,"apparent_temp_max":10.1,"apparent_temp_min":5.7,"precipitation_sum":0,"precipitation_hours":0,"precipitation_probability_max":46,"wind_speed_max":45.3,"wind_gusts_max":67.7,"wind_direction":307,"uv_index_max":3.8,"sunrise":"2026-02-17T06:55","sunset":"2026-02-17T17:40","wave_height_max":2.06,"wave_direction":266,"wave_period_max":7.7,"sea_state":"Mosso","sea_severity":"GIALLA","moon_phase":"🌑 Nuova","hourly":{"time":["2026-02-17T00:00","2026-02-17T01:00","2026-02-17T02:00","2026-02-17T03:00","2026-02-17T04:00","2026-02-17T05:00","2026-02-17T06:00","2026-02-17T07:00","2026-02-17T08:00","2026-02-17T09:00","2026-02-17T10:00","2026-02-17T11:00","2026-02-17T12:00","2026-02-17T13:00","2026-02-17T14:00","2026-02-17T15:00","2026-02-17T16:00","2026-02-17T17:00","2026-02-17T18:00","2026-02-17T19:00","2026-02-17T20:00","2026-02-17T21:00","2026-02-17T22:00","2026-02-17T23:00"],"temperature":[12.8,12.7,12.6,12.5,12.5,12.5,12.6,12.6,12.7,12.8,12.9,13.1,13.4,13.7,14.1,14.4,14.6,14.7,14.8,14.7,14.6,14.5,14.2,13.6],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"precipitation_probability":[46,43,39,35,30,26,21,18,15,13,11,10,8,6,4,3,3,3,3,3,4,4,4,5],"wind_speed":[45.3,44,43.4,42.8,42.1,41.2,40.6,39.5,38,35.6,33.6,31.9,30.6,30.1,29,27,26.2,27.7,30,31.1,29.3,26.1,22.1,16.4],"wind_gusts":[67.7,67.3,65.5,63,60.8,60.5,60.5,59.8,57.2,53.6,50,46.5,43.4,41.8,41.8,41.4,41.4,42.5,44.3,44.6,43.2,40.3,36.4,30.6],"wind_direction":[294,294,293,292,293,295,299,302,305,309,312,315,317,318,316,315,314,314,315,316,318,322,326,334],"humidity":[78,77,75,73,72,73,74,74,72,69,66,64,62,60,56,53,50,50,50,51,51,50,52,59],"pressure":[1000.3,1000,999.5,998.9,998.6,998.6,998.9,999.4,1000.2,1001.2,1002.1,1002.9,1003.6,1004.2,1004.9,1005.7,1006.6,1007.6,1008.7,1009.7,1010.6,1011.5,1012.3,1013],"cloud_cover":[100,100,100,100,100,100,100,100,67,35,2,1,0,0,0,0,0,0,0,0,0,0,0,0],"visibility":[38440,40500,43760,47020,50280,49080,47900,46700,51160,55640,60100,52850,44450,34875,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140],"uv_index":[0,0,0,0,0,0,0,0,0.3,0.7,1.25,2.15,3.15,3.8,3.8,3.4,2.85,2,1,0.25,0,0,0,0],"wave_height":[2.04,2.06,2.06,2.06,2.06,2.02,1.98,1.94,1.88,1.84,1.78,1.76,1.72,1.7,1.7,1.7,1.7,1.7,1.68,1.68,1.62,1.58,1.52,1.44]}},{"date":"2026-02-18","dayName":"mercoledì","weather_code":2,"temp_max":14.8,"temp_min":11.1,"apparent_temp_max":12.6,"apparent_temp_min":9,"precipitation_sum":0.1,"precipitation_hours":1,"precipitation_probability_max":8,"wind_speed_max":19.8,"wind_gusts_max":33.5,"wind_direction":251,"uv_index_max":1.4,"sunrise":"2026-02-18T06:53","sunset":"2026-02-18T17:41","wave_height_max":1.34,"wave_direction":267,"wave_period_max":6.65,"sea_state":"Mosso","sea_severity":"GIALLA","moon_phase":"🌑 Nuova","hourly":{"time":["2026-02-18T00:00","2026-02-18T01:00","2026-02-18T02:00","2026-02-18T03:00","2026-02-18T04:00","2026-02-18T05:00","2026-02-18T06:00","2026-02-18T07:00","2026-02-18T08:00","2026-02-18T09:00","2026-02-18T10:00","2026-02-18T11:00","2026-02-18T12:00","2026-02-18T13:00","2026-02-18T14:00","2026-02-18T15:00","2026-02-18T16:00","2026-02-18T17:00","2026-02-18T18:00","2026-02-18T19:00","2026-02-18T20:00","2026-02-18T21:00","2026-02-18T22:00","2026-02-18T23:00"],"temperature":[12.8,12.2,11.9,11.8,11.7,11.4,11.1,11.1,11.6,12.3,13,13.6,14.1,14.5,14.4,14.1,14,14.2,14.6,14.8,14.7,14.5,14.3,14.3],"precipitation":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1],"precipitation_probability":[5,5,5,5,4,4,4,4,3,3,3,3,3,3,3,4,4,4,5,5,6,7,7,8],"wind_speed":[10.5,7.4,6.1,4.7,4.2,5.2,6.6,7.2,8,8.6,7.7,5.8,11.7,17.6,19.3,18.7,17.9,17.2,16.7,16.4,17.6,19.4,19.8,16.2],"wind_gusts":[23.4,17.3,12.2,8.3,6.1,6.5,9,10.8,11.2,10.8,11.9,15.5,20.2,24.5,28.4,32,33.5,31,26.3,23.8,26.3,31.3,32.8,27.7],"wind_direction":[352,23,45,58,70,78,81,84,98,112,131,187,236,247,246,242,240,241,245,251,259,269,273,273],"humidity":[69,75,74,70,67,67,68,69,70,70,70,67,63,61,63,67,70,72,73,75,78,81,83,84],"pressure":[1013.6,1014.2,1014.7,1015.2,1015.7,1016.1,1016.6,1017,1017.5,1018.1,1018.5,1018.7,1018.9,1018.9,1018.8,1018.7,1018.6,1018.7,1018.8,1019.1,1019.6,1020.2,1020.6,1020.8],"cloud_cover":[0,0,0,0,0,0,0,0,12,23,35,34,32,31,31,32,32,35,38,41,51,61,71,65],"visibility":[24140,24140,24140,24140,24140,24140,24140,24140,20620,17080,13560,17080,20620,24140,21500,18860,16220,17680,19140,20600,20820,21040,21260,22220],"uv_index":[0,0,0,0,0,0,0,0,0.25,0.6,0.8,0.75,0.65,0.6,0.85,1.25,1.4,1.1,0.55,0.15,0,0,0,0],"wave_height":[1.34,1.26,1.2,1.12,1.06,1.02,0.96,0.92,0.88,0.86,0.82,0.88,0.92,0.98,1.06,1.16,1.24,1.26,1.3,1.32,1.32,1.3,1.3,1.3]}}],"weekly_stats":{"temp_max_avg":"14.7","temp_min_avg":"12.5","precipitation_total":"42.8","rainy_days":4},"pressure_trend":"in aumento","civilProtectionAlert":{"active":false,"level":"verde","type":"Condizioni Meteo","validFrom":"In corso","validTo":"24:00","description":"Seguire le indicazioni della Protezione Civile.","link":"https://bollettinimeteo.regione.campania.it/","lastUpdate":"2026-02-12T16:14:32.672Z","source":"Protezione Civile Campania - Zona 1"},"raw_weather":{"civilProtectionAlert":{"active":false,"level":"verde","type":"Condizioni Meteo","validFrom":"In corso","validTo":"24:00","description":"Seguire le indicazioni della Protezione Civile.","link":"https://bollettinimeteo.regione.campania.it/","lastUpdate":"2026-02-12T16:14:32.672Z","source":"Protezione Civile Campania - Zona 1"},"latitude":40.791664,"longitude":14.041672,"generationtime_ms":0.23066997528076172,"utc_offset_seconds":3600,"timezone":"Europe/Rome","timezone_abbreviation":"GMT+1","elevation":47,"hourly_units":{"time":"iso8601","temperature_2m":"°C","relative_humidity_2m":"%","dew_point_2m":"°C","apparent_temperature":"°C","precipitation_probability":"%","precipitation":"mm","rain":"mm","showers":"mm","snowfall":"cm","snow_depth":"m","weather_code":"wmo code","pressure_msl":"hPa","surface_pressure":"hPa","cloud_cover":"%","visibility":"m","wind_speed_10m":"km/h","wind_direction_10m":"°","wind_gusts_10m":"km/h","uv_index":"","wave_height":"m","wave_direction":"°","wave_period":"s","wind_wave_height":"m","wind_wave_direction":"°","wind_wave_period":"s","swell_wave_height":"m","swell_wave_direction":"°","swell_wave_period":"s"},"hourly":{"time":["2026-02-12T00:00","2026-02-12T01:00","2026-02-12T02:00","2026-02-12T03:00","2026-02-12T04:00","2026-02-12T05:00","2026-02-12T06:00","2026-02-12T07:00","2026-02-12T08:00","2026-02-12T09:00","2026-02-12T10:00","2026-02-12T11:00","2026-02-12T12:00","2026-02-12T13:00","2026-02-12T14:00","2026-02-12T15:00","2026-02-12T16:00","2026-02-12T17:00","2026-02-12T18:00","2026-02-12T19:00","2026-02-12T20:00","2026-02-12T21:00","2026-02-12T22:00","2026-02-12T23:00","2026-02-13T00:00","2026-02-13T01:00","2026-02-13T02:00","2026-02-13T03:00","2026-02-13T04:00","2026-02-13T05:00","2026-02-13T06:00","2026-02-13T07:00","2026-02-13T08:00","2026-02-13T09:00","2026-02-13T10:00","2026-02-13T11:00","2026-02-13T12:00","2026-02-13T13:00","2026-02-13T14:00","2026-02-13T15:00","2026-02-13T16:00","2026-02-13T17:00","2026-02-13T18:00","2026-02-13T19:00","2026-02-13T20:00","2026-02-13T21:00","2026-02-13T22:00","2026-02-13T23:00","2026-02-14T00:00","2026-02-14T01:00","2026-02-14T02:00","2026-02-14T03:00","2026-02-14T04:00","2026-02-14T05:00","2026-02-14T06:00","2026-02-14T07:00","2026-02-14T08:00","2026-02-14T09:00","2026-02-14T10:00","2026-02-14T11:00","2026-02-14T12:00","2026-02-14T13:00","2026-02-14T14:00","2026-02-14T15:00","2026-02-14T16:00","2026-02-14T17:00","2026-02-14T18:00","2026-02-14T19:00","2026-02-14T20:00","2026-02-14T21:00","2026-02-14T22:00","2026-02-14T23:00","2026-02-15T00:00","2026-02-15T01:00","2026-02-15T02:00","2026-02-15T03:00","2026-02-15T04:00","2026-02-15T05:00","2026-02-15T06:00","2026-02-15T07:00","2026-02-15T08:00","2026-02-15T09:00","2026-02-15T10:00","2026-02-15T11:00","2026-02-15T12:00","2026-02-15T13:00","2026-02-15T14:00","2026-02-15T15:00","2026-02-15T16:00","2026-02-15T17:00","2026-02-15T18:00","2026-02-15T19:00","2026-02-15T20:00","2026-02-15T21:00","2026-02-15T22:00","2026-02-15T23:00","2026-02-16T00:00","2026-02-16T01:00","2026-02-16T02:00","2026-02-16T03:00","2026-02-16T04:00","2026-02-16T05:00","2026-02-16T06:00","2026-02-16T07:00","2026-02-16T08:00","2026-02-16T09:00","2026-02-16T10:00","2026-02-16T11:00","2026-02-16T12:00","2026-02-16T13:00","2026-02-16T14:00","2026-02-16T15:00","2026-02-16T16:00","2026-02-16T17:00","2026-02-16T18:00","2026-02-16T19:00","2026-02-16T20:00","2026-02-16T21:00","2026-02-16T22:00","2026-02-16T23:00","2026-02-17T00:00","2026-02-17T01:00","2026-02-17T02:00","2026-02-17T03:00","2026-02-17T04:00","2026-02-17T05:00","2026-02-17T06:00","2026-02-17T07:00","2026-02-17T08:00","2026-02-17T09:00","2026-02-17T10:00","2026-02-17T11:00","2026-02-17T12:00","2026-02-17T13:00","2026-02-17T14:00","2026-02-17T15:00","2026-02-17T16:00","2026-02-17T17:00","2026-02-17T18:00","2026-02-17T19:00","2026-02-17T20:00","2026-02-17T21:00","2026-02-17T22:00","2026-02-17T23:00","2026-02-18T00:00","2026-02-18T01:00","2026-02-18T02:00","2026-02-18T03:00","2026-02-18T04:00","2026-02-18T05:00","2026-02-18T06:00","2026-02-18T07:00","2026-02-18T08:00","2026-02-18T09:00","2026-02-18T10:00","2026-02-18T11:00","2026-02-18T12:00","2026-02-18T13:00","2026-02-18T14:00","2026-02-18T15:00","2026-02-18T16:00","2026-02-18T17:00","2026-02-18T18:00","2026-02-18T19:00","2026-02-18T20:00","2026-02-18T21:00","2026-02-18T22:00","2026-02-18T23:00"],"temperature_2m":[14.4,14.6,14.6,14.5,14.8,14.7,14.8,13.9,13.5,13.1,12.6,12.8,13.6,14.3,14.3,13.7,13.6,13.9,14.4,14.9,14.6,14.9,14.6,14.6,14.7,14.4,14.5,14.7,14.5,14.5,14.4,14.2,14.1,13.7,13.4,13.6,13.8,14.3,14.7,14.9,14.9,14.9,14.9,14.9,14.7,14.7,14.4,14.3,14.3,14.3,14.5,14.5,14.2,14.2,13.7,14,13.5,13.4,13.3,13.4,13.3,14.3,14.4,14.2,13.6,13.1,13,12.9,12.9,12.9,12.9,13,12.9,13,13.2,13.2,13.1,13.2,13.9,13.6,13.7,13.9,14.3,14.8,15.3,15.3,15.4,15.6,15.5,15,14.2,13.9,13.6,13.4,13.2,13,12.8,12.7,12.6,12.5,12.4,12.5,12.6,12.7,12.9,13,13.1,13,12.8,12.8,13,13.5,13.7,13.7,13.5,13.3,13.2,13.1,13,12.9,12.8,12.7,12.6,12.5,12.5,12.5,12.6,12.6,12.7,12.8,12.9,13.1,13.4,13.7,14.1,14.4,14.6,14.7,14.8,14.7,14.6,14.5,14.2,13.6,12.8,12.2,11.9,11.8,11.7,11.4,11.1,11.1,11.6,12.3,13,13.6,14.1,14.5,14.4,14.1,14,14.2,14.6,14.8,14.7,14.5,14.3,14.3],"relative_humidity_2m":[83,84,82,83,79,79,79,87,84,87,89,90,83,79,75,84,85,81,78,68,72,69,70,70,72,77,75,70,72,72,72,73,75,79,81,79,78,76,76,77,76,75,75,71,77,74,82,79,76,76,71,71,71,72,77,71,71,74,78,78,86,81,76,77,83,86,87,87,89,89,88,88,87,86,83,77,75,71,66,69,69,68,65,64,64,66,65,62,61,60,59,59,58,57,56,55,54,53,53,53,55,58,62,66,70,74,77,79,80,81,83,86,88,88,87,86,84,82,80,79,78,77,75,73,72,73,74,74,72,69,66,64,62,60,56,53,50,50,50,51,51,50,52,59,69,75,74,70,67,67,68,69,70,70,70,67,63,61,63,67,70,72,73,75,78,81,83,84],"dew_point_2m":[11.5,12,11.6,11.7,11.2,11.1,11.2,11.8,10.8,11,10.8,11.2,10.8,10.7,9.9,11,11.2,10.7,10.7,9.1,9.7,9.3,9.2,9.2,9.7,10.4,10.2,9.3,9.5,9.5,9.4,9.5,9.7,10.1,10.2,10.1,10.1,10.1,10.6,10.9,10.7,10.6,10.5,9.7,10.8,10.2,11.4,10.7,10.2,10.2,9.3,9.3,9.1,9.3,9.8,8.8,8.3,8.9,9.6,9.7,11,11.1,10.2,10.2,10.8,10.9,10.9,10.8,11.1,11.2,11,11.1,10.8,10.8,10.4,9.3,8.8,8.1,7.7,8,8.2,8.1,7.8,8,8.6,9,8.9,8.3,8,7.3,6.3,6,5.5,5,4.6,4.2,3.8,3.4,3.3,3.2,3.6,4.5,5.6,6.6,7.6,8.5,9.2,9.4,9.5,9.6,10.2,11.2,11.8,11.7,11.4,11.1,10.6,10.1,9.7,9.4,9.1,8.8,8.3,7.8,7.6,7.8,8.1,8.1,7.8,7.3,6.7,6.5,6.4,6.1,5.4,4.9,4.3,4.4,4.4,4.7,4.6,4.2,4.4,5.7,7.2,7.9,7.4,6.5,5.8,5.5,5.4,5.6,6.3,6.9,7.6,7.6,7.2,7,7.5,8.1,8.6,9.2,9.8,10.4,10.9,11.2,11.4,11.6],"apparent_temperature":[13.8,13.9,13.7,13.4,13.5,13.9,13.9,11.9,10.6,10.9,11.8,11.1,11,8.1,7.4,8.7,9.7,10.1,10.5,9.9,9.6,8.8,8.8,8.5,8.4,8.6,9.1,8.5,8.5,8.8,8.8,8.7,8.9,9.4,9.9,10.6,11.1,11.5,11.6,11.5,12.1,13.1,14.1,13.8,13.7,13.8,13.2,12.4,12,11.4,11.2,11.1,10.5,9.7,8.9,8.9,7.5,8.6,8.3,8.6,10.2,12.7,12.3,11.6,10.6,9.7,9.5,9.4,9.6,9.7,9.2,9,8.7,9,9.8,10.6,10.6,10.4,11.5,11.3,11.4,11.8,12.4,13.2,13.2,13.4,13.7,13.8,13.6,12.6,11.4,11.3,10.9,10.7,10.6,10.5,10.5,10.5,10.7,10.8,10.8,10.8,10.7,10.9,11.4,11.7,11.7,12,12.3,12.4,12.1,11.6,11,10.3,9.5,8.6,7.8,6.9,6.2,6,5.9,6,5.9,5.7,5.8,6,6.2,6.4,6.6,7,7.2,7.6,8.1,8.5,8.8,9.2,9.4,9.3,9,8.9,9,9.3,9.6,10.1,10.5,10.5,10.4,10.2,10.1,9.6,9,9,9.5,10.2,11.2,12.1,11.7,11.1,10.9,10.9,11,11.5,12.1,12.6,12.4,12,11.8,12.4],"precipitation_probability":[0,3,5,8,8,3,10,78,100,100,100,100,98,75,63,38,15,0,0,3,3,13,15,20,10,3,0,3,3,0,5,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,15,33,45,53,73,85,85,75,75,73,78,85,84,81,80,82,86,90,93,95,95,90,83,78,78,80,80,74,66,58,50,41,35,40,36,33,32,33,34,35,36,35,33,29,25,21,16,13,9,5,2,0,0,0,6,16,28,41,51,58,61,62,61,59,57,55,54,52,50,48,46,43,39,35,30,26,21,18,15,13,11,10,8,6,4,3,3,3,3,3,4,4,4,5,5,5,5,5,4,4,4,4,3,3,3,3,3,3,3,4,4,4,5,5,6,7,7,8],"precipitation":[0,0,0,0,0,0,0,1.4,1.4,1.4,3.7,2.5,0.3,1.3,0,0.2,0.6,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.1,0.3,0.2,0,0,0.1,0.1,0.4,0.5,0.8,0.2,0.9,2.9,3.1,2.2,1.9,2.1,2,0.9,0.4,0.4,0.4,0.2,0.1,0.2,0,0.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.3,0.3,0.6,0.6,0.6,0.4,0.4,0.4,0.9,0.9,0.9,0.8,0.8,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1],"rain":[0,0,0,0,0,0,0,1.1,1.3,1.2,3.3,1.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.1,0.2,0,0.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.3,0.3,0.5,0.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"showers":[0,0,0,0,0,0,0,0.3,0.1,0.2,0.4,0.7,0.3,1.3,0,0.2,0.6,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.2,0,0,0,0.1,0.1,0.4,0.5,0.8,0.2,0.9,2.9,3.1,2.2,1.9,2.1,2,0.9,0.4,0.4,0.4,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.4,0.4,0.4,0.9,0.9,0.9,0.8,0.8,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1],"snowfall":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"snow_depth":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"weather_code":[2,2,2,3,3,3,3,61,61,61,63,63,80,80,3,80,80,3,3,3,3,3,3,3,2,1,1,1,1,2,2,2,2,2,1,1,0,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,80,61,3,3,3,3,80,80,80,80,95,95,81,80,80,80,80,80,80,80,80,61,61,61,3,61,2,3,2,1,2,2,2,1,1,2,2,2,1,1,1,1,1,1,3,3,3,3,3,3,61,61,61,3,3,3,95,95,95,95,95,95,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2],"pressure_msl":[1000.1,999.3,999.1,998.1,997.6,995.8,994.4,993,992.2,990.4,990.6,988.7,987.8,986.6,986.4,986.4,986.7,986.9,987.5,988.5,989.4,989.4,989.9,990.3,990.9,990.9,991.2,991.2,991.3,991.7,992.1,993.1,994,994.9,995.6,996.1,996.5,996.7,996.5,996.9,997.3,997.8,998.4,998.8,998.8,998.8,998.6,998.5,998.7,999.2,999.3,998.1,996.2,995.4,995.1,995,995.1,994.8,994.6,994.4,994.4,993.8,993.2,993,993,993.2,993.3,993.4,993.5,993.8,993.8,993.9,994.2,994.7,995.1,995.2,995.7,996.3,997.2,998.4,999.7,1000.5,1001.5,1002.6,1003.4,1003.7,1003.9,1004.1,1004.6,1005.6,1006.7,1007.9,1008.7,1009.4,1009.8,1010,1010,1009.9,1009.8,1009.7,1009.5,1009.4,1009.3,1009.1,1008.8,1008.3,1007.8,1007.1,1006.4,1005.6,1004.8,1004,1003.3,1002.8,1002.3,1001.9,1001.5,1001.1,1000.8,1000.5,1000.3,1000,999.5,998.9,998.6,998.6,998.9,999.4,1000.2,1001.2,1002.1,1002.9,1003.6,1004.2,1004.9,1005.7,1006.6,1007.6,1008.7,1009.7,1010.6,1011.5,1012.3,1013,1013.6,1014.2,1014.7,1015.2,1015.7,1016.1,1016.6,1017,1017.5,1018.1,1018.5,1018.7,1018.9,1018.9,1018.8,1018.7,1018.6,1018.7,1018.8,1019.1,1019.6,1020.2,1020.6,1020.8],"surface_pressure":[994.5,993.7,993.5,992.5,992.1,990.3,988.9,987.5,986.7,984.9,985.1,983.2,982.3,981.1,980.9,980.9,981.2,981.4,982,983,983.9,983.9,984.4,984.8,985.4,985.4,985.7,985.7,985.8,986.2,986.6,987.6,988.5,989.3,990,990.5,990.9,991.2,991,991.4,991.8,992.3,992.9,993.3,993.2,993.2,993,992.9,993.1,993.6,993.7,992.5,990.7,989.9,989.5,989.5,989.5,989.2,989,988.8,988.8,988.3,987.7,987.5,987.5,987.6,987.7,987.8,987.9,988.2,988.2,988.3,988.6,989.1,989.5,989.6,990.1,990.7,991.6,992.8,994.1,994.9,995.9,997,997.8,998.1,998.3,998.5,999,1000,1001.1,1002.3,1003.1,1003.8,1004.2,1004.4,1004.3,1004.2,1004.1,1004,1003.8,1003.7,1003.6,1003.5,1003.2,1002.7,1002.2,1001.5,1000.8,1000,999.2,998.4,997.7,997.2,996.7,996.3,995.9,995.5,995.2,994.9,994.7,994.4,993.9,993.3,993,993,993.3,993.8,994.6,995.6,996.5,997.3,998,998.6,999.3,1000.1,1001,1002,1003.1,1004.1,1005,1005.9,1006.7,1007.3,1007.9,1008.5,1009,1009.5,1010,1010.4,1010.9,1011.3,1011.8,1012.4,1012.8,1013,1013.2,1013.2,1013.1,1013,1012.9,1013,1013.1,1013.4,1013.9,1014.5,1014.9,1015.1],"cloud_cover":[51,64,73,100,100,100,100,100,100,100,100,100,99,100,100,100,100,100,100,100,100,100,100,98,47,34,40,23,33,57,67,50,69,68,35,25,5,21,25,31,25,30,100,100,93,100,100,100,97,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,77,86,89,96,96,87,100,98,83,89,54,33,54,68,49,39,45,51,47,57,50,44,37,34,30,27,51,76,100,100,100,100,100,100,100,96,92,88,85,83,80,87,93,100,100,100,100,100,100,100,100,100,100,100,100,100,67,35,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,23,35,34,32,31,31,32,32,35,38,41,51,61,71,65],"visibility":[24600,22740,26680,25660,34540,35760,35040,14600,13520,10020,6720,10680,24200,30300,43800,21660,19580,29660,37240,56320,49940,55100,53140,53100,49780,38780,43580,53800,49380,49880,49360,48620,44060,35120,30700,33500,37100,41660,41120,39080,41800,44220,43760,51220,39720,46020,28220,34620,40780,42100,51220,52220,51280,49260,15820,49820,52600,45300,36620,37120,17600,29440,41280,39500,25780,17460,16100,15220,12660,12700,13060,14460,16840,19360,26080,39000,44400,52820,59520,54080,56400,57340,61220,62900,62680,60820,62620,64920,66560,67100,68360,69240,70120,71000,71880,72500,73120,73740,73480,73200,72940,68940,64960,60960,45020,29100,13160,18320,23500,28660,23800,18940,14080,15420,16760,18100,23500,28920,34320,36380,38440,40500,43760,47020,50280,49080,47900,46700,51160,55640,60100,52850,44450,34875,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,20620,17080,13560,17080,20620,24140,21500,18860,16220,17680,19140,20600,20820,21040,21260,22220],"wind_speed_10m":[7.1,9,9.8,11.6,11.4,8.1,9.4,18.2,21.9,17.4,7.2,14.7,19.2,43.8,47.4,36.2,29.4,27.8,28.6,33.2,34.3,41.1,38.1,40.5,42.4,40.7,37.9,40.9,40.3,38.2,37.4,37.1,35.4,29.8,24.5,21.2,18.9,20.2,22.6,25.4,21.1,13.6,6.5,7.3,8.7,7.1,11.5,14.8,16.8,20.5,21.2,22.1,24.1,30,32.9,33,38.3,30.8,33.7,32.8,23.2,13.3,15.2,18.5,22,25.7,26.2,26,25.3,25,27,29.6,31.1,29.5,23.9,17,15,16.4,12.9,11.8,13,10.9,8.9,7.7,11.9,11.3,9.7,9,9.1,11.7,13.5,11.2,10.9,9.9,8.7,7.4,6.1,4.7,2.6,0.5,1,2.5,5.5,6.6,5.8,6.6,8.1,6,2.6,1.8,7,15.4,22.4,27,30.9,34.6,38.9,43.3,46.1,46.6,45.3,44,43.4,42.8,42.1,41.2,40.6,39.5,38,35.6,33.6,31.9,30.6,30.1,29,27,26.2,27.7,30,31.1,29.3,26.1,22.1,16.4,10.5,7.4,6.1,4.7,4.2,5.2,6.6,7.2,8,8.6,7.7,5.8,11.7,17.6,19.3,18.7,17.9,17.2,16.7,16.4,17.6,19.4,19.8,16.2],"wind_direction_10m":[285,268,262,265,259,249,203,214,225,202,174,149,264,279,285,295,292,289,291,304,303,300,301,299,299,296,293,294,299,300,299,304,308,315,317,320,318,310,304,302,303,302,273,213,204,195,176,179,165,165,165,161,142,142,150,153,149,127,140,144,152,178,185,159,159,149,146,146,144,139,132,130,125,117,102,85,42,33,30,20,5,17,27,28,2,351,358,16,34,56,56,48,46,44,42,43,50,58,56,45,225,172,157,158,184,229,249,253,254,281,282,281,281,283,285,287,289,293,294,294,294,294,293,292,293,295,299,302,305,309,312,315,317,318,316,315,314,314,315,316,318,322,326,334,352,23,45,58,70,78,81,84,98,112,131,187,236,247,246,242,240,241,245,251,259,269,273,273],"wind_gusts_10m":[13,10.4,13.7,16.6,16.2,13,12.6,30.6,29.2,28.8,23,24.5,28.4,60.5,75.2,67.3,50,39.2,38.5,44.6,46.8,62.3,56.9,55.8,59.4,59.4,56.5,56.9,58.7,55.8,52.2,51.1,50.8,48.2,39.2,32.4,28.4,27,30.2,34.2,33.8,27.7,18.4,10.4,12.2,11.9,15.5,19.8,22.3,27.4,28.8,29.5,34.6,40,45.4,45.7,52.6,52.9,45.7,47.9,43.9,34.6,29.5,33.1,35.3,38.5,38.5,37.1,34.2,34.2,35.6,39.6,41.8,41.8,39.2,31.7,22.7,22.3,22,20.5,18.4,17.6,14.8,12.2,15.8,19.8,15.1,13,12.2,16.6,18.7,18,17.3,15.8,14,13,11.9,10.4,7.9,5,4,6.5,10.8,14,15.5,15.8,15.1,11.9,7.9,7.2,12.6,21.6,30.2,37.8,45,51.5,57.2,61.9,65.5,67.3,67.7,67.3,65.5,63,60.8,60.5,60.5,59.8,57.2,53.6,50,46.5,43.4,41.8,41.8,41.4,41.4,42.5,44.3,44.6,43.2,40.3,36.4,30.6,23.4,17.3,12.2,8.3,6.1,6.5,9,10.8,11.2,10.8,11.9,15.5,20.2,24.5,28.4,32,33.5,31,26.3,23.8,26.3,31.3,32.8,27.7],"uv_index":[0,0,0,0,0,0,0,0,0.05,0.05,0.25,0.15,3.7,1.2,3.05,1.4,0.4,0.45,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.2,1.05,2.1,3.15,3.8,4,3.6,2.8,1.7,0.65,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.05,0.25,0.1,0.35,0.3,0.25,0.45,0.75,0.4,0.15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.65,1.6,1.65,2.65,2.75,2.7,1.65,1.2,0.6,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.25,1.1,2.25,2.95,3.3,3.05,3.5,0.6,0.2,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.7,1.25,2.15,3.15,3.8,3.8,3.4,2.85,2,1,0.25,0,0,0,0,0,0,0,0,0,0,0,0,0.25,0.6,0.8,0.75,0.65,0.6,0.85,1.25,1.4,1.1,0.55,0.15,0,0,0,0],"wave_height":[2.1,2.12,2.06,1.98,1.92,1.84,1.78,1.7,1.66,1.6,1.56,1.76,1.96,2.16,2.34,2.54,2.72,2.72,2.72,2.72,2.78,2.84,2.9,2.98,3.04,3.12,3.2,3.26,3.34,3.28,3.24,3.18,3.08,2.98,2.88,2.78,2.68,2.58,2.48,2.36,2.26,2.14,2.02,1.9,1.8,1.68,1.58,1.52,1.44,1.38,1.36,1.32,1.3,1.36,1.4,1.46,1.48,1.52,1.54,1.7,1.86,2.02,2.12,2.24,2.34,2.38,2.4,2.44,2.54,2.64,2.74,2.7,2.66,2.62,2.54,2.44,2.36,2.28,2.22,2.14,2.04,1.94,1.84,1.74,1.64,1.54,1.5,1.46,1.42,1.4,1.38,1.36,1.3,1.26,1.2,1.18,1.14,1.12,1.1,1.08,1.06,1.04,1.04,1.02,1.02,1.04,1.04,1.16,1.26,1.38,1.52,1.66,1.8,1.84,1.88,1.92,1.96,1.98,2.02,2.04,2.04,2.06,2.06,2.06,2.06,2.02,1.98,1.94,1.88,1.84,1.78,1.76,1.72,1.7,1.7,1.7,1.7,1.7,1.68,1.68,1.62,1.58,1.52,1.44,1.34,1.26,1.2,1.12,1.06,1.02,0.96,0.92,0.88,0.86,0.82,0.88,0.92,0.98,1.06,1.16,1.24,1.26,1.3,1.32,1.32,1.3,1.3,1.3],"wave_direction":[263,263,263,263,263,262,262,261,259,258,256,259,262,265,265,264,264,263,263,262,262,263,263,263,263,263,264,264,265,264,264,263,262,262,261,261,260,260,260,259,259,258,257,256,255,255,254,253,251,250,246,242,238,225,211,198,199,200,201,206,212,217,220,223,226,228,229,231,231,232,232,232,232,232,231,231,230,229,229,228,228,228,228,229,230,231,236,241,246,250,255,259,261,262,264,264,265,265,265,264,264,262,261,259,257,256,254,253,252,251,252,252,253,254,254,255,257,260,262,263,264,265,265,265,265,265,266,266,266,266,266,266,265,265,265,266,266,268,270,272,273,273,274,273,272,271,270,269,268,267,267,266,265,265,264,263,261,260,261,262,263,263,264,264,263,262,261,261],"wave_period":[8,7.95,7.9,7.75,7.65,7.55,7.4,7.25,7.1,6.95,6.75,6.4,6,5.9,6.3,6.95,7.5,7.85,8.15,8.35,8.45,8.45,8.5,8.6,8.7,8.8,8.85,8.85,8.85,8.9,8.9,8.95,8.95,8.95,8.95,8.9,8.8,8.7,8.55,8.4,8.25,8.15,8,7.9,7.75,7.6,7.45,7.25,7.05,6.85,6.6,6.35,6.1,5.8,5.45,5.25,5.25,5.45,5.6,5.75,5.9,6.1,6.4,6.7,7.05,7.35,7.65,7.95,8.25,8.5,8.7,8.85,8.9,8.95,8.95,8.95,8.9,8.85,8.85,8.8,8.75,8.7,8.6,8.5,8.4,8.25,8.1,7.95,7.8,7.7,7.65,7.6,7.55,7.5,7.45,7.4,7.4,7.35,7.35,7.3,7.3,7.3,7.3,7.3,7.25,7.25,7.2,7.2,7.15,7.2,7.3,7.45,7.6,7.7,7.8,7.85,7.8,7.7,7.6,7.6,7.65,7.65,7.65,7.65,7.65,7.65,7.7,7.7,7.7,7.65,7.6,7.6,7.55,7.55,7.55,7.5,7.45,7.35,7.2,7.05,6.9,6.8,6.7,6.65,6.65,6.65,6.6,6.6,6.55,6.5,6.5,6.45,6.4,6.3,6.15,5.8,5.35,5.05,5,5.1,5.2,5.3,5.4,5.45,5.5,5.5,5.5,5.45],"wind_wave_height":[0.06,0.08,0.14,0.18,0.24,0.26,0.3,0.32,0.3,0.3,0.28,0.84,1.42,1.98,1.88,1.78,1.68,1.36,1.06,0.74,1.02,1.28,1.56,1.58,1.58,1.6,1.76,1.94,2.1,1.54,0.96,0.4,0.36,0.32,0.28,0.4,0.54,0.66,0.46,0.28,0.08,0.06,0.06,0.04,0.08,0.1,0.14,0.22,0.3,0.38,0.42,0.48,0.52,0.72,0.9,1.1,1,0.88,0.78,1.04,1.28,1.54,1.36,1.2,1.02,0.84,0.66,0.48,0.44,0.38,0.34,0.28,0.24,0.18,0.16,0.14,0.12,0.14,0.14,0.16,0.12,0.08,0.04,0.02,0.02,0,0.06,0.14,0.2,0.18,0.16,0.14,0.14,0.14,0.14,0.1,0.04,0,0,0,0,0,0,0,0.02,0.02,0.04,0.06,0.1,0.12,0.12,0.1,0.1,0.12,0.16,0.18,0.3,0.42,0.54,0.46,0.4,0.32,0.28,0.26,0.22,0.18,0.14,0.1,0.08,0.06,0.04,0.04,0.02,0.02,0.02,0,0,0,0,0,0,0,0,0,0.02,0.02,0.02,0,0,0,0.02,0.02,0.08,0.12,0.18,0.36,0.52,0.7,0.7,0.72,0.72,0.68,0.64,0.6,0.58,0.58,0.56,0.56],"wind_wave_direction":[249,254,256,257,259,241,223,205,210,215,220,238,256,274,277,279,282,287,291,296,294,292,290,291,292,293,292,292,291,308,326,343,336,330,323,313,303,293,285,278,270,262,253,245,225,206,186,187,187,188,177,166,155,158,161,164,171,177,184,188,192,196,194,192,190,188,185,183,177,170,164,152,139,127,112,97,82,66,51,35,16,358,339,333,328,322,334,346,358,14,31,47,51,54,58,54,49,45,49,53,57,74,90,107,107,106,106,119,132,145,91,38,344,332,321,309,311,313,315,320,325,330,337,345,352,7,22,37,27,16,6,348,331,313,295,277,259,276,293,310,3,55,108,97,86,75,93,111,129,147,164,182,195,209,222,232,241,251,248,245,242,239,236,233,232,231,230,230],"wind_wave_period":[0.7,0.85,1.25,1.75,2.15,2.3,2.35,2.35,2.25,2.1,2.25,3.05,4.15,4.95,5.25,5.25,5.05,4.5,3.8,3.4,3.7,4.3,4.8,4.9,4.9,4.95,5.25,5.65,5.6,4.75,3.45,2.5,2.15,2.05,2.15,2.5,3,3.2,2.75,2,1.35,1,0.8,0.75,1,1.4,1.75,2,2.2,2.4,2.5,2.55,2.7,3,3.4,3.65,3.6,3.4,3.35,3.7,4.25,4.6,4.55,4.25,3.9,3.55,3.15,2.8,2.65,2.55,2.45,2.25,2.05,1.85,1.7,1.65,1.6,1.7,1.8,1.8,1.55,1.15,0.8,0.45,0.2,0.15,0.55,1.25,1.75,1.9,1.9,1.85,1.9,1.95,1.8,1.25,0.55,0,0,0,0,0,0,0,0.45,1.05,1.45,1.45,1.25,1.15,1.35,1.65,1.9,1.95,1.9,2,2.35,2.8,3.05,2.9,2.6,2.25,1.95,1.6,1.35,1.15,1.05,0.95,0.9,0.9,0.8,0.6,0.3,0.1,0,0,0,0,0,0,0,0,0,0.25,0.55,0.7,0.55,0.3,0.1,0,0,0.15,0.6,1.3,1.9,2.4,2.85,3.2,3.35,3.4,3.35,3.3,3.15,3.05,3,3,2.95,2.9],"swell_wave_height":[2.1,2.1,1.94,1.78,1.62,1.54,1.44,1.36,1.3,1.24,1.18,1.02,0.86,0.7,1.18,1.64,2.12,2.24,2.36,2.48,2.36,2.24,2.12,2.14,2.18,2.2,2.24,2.28,2.32,2.42,2.54,2.64,2.54,2.46,2.36,2.26,2.18,2.08,2.06,2.06,2.04,1.92,1.8,1.68,1.56,1.42,1.3,1.24,1.16,1.1,1.06,1.02,0.98,0.92,0.84,0.78,0.8,0.84,0.86,0.96,1.06,1.16,1.42,1.7,1.96,2.1,2.24,2.38,2.46,2.56,2.64,2.62,2.62,2.6,2.52,2.44,2.36,2.28,2.2,2.12,2.02,1.94,1.84,1.74,1.64,1.54,1.46,1.38,1.3,1.22,1.14,1.06,1.02,1,0.96,0.92,0.88,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.88,0.9,0.94,1.08,1.22,1.36,1.48,1.62,1.74,1.68,1.64,1.58,1.56,1.54,1.52,1.54,1.56,1.58,1.66,1.72,1.8,1.72,1.62,1.54,1.52,1.5,1.48,1.44,1.4,1.36,1.38,1.38,1.4,1.44,1.48,1.52,1.48,1.44,1.4,1.3,1.22,1.12,1.04,0.96,0.88,0.82,0.78,0.72,0.7,0.66,0.64,0.6,0.56,0.52,0.64,0.78,0.9,0.92,0.92,0.94,0.96,0.96,0.98,0.98],"swell_wave_direction":[263,263,267,270,274,274,274,274,274,274,274,258,243,227,235,244,252,257,262,267,264,260,257,259,262,264,263,263,262,266,270,274,274,273,273,260,247,234,248,262,276,262,249,235,234,233,232,232,232,232,231,230,229,232,236,239,238,237,236,240,244,248,243,238,233,233,232,232,234,237,239,237,235,233,232,231,230,229,229,228,228,228,228,229,230,231,229,228,226,244,262,280,278,277,275,271,268,264,268,271,275,274,274,273,271,269,267,262,257,252,254,256,258,263,268,273,272,272,271,264,258,251,258,264,271,274,277,280,278,276,274,274,274,274,273,273,272,273,275,276,277,277,278,276,273,271,272,273,274,274,273,273,273,272,272,273,275,276,276,275,275,276,276,277,272,268,263,263],"swell_wave_period":[6.7,6.7,6.7,6.7,6.65,6.6,6.5,6.35,6.15,5.9,5.8,5.85,6,6.25,6.6,7,7.25,7.25,7.15,7.15,7.35,7.7,7.95,8.05,8.05,8.1,8.25,8.45,8.5,8.25,7.85,7.55,7.4,7.4,7.45,7.75,8.15,8.25,7.75,6.9,6.35,6.4,6.7,6.9,6.85,6.75,6.6,6.5,6.4,6.3,6.1,5.9,5.8,5.95,6.25,6.4,6.15,5.75,5.5,5.6,5.9,6.15,6.25,6.3,6.35,6.45,6.6,6.8,7.05,7.4,7.6,7.65,7.6,7.55,7.55,7.5,7.5,7.45,7.45,7.4,7.35,7.3,7.25,7.15,7,6.9,6.85,6.85,6.8,6.7,6.55,6.45,6.4,6.4,6.35,6.15,5.85,5.7,5.85,6.1,6.3,6.25,6.1,5.95,5.75,5.55,5.5,5.65,5.95,6.15,6.25,6.25,6.3,6.4,6.5,6.55,6.45,6.3,6.25,6.55,6.95,7.15,7,6.65,6.3,6.05,5.8,5.65,5.7,5.85,5.9,5.8,5.65,5.55,5.6,5.75,5.8,5.75,5.7,5.6,5.5,5.45,5.35,5.3,5.25,5.2,5.1,5,4.95,5.1,5.35,5.5,5.55,5.5,5.45,5.35,5.25,5.15,5,4.85,4.8,4.85,5,5.1,5,4.9,4.8,4.85]},"daily_units":{"time":"iso8601","weather_code":"wmo code","temperature_2m_max":"°C","temperature_2m_min":"°C","apparent_temperature_max":"°C","apparent_temperature_min":"°C","sunrise":"iso8601","sunset":"iso8601","uv_index_max":"","precipitation_sum":"mm","rain_sum":"mm","showers_sum":"mm","snowfall_sum":"cm","precipitation_hours":"h","precipitation_probability_max":"%","wind_speed_10m_max":"km/h","wind_gusts_10m_max":"km/h","wind_direction_10m_dominant":"°","wave_height_max":"m","wave_direction_dominant":"°","wave_period_max":"s"},"daily":{"time":["2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18"],"weather_code":[80,3,95,80,95,3,2],"temperature_2m_max":[14.9,14.9,14.5,15.6,13.7,14.8,14.8],"temperature_2m_min":[12.6,13.4,12.9,12.9,12.4,12.5,11.1],"apparent_temperature_max":[13.9,14.1,12.7,13.8,12.4,10.1,12.6],"apparent_temperature_min":[7.4,8.4,7.5,8.7,6,5.7,9],"sunrise":["2026-02-12T07:01","2026-02-13T07:00","2026-02-14T06:59","2026-02-15T06:57","2026-02-16T06:56","2026-02-17T06:55","2026-02-18T06:53"],"sunset":["2026-02-12T17:34","2026-02-13T17:35","2026-02-14T17:37","2026-02-15T17:38","2026-02-16T17:39","2026-02-17T17:40","2026-02-18T17:41"],"uv_index_max":[3.7,4,0.75,2.75,3.5,3.8,1.4],"precipitation_sum":[12.9,0,18.8,2,9,0,0.1],"rain_sum":[8.7,0,0.3,0.7,2.4,0,0],"showers_sum":[4.2,0,18.4,1.3,6.3,0,0.1],"snowfall_sum":[0,0,0,0,0,0,0],"precipitation_hours":[10,0,18,7,15,0,1],"precipitation_probability_max":[100,10,95,83,62,46,8],"wind_speed_10m_max":[47.4,42.4,38.3,31.1,46.6,45.3,19.8],"wind_gusts_10m_max":[75.2,59.4,52.9,41.8,67.3,67.7,33.5],"wind_direction_10m_dominant":[280,298,149,53,285,307,251],"wave_height_max":[2.98,3.34,2.74,2.66,2.04,2.06,1.34],"wave_direction_dominant":[262,262,227,234,257,266,267],"wave_period_max":[8.6,8.95,8.85,8.95,7.85,7.7,6.65]}},"raw_marine":{"civilProtectionAlert":{"active":false,"level":"verde","type":"Condizioni Meteo","validFrom":"In corso","validTo":"24:00","description":"Seguire le indicazioni della Protezione Civile.","link":"https://bollettinimeteo.regione.campania.it/","lastUpdate":"2026-02-12T16:14:32.672Z","source":"Protezione Civile Campania - Zona 1"},"latitude":40.791664,"longitude":14.041672,"generationtime_ms":0.23066997528076172,"utc_offset_seconds":3600,"timezone":"Europe/Rome","timezone_abbreviation":"GMT+1","elevation":47,"hourly_units":{"time":"iso8601","temperature_2m":"°C","relative_humidity_2m":"%","dew_point_2m":"°C","apparent_temperature":"°C","precipitation_probability":"%","precipitation":"mm","rain":"mm","showers":"mm","snowfall":"cm","snow_depth":"m","weather_code":"wmo code","pressure_msl":"hPa","surface_pressure":"hPa","cloud_cover":"%","visibility":"m","wind_speed_10m":"km/h","wind_direction_10m":"°","wind_gusts_10m":"km/h","uv_index":"","wave_height":"m","wave_direction":"°","wave_period":"s","wind_wave_height":"m","wind_wave_direction":"°","wind_wave_period":"s","swell_wave_height":"m","swell_wave_direction":"°","swell_wave_period":"s"},"hourly":{"time":["2026-02-12T00:00","2026-02-12T01:00","2026-02-12T02:00","2026-02-12T03:00","2026-02-12T04:00","2026-02-12T05:00","2026-02-12T06:00","2026-02-12T07:00","2026-02-12T08:00","2026-02-12T09:00","2026-02-12T10:00","2026-02-12T11:00","2026-02-12T12:00","2026-02-12T13:00","2026-02-12T14:00","2026-02-12T15:00","2026-02-12T16:00","2026-02-12T17:00","2026-02-12T18:00","2026-02-12T19:00","2026-02-12T20:00","2026-02-12T21:00","2026-02-12T22:00","2026-02-12T23:00","2026-02-13T00:00","2026-02-13T01:00","2026-02-13T02:00","2026-02-13T03:00","2026-02-13T04:00","2026-02-13T05:00","2026-02-13T06:00","2026-02-13T07:00","2026-02-13T08:00","2026-02-13T09:00","2026-02-13T10:00","2026-02-13T11:00","2026-02-13T12:00","2026-02-13T13:00","2026-02-13T14:00","2026-02-13T15:00","2026-02-13T16:00","2026-02-13T17:00","2026-02-13T18:00","2026-02-13T19:00","2026-02-13T20:00","2026-02-13T21:00","2026-02-13T22:00","2026-02-13T23:00","2026-02-14T00:00","2026-02-14T01:00","2026-02-14T02:00","2026-02-14T03:00","2026-02-14T04:00","2026-02-14T05:00","2026-02-14T06:00","2026-02-14T07:00","2026-02-14T08:00","2026-02-14T09:00","2026-02-14T10:00","2026-02-14T11:00","2026-02-14T12:00","2026-02-14T13:00","2026-02-14T14:00","2026-02-14T15:00","2026-02-14T16:00","2026-02-14T17:00","2026-02-14T18:00","2026-02-14T19:00","2026-02-14T20:00","2026-02-14T21:00","2026-02-14T22:00","2026-02-14T23:00","2026-02-15T00:00","2026-02-15T01:00","2026-02-15T02:00","2026-02-15T03:00","2026-02-15T04:00","2026-02-15T05:00","2026-02-15T06:00","2026-02-15T07:00","2026-02-15T08:00","2026-02-15T09:00","2026-02-15T10:00","2026-02-15T11:00","2026-02-15T12:00","2026-02-15T13:00","2026-02-15T14:00","2026-02-15T15:00","2026-02-15T16:00","2026-02-15T17:00","2026-02-15T18:00","2026-02-15T19:00","2026-02-15T20:00","2026-02-15T21:00","2026-02-15T22:00","2026-02-15T23:00","2026-02-16T00:00","2026-02-16T01:00","2026-02-16T02:00","2026-02-16T03:00","2026-02-16T04:00","2026-02-16T05:00","2026-02-16T06:00","2026-02-16T07:00","2026-02-16T08:00","2026-02-16T09:00","2026-02-16T10:00","2026-02-16T11:00","2026-02-16T12:00","2026-02-16T13:00","2026-02-16T14:00","2026-02-16T15:00","2026-02-16T16:00","2026-02-16T17:00","2026-02-16T18:00","2026-02-16T19:00","2026-02-16T20:00","2026-02-16T21:00","2026-02-16T22:00","2026-02-16T23:00","2026-02-17T00:00","2026-02-17T01:00","2026-02-17T02:00","2026-02-17T03:00","2026-02-17T04:00","2026-02-17T05:00","2026-02-17T06:00","2026-02-17T07:00","2026-02-17T08:00","2026-02-17T09:00","2026-02-17T10:00","2026-02-17T11:00","2026-02-17T12:00","2026-02-17T13:00","2026-02-17T14:00","2026-02-17T15:00","2026-02-17T16:00","2026-02-17T17:00","2026-02-17T18:00","2026-02-17T19:00","2026-02-17T20:00","2026-02-17T21:00","2026-02-17T22:00","2026-02-17T23:00","2026-02-18T00:00","2026-02-18T01:00","2026-02-18T02:00","2026-02-18T03:00","2026-02-18T04:00","2026-02-18T05:00","2026-02-18T06:00","2026-02-18T07:00","2026-02-18T08:00","2026-02-18T09:00","2026-02-18T10:00","2026-02-18T11:00","2026-02-18T12:00","2026-02-18T13:00","2026-02-18T14:00","2026-02-18T15:00","2026-02-18T16:00","2026-02-18T17:00","2026-02-18T18:00","2026-02-18T19:00","2026-02-18T20:00","2026-02-18T21:00","2026-02-18T22:00","2026-02-18T23:00"],"temperature_2m":[14.4,14.6,14.6,14.5,14.8,14.7,14.8,13.9,13.5,13.1,12.6,12.8,13.6,14.3,14.3,13.7,13.6,13.9,14.4,14.9,14.6,14.9,14.6,14.6,14.7,14.4,14.5,14.7,14.5,14.5,14.4,14.2,14.1,13.7,13.4,13.6,13.8,14.3,14.7,14.9,14.9,14.9,14.9,14.9,14.7,14.7,14.4,14.3,14.3,14.3,14.5,14.5,14.2,14.2,13.7,14,13.5,13.4,13.3,13.4,13.3,14.3,14.4,14.2,13.6,13.1,13,12.9,12.9,12.9,12.9,13,12.9,13,13.2,13.2,13.1,13.2,13.9,13.6,13.7,13.9,14.3,14.8,15.3,15.3,15.4,15.6,15.5,15,14.2,13.9,13.6,13.4,13.2,13,12.8,12.7,12.6,12.5,12.4,12.5,12.6,12.7,12.9,13,13.1,13,12.8,12.8,13,13.5,13.7,13.7,13.5,13.3,13.2,13.1,13,12.9,12.8,12.7,12.6,12.5,12.5,12.5,12.6,12.6,12.7,12.8,12.9,13.1,13.4,13.7,14.1,14.4,14.6,14.7,14.8,14.7,14.6,14.5,14.2,13.6,12.8,12.2,11.9,11.8,11.7,11.4,11.1,11.1,11.6,12.3,13,13.6,14.1,14.5,14.4,14.1,14,14.2,14.6,14.8,14.7,14.5,14.3,14.3],"relative_humidity_2m":[83,84,82,83,79,79,79,87,84,87,89,90,83,79,75,84,85,81,78,68,72,69,70,70,72,77,75,70,72,72,72,73,75,79,81,79,78,76,76,77,76,75,75,71,77,74,82,79,76,76,71,71,71,72,77,71,71,74,78,78,86,81,76,77,83,86,87,87,89,89,88,88,87,86,83,77,75,71,66,69,69,68,65,64,64,66,65,62,61,60,59,59,58,57,56,55,54,53,53,53,55,58,62,66,70,74,77,79,80,81,83,86,88,88,87,86,84,82,80,79,78,77,75,73,72,73,74,74,72,69,66,64,62,60,56,53,50,50,50,51,51,50,52,59,69,75,74,70,67,67,68,69,70,70,70,67,63,61,63,67,70,72,73,75,78,81,83,84],"dew_point_2m":[11.5,12,11.6,11.7,11.2,11.1,11.2,11.8,10.8,11,10.8,11.2,10.8,10.7,9.9,11,11.2,10.7,10.7,9.1,9.7,9.3,9.2,9.2,9.7,10.4,10.2,9.3,9.5,9.5,9.4,9.5,9.7,10.1,10.2,10.1,10.1,10.1,10.6,10.9,10.7,10.6,10.5,9.7,10.8,10.2,11.4,10.7,10.2,10.2,9.3,9.3,9.1,9.3,9.8,8.8,8.3,8.9,9.6,9.7,11,11.1,10.2,10.2,10.8,10.9,10.9,10.8,11.1,11.2,11,11.1,10.8,10.8,10.4,9.3,8.8,8.1,7.7,8,8.2,8.1,7.8,8,8.6,9,8.9,8.3,8,7.3,6.3,6,5.5,5,4.6,4.2,3.8,3.4,3.3,3.2,3.6,4.5,5.6,6.6,7.6,8.5,9.2,9.4,9.5,9.6,10.2,11.2,11.8,11.7,11.4,11.1,10.6,10.1,9.7,9.4,9.1,8.8,8.3,7.8,7.6,7.8,8.1,8.1,7.8,7.3,6.7,6.5,6.4,6.1,5.4,4.9,4.3,4.4,4.4,4.7,4.6,4.2,4.4,5.7,7.2,7.9,7.4,6.5,5.8,5.5,5.4,5.6,6.3,6.9,7.6,7.6,7.2,7,7.5,8.1,8.6,9.2,9.8,10.4,10.9,11.2,11.4,11.6],"apparent_temperature":[13.8,13.9,13.7,13.4,13.5,13.9,13.9,11.9,10.6,10.9,11.8,11.1,11,8.1,7.4,8.7,9.7,10.1,10.5,9.9,9.6,8.8,8.8,8.5,8.4,8.6,9.1,8.5,8.5,8.8,8.8,8.7,8.9,9.4,9.9,10.6,11.1,11.5,11.6,11.5,12.1,13.1,14.1,13.8,13.7,13.8,13.2,12.4,12,11.4,11.2,11.1,10.5,9.7,8.9,8.9,7.5,8.6,8.3,8.6,10.2,12.7,12.3,11.6,10.6,9.7,9.5,9.4,9.6,9.7,9.2,9,8.7,9,9.8,10.6,10.6,10.4,11.5,11.3,11.4,11.8,12.4,13.2,13.2,13.4,13.7,13.8,13.6,12.6,11.4,11.3,10.9,10.7,10.6,10.5,10.5,10.5,10.7,10.8,10.8,10.8,10.7,10.9,11.4,11.7,11.7,12,12.3,12.4,12.1,11.6,11,10.3,9.5,8.6,7.8,6.9,6.2,6,5.9,6,5.9,5.7,5.8,6,6.2,6.4,6.6,7,7.2,7.6,8.1,8.5,8.8,9.2,9.4,9.3,9,8.9,9,9.3,9.6,10.1,10.5,10.5,10.4,10.2,10.1,9.6,9,9,9.5,10.2,11.2,12.1,11.7,11.1,10.9,10.9,11,11.5,12.1,12.6,12.4,12,11.8,12.4],"precipitation_probability":[0,3,5,8,8,3,10,78,100,100,100,100,98,75,63,38,15,0,0,3,3,13,15,20,10,3,0,3,3,0,5,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,15,33,45,53,73,85,85,75,75,73,78,85,84,81,80,82,86,90,93,95,95,90,83,78,78,80,80,74,66,58,50,41,35,40,36,33,32,33,34,35,36,35,33,29,25,21,16,13,9,5,2,0,0,0,6,16,28,41,51,58,61,62,61,59,57,55,54,52,50,48,46,43,39,35,30,26,21,18,15,13,11,10,8,6,4,3,3,3,3,3,4,4,4,5,5,5,5,5,4,4,4,4,3,3,3,3,3,3,3,4,4,4,5,5,6,7,7,8],"precipitation":[0,0,0,0,0,0,0,1.4,1.4,1.4,3.7,2.5,0.3,1.3,0,0.2,0.6,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.1,0.3,0.2,0,0,0.1,0.1,0.4,0.5,0.8,0.2,0.9,2.9,3.1,2.2,1.9,2.1,2,0.9,0.4,0.4,0.4,0.2,0.1,0.2,0,0.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.3,0.3,0.6,0.6,0.6,0.4,0.4,0.4,0.9,0.9,0.9,0.8,0.8,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1],"rain":[0,0,0,0,0,0,0,1.1,1.3,1.2,3.3,1.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.1,0.2,0,0.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.3,0.3,0.5,0.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"showers":[0,0,0,0,0,0,0,0.3,0.1,0.2,0.4,0.7,0.3,1.3,0,0.2,0.6,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.2,0,0,0,0.1,0.1,0.4,0.5,0.8,0.2,0.9,2.9,3.1,2.2,1.9,2.1,2,0.9,0.4,0.4,0.4,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.4,0.4,0.4,0.9,0.9,0.9,0.8,0.8,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1],"snowfall":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"snow_depth":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"weather_code":[2,2,2,3,3,3,3,61,61,61,63,63,80,80,3,80,80,3,3,3,3,3,3,3,2,1,1,1,1,2,2,2,2,2,1,1,0,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,80,61,3,3,3,3,80,80,80,80,95,95,81,80,80,80,80,80,80,80,80,61,61,61,3,61,2,3,2,1,2,2,2,1,1,2,2,2,1,1,1,1,1,1,3,3,3,3,3,3,61,61,61,3,3,3,95,95,95,95,95,95,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2],"pressure_msl":[1000.1,999.3,999.1,998.1,997.6,995.8,994.4,993,992.2,990.4,990.6,988.7,987.8,986.6,986.4,986.4,986.7,986.9,987.5,988.5,989.4,989.4,989.9,990.3,990.9,990.9,991.2,991.2,991.3,991.7,992.1,993.1,994,994.9,995.6,996.1,996.5,996.7,996.5,996.9,997.3,997.8,998.4,998.8,998.8,998.8,998.6,998.5,998.7,999.2,999.3,998.1,996.2,995.4,995.1,995,995.1,994.8,994.6,994.4,994.4,993.8,993.2,993,993,993.2,993.3,993.4,993.5,993.8,993.8,993.9,994.2,994.7,995.1,995.2,995.7,996.3,997.2,998.4,999.7,1000.5,1001.5,1002.6,1003.4,1003.7,1003.9,1004.1,1004.6,1005.6,1006.7,1007.9,1008.7,1009.4,1009.8,1010,1010,1009.9,1009.8,1009.7,1009.5,1009.4,1009.3,1009.1,1008.8,1008.3,1007.8,1007.1,1006.4,1005.6,1004.8,1004,1003.3,1002.8,1002.3,1001.9,1001.5,1001.1,1000.8,1000.5,1000.3,1000,999.5,998.9,998.6,998.6,998.9,999.4,1000.2,1001.2,1002.1,1002.9,1003.6,1004.2,1004.9,1005.7,1006.6,1007.6,1008.7,1009.7,1010.6,1011.5,1012.3,1013,1013.6,1014.2,1014.7,1015.2,1015.7,1016.1,1016.6,1017,1017.5,1018.1,1018.5,1018.7,1018.9,1018.9,1018.8,1018.7,1018.6,1018.7,1018.8,1019.1,1019.6,1020.2,1020.6,1020.8],"surface_pressure":[994.5,993.7,993.5,992.5,992.1,990.3,988.9,987.5,986.7,984.9,985.1,983.2,982.3,981.1,980.9,980.9,981.2,981.4,982,983,983.9,983.9,984.4,984.8,985.4,985.4,985.7,985.7,985.8,986.2,986.6,987.6,988.5,989.3,990,990.5,990.9,991.2,991,991.4,991.8,992.3,992.9,993.3,993.2,993.2,993,992.9,993.1,993.6,993.7,992.5,990.7,989.9,989.5,989.5,989.5,989.2,989,988.8,988.8,988.3,987.7,987.5,987.5,987.6,987.7,987.8,987.9,988.2,988.2,988.3,988.6,989.1,989.5,989.6,990.1,990.7,991.6,992.8,994.1,994.9,995.9,997,997.8,998.1,998.3,998.5,999,1000,1001.1,1002.3,1003.1,1003.8,1004.2,1004.4,1004.3,1004.2,1004.1,1004,1003.8,1003.7,1003.6,1003.5,1003.2,1002.7,1002.2,1001.5,1000.8,1000,999.2,998.4,997.7,997.2,996.7,996.3,995.9,995.5,995.2,994.9,994.7,994.4,993.9,993.3,993,993,993.3,993.8,994.6,995.6,996.5,997.3,998,998.6,999.3,1000.1,1001,1002,1003.1,1004.1,1005,1005.9,1006.7,1007.3,1007.9,1008.5,1009,1009.5,1010,1010.4,1010.9,1011.3,1011.8,1012.4,1012.8,1013,1013.2,1013.2,1013.1,1013,1012.9,1013,1013.1,1013.4,1013.9,1014.5,1014.9,1015.1],"cloud_cover":[51,64,73,100,100,100,100,100,100,100,100,100,99,100,100,100,100,100,100,100,100,100,100,98,47,34,40,23,33,57,67,50,69,68,35,25,5,21,25,31,25,30,100,100,93,100,100,100,97,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,77,86,89,96,96,87,100,98,83,89,54,33,54,68,49,39,45,51,47,57,50,44,37,34,30,27,51,76,100,100,100,100,100,100,100,96,92,88,85,83,80,87,93,100,100,100,100,100,100,100,100,100,100,100,100,100,67,35,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,23,35,34,32,31,31,32,32,35,38,41,51,61,71,65],"visibility":[24600,22740,26680,25660,34540,35760,35040,14600,13520,10020,6720,10680,24200,30300,43800,21660,19580,29660,37240,56320,49940,55100,53140,53100,49780,38780,43580,53800,49380,49880,49360,48620,44060,35120,30700,33500,37100,41660,41120,39080,41800,44220,43760,51220,39720,46020,28220,34620,40780,42100,51220,52220,51280,49260,15820,49820,52600,45300,36620,37120,17600,29440,41280,39500,25780,17460,16100,15220,12660,12700,13060,14460,16840,19360,26080,39000,44400,52820,59520,54080,56400,57340,61220,62900,62680,60820,62620,64920,66560,67100,68360,69240,70120,71000,71880,72500,73120,73740,73480,73200,72940,68940,64960,60960,45020,29100,13160,18320,23500,28660,23800,18940,14080,15420,16760,18100,23500,28920,34320,36380,38440,40500,43760,47020,50280,49080,47900,46700,51160,55640,60100,52850,44450,34875,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,24140,20620,17080,13560,17080,20620,24140,21500,18860,16220,17680,19140,20600,20820,21040,21260,22220],"wind_speed_10m":[7.1,9,9.8,11.6,11.4,8.1,9.4,18.2,21.9,17.4,7.2,14.7,19.2,43.8,47.4,36.2,29.4,27.8,28.6,33.2,34.3,41.1,38.1,40.5,42.4,40.7,37.9,40.9,40.3,38.2,37.4,37.1,35.4,29.8,24.5,21.2,18.9,20.2,22.6,25.4,21.1,13.6,6.5,7.3,8.7,7.1,11.5,14.8,16.8,20.5,21.2,22.1,24.1,30,32.9,33,38.3,30.8,33.7,32.8,23.2,13.3,15.2,18.5,22,25.7,26.2,26,25.3,25,27,29.6,31.1,29.5,23.9,17,15,16.4,12.9,11.8,13,10.9,8.9,7.7,11.9,11.3,9.7,9,9.1,11.7,13.5,11.2,10.9,9.9,8.7,7.4,6.1,4.7,2.6,0.5,1,2.5,5.5,6.6,5.8,6.6,8.1,6,2.6,1.8,7,15.4,22.4,27,30.9,34.6,38.9,43.3,46.1,46.6,45.3,44,43.4,42.8,42.1,41.2,40.6,39.5,38,35.6,33.6,31.9,30.6,30.1,29,27,26.2,27.7,30,31.1,29.3,26.1,22.1,16.4,10.5,7.4,6.1,4.7,4.2,5.2,6.6,7.2,8,8.6,7.7,5.8,11.7,17.6,19.3,18.7,17.9,17.2,16.7,16.4,17.6,19.4,19.8,16.2],"wind_direction_10m":[285,268,262,265,259,249,203,214,225,202,174,149,264,279,285,295,292,289,291,304,303,300,301,299,299,296,293,294,299,300,299,304,308,315,317,320,318,310,304,302,303,302,273,213,204,195,176,179,165,165,165,161,142,142,150,153,149,127,140,144,152,178,185,159,159,149,146,146,144,139,132,130,125,117,102,85,42,33,30,20,5,17,27,28,2,351,358,16,34,56,56,48,46,44,42,43,50,58,56,45,225,172,157,158,184,229,249,253,254,281,282,281,281,283,285,287,289,293,294,294,294,294,293,292,293,295,299,302,305,309,312,315,317,318,316,315,314,314,315,316,318,322,326,334,352,23,45,58,70,78,81,84,98,112,131,187,236,247,246,242,240,241,245,251,259,269,273,273],"wind_gusts_10m":[13,10.4,13.7,16.6,16.2,13,12.6,30.6,29.2,28.8,23,24.5,28.4,60.5,75.2,67.3,50,39.2,38.5,44.6,46.8,62.3,56.9,55.8,59.4,59.4,56.5,56.9,58.7,55.8,52.2,51.1,50.8,48.2,39.2,32.4,28.4,27,30.2,34.2,33.8,27.7,18.4,10.4,12.2,11.9,15.5,19.8,22.3,27.4,28.8,29.5,34.6,40,45.4,45.7,52.6,52.9,45.7,47.9,43.9,34.6,29.5,33.1,35.3,38.5,38.5,37.1,34.2,34.2,35.6,39.6,41.8,41.8,39.2,31.7,22.7,22.3,22,20.5,18.4,17.6,14.8,12.2,15.8,19.8,15.1,13,12.2,16.6,18.7,18,17.3,15.8,14,13,11.9,10.4,7.9,5,4,6.5,10.8,14,15.5,15.8,15.1,11.9,7.9,7.2,12.6,21.6,30.2,37.8,45,51.5,57.2,61.9,65.5,67.3,67.7,67.3,65.5,63,60.8,60.5,60.5,59.8,57.2,53.6,50,46.5,43.4,41.8,41.8,41.4,41.4,42.5,44.3,44.6,43.2,40.3,36.4,30.6,23.4,17.3,12.2,8.3,6.1,6.5,9,10.8,11.2,10.8,11.9,15.5,20.2,24.5,28.4,32,33.5,31,26.3,23.8,26.3,31.3,32.8,27.7],"uv_index":[0,0,0,0,0,0,0,0,0.05,0.05,0.25,0.15,3.7,1.2,3.05,1.4,0.4,0.45,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.2,1.05,2.1,3.15,3.8,4,3.6,2.8,1.7,0.65,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.05,0.25,0.1,0.35,0.3,0.25,0.45,0.75,0.4,0.15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.65,1.6,1.65,2.65,2.75,2.7,1.65,1.2,0.6,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0.25,1.1,2.25,2.95,3.3,3.05,3.5,0.6,0.2,0.05,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.3,0.7,1.25,2.15,3.15,3.8,3.8,3.4,2.85,2,1,0.25,0,0,0,0,0,0,0,0,0,0,0,0,0.25,0.6,0.8,0.75,0.65,0.6,0.85,1.25,1.4,1.1,0.55,0.15,0,0,0,0],"wave_height":[2.1,2.12,2.06,1.98,1.92,1.84,1.78,1.7,1.66,1.6,1.56,1.76,1.96,2.16,2.34,2.54,2.72,2.72,2.72,2.72,2.78,2.84,2.9,2.98,3.04,3.12,3.2,3.26,3.34,3.28,3.24,3.18,3.08,2.98,2.88,2.78,2.68,2.58,2.48,2.36,2.26,2.14,2.02,1.9,1.8,1.68,1.58,1.52,1.44,1.38,1.36,1.32,1.3,1.36,1.4,1.46,1.48,1.52,1.54,1.7,1.86,2.02,2.12,2.24,2.34,2.38,2.4,2.44,2.54,2.64,2.74,2.7,2.66,2.62,2.54,2.44,2.36,2.28,2.22,2.14,2.04,1.94,1.84,1.74,1.64,1.54,1.5,1.46,1.42,1.4,1.38,1.36,1.3,1.26,1.2,1.18,1.14,1.12,1.1,1.08,1.06,1.04,1.04,1.02,1.02,1.04,1.04,1.16,1.26,1.38,1.52,1.66,1.8,1.84,1.88,1.92,1.96,1.98,2.02,2.04,2.04,2.06,2.06,2.06,2.06,2.02,1.98,1.94,1.88,1.84,1.78,1.76,1.72,1.7,1.7,1.7,1.7,1.7,1.68,1.68,1.62,1.58,1.52,1.44,1.34,1.26,1.2,1.12,1.06,1.02,0.96,0.92,0.88,0.86,0.82,0.88,0.92,0.98,1.06,1.16,1.24,1.26,1.3,1.32,1.32,1.3,1.3,1.3],"wave_direction":[263,263,263,263,263,262,262,261,259,258,256,259,262,265,265,264,264,263,263,262,262,263,263,263,263,263,264,264,265,264,264,263,262,262,261,261,260,260,260,259,259,258,257,256,255,255,254,253,251,250,246,242,238,225,211,198,199,200,201,206,212,217,220,223,226,228,229,231,231,232,232,232,232,232,231,231,230,229,229,228,228,228,228,229,230,231,236,241,246,250,255,259,261,262,264,264,265,265,265,264,264,262,261,259,257,256,254,253,252,251,252,252,253,254,254,255,257,260,262,263,264,265,265,265,265,265,266,266,266,266,266,266,265,265,265,266,266,268,270,272,273,273,274,273,272,271,270,269,268,267,267,266,265,265,264,263,261,260,261,262,263,263,264,264,263,262,261,261],"wave_period":[8,7.95,7.9,7.75,7.65,7.55,7.4,7.25,7.1,6.95,6.75,6.4,6,5.9,6.3,6.95,7.5,7.85,8.15,8.35,8.45,8.45,8.5,8.6,8.7,8.8,8.85,8.85,8.85,8.9,8.9,8.95,8.95,8.95,8.95,8.9,8.8,8.7,8.55,8.4,8.25,8.15,8,7.9,7.75,7.6,7.45,7.25,7.05,6.85,6.6,6.35,6.1,5.8,5.45,5.25,5.25,5.45,5.6,5.75,5.9,6.1,6.4,6.7,7.05,7.35,7.65,7.95,8.25,8.5,8.7,8.85,8.9,8.95,8.95,8.95,8.9,8.85,8.85,8.8,8.75,8.7,8.6,8.5,8.4,8.25,8.1,7.95,7.8,7.7,7.65,7.6,7.55,7.5,7.45,7.4,7.4,7.35,7.35,7.3,7.3,7.3,7.3,7.3,7.25,7.25,7.2,7.2,7.15,7.2,7.3,7.45,7.6,7.7,7.8,7.85,7.8,7.7,7.6,7.6,7.65,7.65,7.65,7.65,7.65,7.65,7.7,7.7,7.7,7.65,7.6,7.6,7.55,7.55,7.55,7.5,7.45,7.35,7.2,7.05,6.9,6.8,6.7,6.65,6.65,6.65,6.6,6.6,6.55,6.5,6.5,6.45,6.4,6.3,6.15,5.8,5.35,5.05,5,5.1,5.2,5.3,5.4,5.45,5.5,5.5,5.5,5.45],"wind_wave_height":[0.06,0.08,0.14,0.18,0.24,0.26,0.3,0.32,0.3,0.3,0.28,0.84,1.42,1.98,1.88,1.78,1.68,1.36,1.06,0.74,1.02,1.28,1.56,1.58,1.58,1.6,1.76,1.94,2.1,1.54,0.96,0.4,0.36,0.32,0.28,0.4,0.54,0.66,0.46,0.28,0.08,0.06,0.06,0.04,0.08,0.1,0.14,0.22,0.3,0.38,0.42,0.48,0.52,0.72,0.9,1.1,1,0.88,0.78,1.04,1.28,1.54,1.36,1.2,1.02,0.84,0.66,0.48,0.44,0.38,0.34,0.28,0.24,0.18,0.16,0.14,0.12,0.14,0.14,0.16,0.12,0.08,0.04,0.02,0.02,0,0.06,0.14,0.2,0.18,0.16,0.14,0.14,0.14,0.14,0.1,0.04,0,0,0,0,0,0,0,0.02,0.02,0.04,0.06,0.1,0.12,0.12,0.1,0.1,0.12,0.16,0.18,0.3,0.42,0.54,0.46,0.4,0.32,0.28,0.26,0.22,0.18,0.14,0.1,0.08,0.06,0.04,0.04,0.02,0.02,0.02,0,0,0,0,0,0,0,0,0,0.02,0.02,0.02,0,0,0,0.02,0.02,0.08,0.12,0.18,0.36,0.52,0.7,0.7,0.72,0.72,0.68,0.64,0.6,0.58,0.58,0.56,0.56],"wind_wave_direction":[249,254,256,257,259,241,223,205,210,215,220,238,256,274,277,279,282,287,291,296,294,292,290,291,292,293,292,292,291,308,326,343,336,330,323,313,303,293,285,278,270,262,253,245,225,206,186,187,187,188,177,166,155,158,161,164,171,177,184,188,192,196,194,192,190,188,185,183,177,170,164,152,139,127,112,97,82,66,51,35,16,358,339,333,328,322,334,346,358,14,31,47,51,54,58,54,49,45,49,53,57,74,90,107,107,106,106,119,132,145,91,38,344,332,321,309,311,313,315,320,325,330,337,345,352,7,22,37,27,16,6,348,331,313,295,277,259,276,293,310,3,55,108,97,86,75,93,111,129,147,164,182,195,209,222,232,241,251,248,245,242,239,236,233,232,231,230,230],"wind_wave_period":[0.7,0.85,1.25,1.75,2.15,2.3,2.35,2.35,2.25,2.1,2.25,3.05,4.15,4.95,5.25,5.25,5.05,4.5,3.8,3.4,3.7,4.3,4.8,4.9,4.9,4.95,5.25,5.65,5.6,4.75,3.45,2.5,2.15,2.05,2.15,2.5,3,3.2,2.75,2,1.35,1,0.8,0.75,1,1.4,1.75,2,2.2,2.4,2.5,2.55,2.7,3,3.4,3.65,3.6,3.4,3.35,3.7,4.25,4.6,4.55,4.25,3.9,3.55,3.15,2.8,2.65,2.55,2.45,2.25,2.05,1.85,1.7,1.65,1.6,1.7,1.8,1.8,1.55,1.15,0.8,0.45,0.2,0.15,0.55,1.25,1.75,1.9,1.9,1.85,1.9,1.95,1.8,1.25,0.55,0,0,0,0,0,0,0,0.45,1.05,1.45,1.45,1.25,1.15,1.35,1.65,1.9,1.95,1.9,2,2.35,2.8,3.05,2.9,2.6,2.25,1.95,1.6,1.35,1.15,1.05,0.95,0.9,0.9,0.8,0.6,0.3,0.1,0,0,0,0,0,0,0,0,0,0.25,0.55,0.7,0.55,0.3,0.1,0,0,0.15,0.6,1.3,1.9,2.4,2.85,3.2,3.35,3.4,3.35,3.3,3.15,3.05,3,3,2.95,2.9],"swell_wave_height":[2.1,2.1,1.94,1.78,1.62,1.54,1.44,1.36,1.3,1.24,1.18,1.02,0.86,0.7,1.18,1.64,2.12,2.24,2.36,2.48,2.36,2.24,2.12,2.14,2.18,2.2,2.24,2.28,2.32,2.42,2.54,2.64,2.54,2.46,2.36,2.26,2.18,2.08,2.06,2.06,2.04,1.92,1.8,1.68,1.56,1.42,1.3,1.24,1.16,1.1,1.06,1.02,0.98,0.92,0.84,0.78,0.8,0.84,0.86,0.96,1.06,1.16,1.42,1.7,1.96,2.1,2.24,2.38,2.46,2.56,2.64,2.62,2.62,2.6,2.52,2.44,2.36,2.28,2.2,2.12,2.02,1.94,1.84,1.74,1.64,1.54,1.46,1.38,1.3,1.22,1.14,1.06,1.02,1,0.96,0.92,0.88,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.88,0.9,0.94,1.08,1.22,1.36,1.48,1.62,1.74,1.68,1.64,1.58,1.56,1.54,1.52,1.54,1.56,1.58,1.66,1.72,1.8,1.72,1.62,1.54,1.52,1.5,1.48,1.44,1.4,1.36,1.38,1.38,1.4,1.44,1.48,1.52,1.48,1.44,1.4,1.3,1.22,1.12,1.04,0.96,0.88,0.82,0.78,0.72,0.7,0.66,0.64,0.6,0.56,0.52,0.64,0.78,0.9,0.92,0.92,0.94,0.96,0.96,0.98,0.98],"swell_wave_direction":[263,263,267,270,274,274,274,274,274,274,274,258,243,227,235,244,252,257,262,267,264,260,257,259,262,264,263,263,262,266,270,274,274,273,273,260,247,234,248,262,276,262,249,235,234,233,232,232,232,232,231,230,229,232,236,239,238,237,236,240,244,248,243,238,233,233,232,232,234,237,239,237,235,233,232,231,230,229,229,228,228,228,228,229,230,231,229,228,226,244,262,280,278,277,275,271,268,264,268,271,275,274,274,273,271,269,267,262,257,252,254,256,258,263,268,273,272,272,271,264,258,251,258,264,271,274,277,280,278,276,274,274,274,274,273,273,272,273,275,276,277,277,278,276,273,271,272,273,274,274,273,273,273,272,272,273,275,276,276,275,275,276,276,277,272,268,263,263],"swell_wave_period":[6.7,6.7,6.7,6.7,6.65,6.6,6.5,6.35,6.15,5.9,5.8,5.85,6,6.25,6.6,7,7.25,7.25,7.15,7.15,7.35,7.7,7.95,8.05,8.05,8.1,8.25,8.45,8.5,8.25,7.85,7.55,7.4,7.4,7.45,7.75,8.15,8.25,7.75,6.9,6.35,6.4,6.7,6.9,6.85,6.75,6.6,6.5,6.4,6.3,6.1,5.9,5.8,5.95,6.25,6.4,6.15,5.75,5.5,5.6,5.9,6.15,6.25,6.3,6.35,6.45,6.6,6.8,7.05,7.4,7.6,7.65,7.6,7.55,7.55,7.5,7.5,7.45,7.45,7.4,7.35,7.3,7.25,7.15,7,6.9,6.85,6.85,6.8,6.7,6.55,6.45,6.4,6.4,6.35,6.15,5.85,5.7,5.85,6.1,6.3,6.25,6.1,5.95,5.75,5.55,5.5,5.65,5.95,6.15,6.25,6.25,6.3,6.4,6.5,6.55,6.45,6.3,6.25,6.55,6.95,7.15,7,6.65,6.3,6.05,5.8,5.65,5.7,5.85,5.9,5.8,5.65,5.55,5.6,5.75,5.8,5.75,5.7,5.6,5.5,5.45,5.35,5.3,5.25,5.2,5.1,5,4.95,5.1,5.35,5.5,5.55,5.5,5.45,5.35,5.25,5.15,5,4.85,4.8,4.85,5,5.1,5,4.9,4.8,4.85]},"daily_units":{"time":"iso8601","weather_code":"wmo code","temperature_2m_max":"°C","temperature_2m_min":"°C","apparent_temperature_max":"°C","apparent_temperature_min":"°C","sunrise":"iso8601","sunset":"iso8601","uv_index_max":"","precipitation_sum":"mm","rain_sum":"mm","showers_sum":"mm","snowfall_sum":"cm","precipitation_hours":"h","precipitation_probability_max":"%","wind_speed_10m_max":"km/h","wind_gusts_10m_max":"km/h","wind_direction_10m_dominant":"°","wave_height_max":"m","wave_direction_dominant":"°","wave_period_max":"s"},"daily":{"time":["2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18"],"weather_code":[80,3,95,80,95,3,2],"temperature_2m_max":[14.9,14.9,14.5,15.6,13.7,14.8,14.8],"temperature_2m_min":[12.6,13.4,12.9,12.9,12.4,12.5,11.1],"apparent_temperature_max":[13.9,14.1,12.7,13.8,12.4,10.1,12.6],"apparent_temperature_min":[7.4,8.4,7.5,8.7,6,5.7,9],"sunrise":["2026-02-12T07:01","2026-02-13T07:00","2026-02-14T06:59","2026-02-15T06:57","2026-02-16T06:56","2026-02-17T06:55","2026-02-18T06:53"],"sunset":["2026-02-12T17:34","2026-02-13T17:35","2026-02-14T17:37","2026-02-15T17:38","2026-02-16T17:39","2026-02-17T17:40","2026-02-18T17:41"],"uv_index_max":[3.7,4,0.75,2.75,3.5,3.8,1.4],"precipitation_sum":[12.9,0,18.8,2,9,0,0.1],"rain_sum":[8.7,0,0.3,0.7,2.4,0,0],"showers_sum":[4.2,0,18.4,1.3,6.3,0,0.1],"snowfall_sum":[0,0,0,0,0,0,0],"precipitation_hours":[10,0,18,7,15,0,1],"precipitation_probability_max":[100,10,95,83,62,46,8],"wind_speed_10m_max":[47.4,42.4,38.3,31.1,46.6,45.3,19.8],"wind_gusts_10m_max":[75.2,59.4,52.9,41.8,67.3,67.7,33.5],"wind_direction_10m_dominant":[280,298,149,53,285,307,251],"wave_height_max":[2.98,3.34,2.74,2.66,2.04,2.06,1.34],"wave_direction_dominant":[262,262,227,234,257,266,267],"wave_period_max":[8.6,8.95,8.85,8.95,7.85,7.7,6.65]}},"currentHour":16};
-    const liveSchedules = {"procidaNapoli":[{"time":"16:14","type":"Traghetto","status":"In Orario","route":"Procida → Napoli"}],"napoliProcida":[{"time":"07:00","type":"Traghetto","status":"In Orario","route":"Napoli → Procida"},{"time":"09:00","type":"Aliscafo","status":"In Orario","route":"Napoli → Procida"},{"time":"11:30","type":"Traghetto","status":"In Orario","route":"Napoli → Procida"},{"time":"13:50","type":"Aliscafo","status":"In Orario","route":"Napoli → Procida"},{"time":"16:00","type":"Traghetto","status":"In Orario","route":"Napoli → Procida"},{"time":"17:40","type":"Aliscafo","status":"In Orario","route":"Napoli → Procida"},{"time":"19:15","type":"Traghetto","status":"In Orario","route":"Napoli → Procida"},{"time":"21:00","type":"Aliscafo","status":"In Orario","route":"Napoli → Procida"}]};
-    let chartsRendered = false;
-
-    // ✅ FUNZIONE CORRETTA - NEXT DEPARTURE SEPARATO PER ROTTA
-    function getNextDepartureByRoute(route) {
-      const now = new Date();
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-      
-      const departures = route === 'procida' ? liveSchedules.procidaNapoli : liveSchedules.napoliProcida;
-      
-      let nextDep = null;
-      let minDiff = Infinity;
-      
-      departures.forEach(dep => {
-        const [h, m] = dep.time.split(':').map(Number);
-        const depMinutes = h * 60 + m;
-        const diff = depMinutes - currentMinutes;
-        
-        if (diff > 0 && diff < minDiff) {
-          minDiff = diff;
-          nextDep = { ...dep, diff };
+        function formatDate(date) {
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('it-IT', options);
         }
-      });
-      
-      if (!nextDep && departures.length > 0) {
-        const firstTomorrow = departures[0];
-        const [h, m] = firstTomorrow.time.split(':').map(Number);
-        nextDep = {
-          ...firstTomorrow,
-          diff: (24 * 60) + (h * 60 + m) - currentMinutes,
-          tomorrow: true
-        };
-      }
-      
-      return nextDep;
-    }
 
-    function updateDepartureBanner() {
-      const procidaNext = getNextDepartureByRoute('procida');
-      const napoliNext = getNextDepartureByRoute('napoli');
-      
-      // Aggiorna colonna PROCIDA
-      if (procidaNext) {
-        const icon = (procidaNext.type || '').toLowerCase().includes('aliscafo') ? '🚤' : '⛴️';
-        document.getElementById('procidaTime').textContent = procidaNext.time;
-        document.getElementById('procidaType').textContent = icon + ' ' + (procidaNext.type || 'Traghetto');
-        
-        const status = (procidaNext.status || 'In Orario').toLowerCase();
-        const statusDot = document.getElementById('procidaStatusDot');
-        const statusText = document.getElementById('procidaStatus');
-        
-        if (status.includes('orario') || status.includes('imbarco')) {
-          statusDot.className = 'status-dot verde';
-          statusText.textContent = procidaNext.status || 'In Orario';
-        } else if (status.includes('ritard')) {
-          statusDot.className = 'status-dot gialla';
-          statusText.textContent = procidaNext.status || 'Ritardo';
-        } else {
-          statusDot.className = 'status-dot rossa';
-          statusText.textContent = procidaNext.status || 'Cancellata';
-        }
-        
-        updateCountdown('procida', procidaNext);
-      }
-      
-      // Aggiorna colonna NAPOLI
-      if (napoliNext) {
-        const icon = (napoliNext.type || '').toLowerCase().includes('aliscafo') ? '🚤' : '⛴️';
-        document.getElementById('napoliTime').textContent = napoliNext.time;
-        document.getElementById('napoliType').textContent = icon + ' ' + (napoliNext.type || 'Traghetto');
-        
-        const status = (napoliNext.status || 'In Orario').toLowerCase();
-        const statusDot = document.getElementById('napoliStatusDot');
-        const statusText = document.getElementById('napoliStatus');
-        
-        if (status.includes('orario') || status.includes('imbarco')) {
-          statusDot.className = 'status-dot verde';
-          statusText.textContent = napoliNext.status || 'In Orario';
-        } else if (status.includes('ritard')) {
-          statusDot.className = 'status-dot gialla';
-          statusText.textContent = napoliNext.status || 'Ritardo';
-        } else {
-          statusDot.className = 'status-dot rossa';
-          statusText.textContent = napoliNext.status || 'Cancellata';
-        }
-        
-        updateCountdown('napoli', napoliNext);
-      }
-      
-      // Aggiorna anche il widget
-      const firstNext = procidaNext && (!napoliNext || procidaNext.diff < napoliNext.diff) ? procidaNext : napoliNext;
-      if (firstNext) {
-        document.getElementById('widgetNextTime').textContent = firstNext.time;
-      }
-    }
+        function getCountdown(timeStr) {
+            const now = new Date();
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const target = new Date();
+            target.setHours(hours, minutes, 0, 0);
 
-    function updateCountdown(route, departure) {
-      if (!departure) return;
-
-      const now = new Date();
-      const [h, m] = departure.time.split(':').map(Number);
-      const depTime = new Date();
-      depTime.setHours(h, m, 0, 0);
-      
-      if (departure.tomorrow) {
-        depTime.setDate(depTime.getDate() + 1);
-      }
-      
-      const diff = depTime - now;
-      const minutes = Math.floor(diff / 60000);
-      const hours = Math.floor(minutes / 60);
-      const mins = minutes % 60;
-      
-      const countdownEl = document.getElementById(route + 'Countdown');
-      if (countdownEl) {
-        if (departure.tomorrow) {
-          countdownEl.textContent = '⏳ Domani - Tra ' + hours + 'h ' + mins + 'min';
-        } else if (hours > 0) {
-          countdownEl.textContent = '⏱️ Tra ' + hours + 'h ' + mins + 'min';
-        } else if (mins > 0) {
-          countdownEl.textContent = '⏱️ Tra ' + mins + ' minuti';
-        } else {
-          countdownEl.textContent = '🚀 In partenza!';
-        }
-      }
-    }
-
-    // ✅ RENDER ORARI COMPATTI
-    function renderSchedules() {
-      const procidaContainer = document.getElementById('procidaNapoliSlots');
-      const napoliContainer = document.getElementById('napoliProcidaSlots');
-      
-      liveSchedules.procidaNapoli.forEach(dep => {
-        const slot = document.createElement('div');
-        slot.className = 'schedule-slot';
-        
-        const status = (dep.status || 'In Orario').toLowerCase();
-        if (status.includes('orario') || status.includes('imbarco')) {
-          slot.classList.add('status-verde');
-        } else if (status.includes('ritard')) {
-          slot.classList.add('status-gialla');
-        } else if (status.includes('cancellat')) {
-          slot.classList.add('status-rossa');
-        }
-        
-        const icon = (dep.type || '').toLowerCase().includes('aliscafo') ? '🚤' : '⛴️';
-        slot.innerHTML = '<span class="schedule-slot-time">' + dep.time + '</span><span class="schedule-slot-icon">' + icon + '</span>';
-        procidaContainer.appendChild(slot);
-      });
-      
-      liveSchedules.napoliProcida.forEach(dep => {
-        const slot = document.createElement('div');
-        slot.className = 'schedule-slot';
-        
-        const status = (dep.status || 'In Orario').toLowerCase();
-        if (status.includes('orario') || status.includes('imbarco')) {
-          slot.classList.add('status-verde');
-        } else if (status.includes('ritard')) {
-          slot.classList.add('status-gialla');
-        } else if (status.includes('cancellat')) {
-          slot.classList.add('status-rossa');
-        }
-        
-        const icon = (dep.type || '').toLowerCase().includes('aliscafo') ? '🚤' : '⛴️';
-        slot.innerHTML = '<span class="schedule-slot-time">' + dep.time + '</span><span class="schedule-slot-icon">' + icon + '</span>';
-        napoliContainer.appendChild(slot);
-      });
-    }
-
-    updateDepartureBanner();
-    renderSchedules();
-    
-    setInterval(function() {
-      const procidaNext = getNextDepartureByRoute('procida');
-      const napoliNext = getNextDepartureByRoute('napoli');
-      if (procidaNext) updateCountdown('procida', procidaNext);
-      if (napoliNext) updateCountdown('napoli', napoliNext);
-    }, 30000);
-
-    function getDayLabel(dateString, index) {
-      const date = new Date(dateString);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      date.setHours(0, 0, 0, 0);
-
-      const tomorrow = new Date(today);
-      tomorrow.setDate(today.getDate() + 1);
-
-      if (date.getTime() === today.getTime()) return 'OGGI';
-      if (date.getTime() === tomorrow.getTime()) return 'DOMANI';
-
-      const giorni = ['DOM', 'LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB'];
-      const dayName = giorni[date.getDay()];
-      const dayNum = date.getDate();
-      const month = date.getMonth() + 1;
-      return dayName + ' ' + dayNum + '/' + month;
-    }
-
-    function openDrawer() {
-      document.querySelector('.drawer-overlay').classList.add('active');
-      document.querySelector('.drawer').classList.add('active');
-      document.body.style.overflow = 'hidden';
-
-      if (!chartsRendered) {
-        setTimeout(renderCharts, 300);
-        chartsRendered = true;
-      }
-    }
-
-    function closeDrawer() {
-      document.querySelector('.drawer-overlay').classList.remove('active');
-      document.querySelector('.drawer').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function openModal(type) {
-      const modal = document.querySelector('.modal-overlay');
-      const title = document.getElementById('modalTitle');
-      const body = document.getElementById('modalBody');
-
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-
-      if (type === 'radar') {
-        title.textContent = '🌧️ Radar Pioggia Live';
-        body.innerHTML = '<iframe class="modal-iframe" src="https://www.rainviewer.com/map.html?loc=40.7584,14.0098,10&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=0&c=1&o=83&lm=1&layer=radar&sm=1&sn=1" allowfullscreen></iframe>';
-      } else if (type === 'traffic') {
-        title.textContent = '🚢 Traffico Marittimo Live';
-        body.innerHTML = '<iframe class="modal-iframe" src="https://www.marinetraffic.com/en/ais/embed/zoom:12/centery:40.758/centerx:14.010/maptype:0/shownames:false/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" allowfullscreen></iframe>';
-      } else if (type === 'webcam') {
-        title.textContent = '📹 Webcam Procida e Napoli';
-        body.innerHTML = '<div class="webcam-links"><h3>Seleziona webcam da visualizzare</h3><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/napoli-maschio-angioino.html" target="_blank" class="webcam-link">🏛️ Napoli - Maschio Angioino</a><a href="https://www.skylinewebcams.com/it/webcam/italia/campania/napoli/procida-porto.html" target="_blank" class="webcam-link">🏝️ Procida - Porto Marina</a><a href="https://www.youtube.com/results?search_query=procida+webcam+live" target="_blank" class="webcam-link">📺 YouTube - Webcam Live</a></div>';
-      }
-    }
-
-    function closeModal() {
-      document.querySelector('.modal-overlay').classList.remove('active');
-      document.getElementById('modalBody').innerHTML = '';
-      document.body.style.overflow = '';
-    }
-
-    function renderMiniCharts() {
-      if (!weatherData || !weatherData.daily) return;
-
-      const days = weatherData.daily.slice(0, 7).map(function(d, i) { return getDayLabel(d.date, i); });
-      const temps = weatherData.daily.slice(0, 7).map(function(d) { return d.temp_max; });
-      const waves = weatherData.daily.slice(0, 7).map(function(d) { return d.wave_height_max; });
-      const winds = weatherData.daily.slice(0, 7).map(function(d) { return d.wind_speed_max; });
-
-      const commonOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-            ticks: { color: '#B4B8C1', font: { size: 10 } }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { color: '#B4B8C1', font: { size: 9 } }
-          }
-        }
-      };
-
-      new Chart(document.getElementById('tempChartMini'), {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [{
-            data: temps,
-            borderColor: '#FF9F43',
-            backgroundColor: 'rgba(255, 159, 67, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4
-          }]
-        },
-        options: commonOptions
-      });
-
-      new Chart(document.getElementById('waveChartMini'), {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [{
-            data: waves,
-            borderColor: '#3BAADC',
-            backgroundColor: 'rgba(59, 170, 220, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4
-          }]
-        },
-        options: commonOptions
-      });
-
-      new Chart(document.getElementById('windChartMini'), {
-        type: 'bar',
-        data: {
-          labels: days,
-          datasets: [{
-            data: winds,
-            backgroundColor: '#4A90E2',
-            borderRadius: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: {
-              grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#B4B8C1', font: { size: 10 } }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { color: '#B4B8C1', font: { size: 9 } }
+            if (target < now) {
+                target.setDate(target.getDate() + 1);
             }
-          }
+
+            const diff = target - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+
+            if (h > 0) return `Tra ${h}h ${m}m`;
+            if (m <= 0) return 'Imminente';
+            return `Tra ${m} minuti`;
         }
-      });
-    }
 
-    function renderCharts() {
-      if (!weatherData || !weatherData.daily || weatherData.daily.length === 0) {
-        console.error('Dati meteo non disponibili per i grafici');
-        return;
-      }
-
-      const days = weatherData.daily.slice(0, 7).map(function(d, i) { return getDayLabel(d.date, i); });
-      const temps = weatherData.daily.slice(0, 7).map(function(d) { return d.temp_max; });
-      const winds = weatherData.daily.slice(0, 7).map(function(d) { return d.wind_speed_max; });
-      const waves = weatherData.daily.slice(0, 7).map(function(d) { return d.wave_height_max; });
-      const rain = weatherData.daily.slice(0, 7).map(function(d) { return d.precipitation_sum || 0; });
-      const pressure = weatherData.daily.slice(0, 7).map(function(d) {
-        const arr = d.hourly && d.hourly.pressure;
-        if (!Array.isArray(arr) || arr.length === 0) return null;
-        const avg = arr.reduce(function(s, v) { return s + Number(v || 0); }, 0) / arr.length;
-        return Math.round(avg * 10) / 10;
-      });
-
-      const commonOptions = {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: { labels: { color: '#B4B8C1', font: { family: 'Inter', size: 12 } } }
-        },
-        scales: {
-          y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-            ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
-          },
-          x: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-            ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
-          }
+        function getStatusIcon(severity) {
+            const icons = {
+                'verde': '🟢',
+                'gialla': '🟡',
+                'rossa': '🔴'
+            };
+            return icons[severity] || '⚪';
         }
-      };
 
-      const tempCanvas = document.createElement('canvas');
-      document.getElementById('tempChartContainer').appendChild(tempCanvas);
-      new Chart(tempCanvas, {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [{
-            label: 'Temperatura (°C)',
-            data: temps,
-            borderColor: '#FF9F43',
-            backgroundColor: 'rgba(255, 159, 67, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 6,
-            pointHoverRadius: 8
-          }]
-        },
-        options: commonOptions
-      });
+        function getTypeIcon(type) {
+            return type === 'Aliscafo' ? '🚤' : '⛴️';
+        }
 
-      const windCanvas = document.createElement('canvas');
-      document.getElementById('windChartContainer').appendChild(windCanvas);
-      new Chart(windCanvas, {
-        type: 'bar',
-        data: {
-          labels: days,
-          datasets: [{
-            label: 'Vento (km/h)',
-            data: winds,
-            backgroundColor: '#4A90E2',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { labels: { color: '#B4B8C1', font: { family: 'Inter', size: 12 } } }
-          },
-          scales: {
-            y: {
-              grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
+        function getWeatherIcon(condition) {
+            const icons = {
+                'clear': '☀️',
+                'clouds': '☁️',
+                'rain': '🌧️',
+                'snow': '❄️',
+                'thunderstorm': '⛈️',
+                'drizzle': '🌦️',
+                'mist': '🌫️',
+                'fog': '🌫️'
+            };
+            const key = condition.toLowerCase();
+            for (const [k, icon] of Object.entries(icons)) {
+                if (key.includes(k)) return icon;
             }
-          }
+            return '🌤️';
         }
-      });
 
-      const waveCanvas = document.createElement('canvas');
-      document.getElementById('waveChartContainer').appendChild(waveCanvas);
-      new Chart(waveCanvas, {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [{
-            label: 'Onde (m)',
-            data: waves,
-            borderColor: '#3BAADC',
-            backgroundColor: 'rgba(59, 170, 220, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 6,
-            pointHoverRadius: 8
-          }]
-        },
-        options: commonOptions
-      });
+        function renderBannerCards(schedules) {
+            const procidaNapoli = schedules.procidaNapoli || [];
+            const napoliProcida = schedules.napoliProcida || [];
 
-      const rainCanvas = document.createElement('canvas');
-      document.getElementById('rainChartContainer').appendChild(rainCanvas);
-      new Chart(rainCanvas, {
-        type: 'bar',
-        data: {
-          labels: days,
-          datasets: [{
-            label: 'Pioggia (mm)',
-            data: rain,
-            backgroundColor: '#6C5CE7',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { labels: { color: '#B4B8C1', font: { family: 'Inter', size: 12 } } }
-          },
-          scales: {
-            y: {
-              grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { color: '#B4B8C1', font: { family: 'Inter' } }
+            const pnContainer = document.getElementById('procida-napoli-cards');
+            const pnNext = procidaNapoli
+                .filter(c => c.status !== 'Terminata')
+                .slice(0, 2);
+
+            if (pnNext.length === 0) {
+                pnContainer.innerHTML = '<div class="no-departures">Nessuna corsa disponibile</div>';
+            } else {
+                pnContainer.innerHTML = pnNext.map(c => `
+                    <div class="ferry-card ${c.severity}">
+                        <div class="ferry-time">
+                            ${getStatusIcon(c.severity)} ${c.time}
+                            <span class="status-badge ${c.severity}">${c.status}</span>
+                        </div>
+                        <div class="ferry-info">
+                            ${getTypeIcon(c.type)} ${c.type} ${c.company || ''}
+                        </div>
+                        <div class="ferry-info">→ ${c.destination}</div>
+                        <div class="ferry-countdown">⏱️ ${getCountdown(c.time)}</div>
+                    </div>
+                `).join('');
             }
-          }
+
+            const npContainer = document.getElementById('napoli-procida-cards');
+            const npNext = napoliProcida
+                .filter(c => c.status !== 'Terminata')
+                .slice(0, 2);
+
+            if (npNext.length === 0) {
+                npContainer.innerHTML = '<div class="no-departures">Nessuna corsa disponibile</div>';
+            } else {
+                npContainer.innerHTML = npNext.map(c => `
+                    <div class="ferry-card ${c.severity}">
+                        <div class="ferry-time">
+                            ${getStatusIcon(c.severity)} ${c.time}
+                            <span class="status-badge ${c.severity}">${c.status}</span>
+                        </div>
+                        <div class="ferry-info">
+                            ${getTypeIcon(c.type)} ${c.type} ${c.company || ''}
+                        </div>
+                        <div class="ferry-info">Da ${c.origin}</div>
+                        <div class="ferry-countdown">⏱️ ${getCountdown(c.time)}</div>
+                    </div>
+                `).join('');
+            }
         }
-      });
 
-      const pressureCanvas = document.createElement('canvas');
-      document.getElementById('pressureChartContainer').appendChild(pressureCanvas);
-      new Chart(pressureCanvas, {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [{
-            label: 'Pressione (hPa)',
-            data: pressure,
-            borderColor: '#00B894',
-            backgroundColor: 'rgba(0, 184, 148, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 6,
-            pointHoverRadius: 8
-          }]
-        },
-        options: commonOptions
-      });
-    }
+        function renderScheduleTable(schedules) {
+            const pnContainer = document.getElementById('schedule-procida-napoli');
+            const npContainer = document.getElementById('schedule-napoli-procida');
 
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(renderMiniCharts, 500);
-    });
-  </script>
+            const procidaNapoli = schedules.procidaNapoli || [];
+            const napoliProcida = schedules.napoliProcida || [];
+
+            if (procidaNapoli.length === 0) {
+                pnContainer.innerHTML = '<p style="text-align:center;color:#666;">Nessuna corsa disponibile</p>';
+            } else {
+                pnContainer.innerHTML = procidaNapoli.map(c => `
+                    <div class="schedule-slot ${c.severity}">
+                        <div class="slot-time">${getStatusIcon(c.severity)} ${c.time}</div>
+                        <div class="slot-type">${getTypeIcon(c.type)} ${c.type}</div>
+                        <div class="slot-company">${c.company || ''}</div>
+                        <div class="slot-destination">→ ${c.destination}</div>
+                        <span class="status-badge ${c.severity}">${c.status}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (napoliProcida.length === 0) {
+                npContainer.innerHTML = '<p style="text-align:center;color:#666;">Nessuna corsa disponibile</p>';
+            } else {
+                npContainer.innerHTML = napoliProcida.map(c => `
+                    <div class="schedule-slot ${c.severity}">
+                        <div class="slot-time">${getStatusIcon(c.severity)} ${c.time}</div>
+                        <div class="slot-type">${getTypeIcon(c.type)} ${c.type}</div>
+                        <div class="slot-company">${c.company || ''}</div>
+                        <div class="slot-destination">Da ${c.origin}</div>
+                        <span class="status-badge ${c.severity}">${c.status}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderForecast(forecast) {
+            const container = document.getElementById('forecast-grid');
+            
+            if (!forecast || forecast.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:#666;">Nessuna previsione disponibile</p>';
+                return;
+            }
+
+            container.innerHTML = forecast.slice(0, 5).map(day => `
+                <div class="forecast-day">
+                    <div class="forecast-day-name">${day.day}</div>
+                    <div class="forecast-icon">${getWeatherIcon(day.condition)}</div>
+                    <div class="forecast-temp">${day.temp_max}°C / ${day.temp_min}°C</div>
+                    <div class="forecast-desc">${day.description}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderCharts(meteoData) {
+            const tempCtx = document.getElementById('tempChart').getContext('2d');
+            const windCtx = document.getElementById('windChart').getContext('2d');
+
+            if (tempChart) tempChart.destroy();
+            tempChart = new Chart(tempCtx, {
+                type: 'line',
+                data: {
+                    labels: meteoData.hourly_labels || [],
+                    datasets: [{
+                        label: 'Temperatura (°C)',
+                        data: meteoData.hourly_temp || [],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: false }
+                    }
+                }
+            });
+
+            if (windChart) windChart.destroy();
+            windChart = new Chart(windCtx, {
+                type: 'bar',
+                data: {
+                    labels: meteoData.hourly_labels || [],
+                    datasets: [{
+                        label: 'Velocità Vento (km/h)',
+                        data: meteoData.hourly_wind || [],
+                        backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                        borderColor: '#22c55e',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        async function loadData() {
+            try {
+                const ferryRes = await fetch(FERRY_JSON_URL + '?t=' + Date.now());
+                const ferryData = await ferryRes.json();
+                const schedules = ferryData[0]?.schedules || ferryData.schedules || {};
+
+                renderBannerCards(schedules);
+                renderScheduleTable(schedules);
+
+                const meteoRes = await fetch(METEO_JSON_URL + '?t=' + Date.now());
+                const meteoData = await meteoRes.json();
+
+                document.getElementById('temperatura').textContent = meteoData.temperature + '°C';
+                document.getElementById('vento').textContent = meteoData.wind_speed + ' km/h';
+                document.getElementById('umidita').textContent = meteoData.humidity + '%';
+                document.getElementById('pressione').textContent = meteoData.pressure + ' hPa';
+
+                document.getElementById('temp-desc').textContent = meteoData.description || 'Procida';
+                document.getElementById('wind-desc').textContent = `Direzione: ${meteoData.wind_direction || 'N/A'}`;
+
+                if (meteoData.forecast) {
+                    renderForecast(meteoData.forecast);
+                }
+
+                if (meteoData.hourly_temp && meteoData.hourly_wind) {
+                    renderCharts(meteoData);
+                }
+
+                document.getElementById('last-update').textContent = 
+                    `Ultimo aggiornamento: ${formatDate(new Date())}`;
+
+            } catch (error) {
+                console.error('Errore caricamento dati:', error);
+                document.getElementById('last-update').textContent = 
+                    `⚠️ Errore nel caricamento dei dati`;
+            }
+        }
+
+        loadData();
+        setInterval(loadData, 30000);
+
+        setInterval(() => {
+            const cards = document.querySelectorAll('.ferry-countdown');
+            cards.forEach(card => {
+                const timeStr = card.closest('.ferry-card').querySelector('.ferry-time').textContent.match(/\d{2}:\d{2}/);
+                if (timeStr) {
+                    card.innerHTML = `⏱️ ${getCountdown(timeStr[0])}`;
+                }
+            });
+        }, 10000);
+    </script>
 </body>
 </html>
